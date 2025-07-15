@@ -13,7 +13,8 @@
 		"enabled": true
 	},
 	"files": {
-		"includes": ["src/**", "tests/**", "!**/*.min.js"]
+		"includes": ["src/**", "tests/**", "!**/*.min.js"],
+		"ignoreUnknown": true
 	},
 	"vcs": {
 		"enabled": false,

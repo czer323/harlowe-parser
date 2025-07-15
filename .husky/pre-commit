@@ -1,2 +1,15 @@
 #!/bin/sh
 npx lint-staged
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+npm run typecheck
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+npm test
+if [ $? -ne 0 ]; then
+  exit 1
+fi
