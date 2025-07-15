@@ -1,0 +1,32 @@
+ReferenceData
+twee3-language-tools-master
+.github
+.vscode
+Example Harlowe Passages
+.gemini
+Example Chevrotain
+ReferenceData
+
+# Node.js/TypeScript/Editor ignores
+node_modules/
+dist/
+build/
+coverage/
+*.log
+.env*
+*.tsbuildinfo
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+.parcel-cache/
+.turbo/
+.next/
+.vercel/
+.idea/
+.nyc_output/
+*.local
+*.swp
+*.swo
+
