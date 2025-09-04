@@ -1,135 +1,144 @@
 /// <reference types="vitest" />
 
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { describe, expect, it } from "vitest";
 import { HarloweLexer } from "../src/lexer.js";
 
-describe("HarloweLexer", () => {
-	it("tokenizes a passage header", () => {
-		const input = ":: PassageName\n";
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		expect(tokens[0].tokenType.name).toBe("PassageHeader");
-		expect(tokens[0].image).toBe(":: PassageName");
+// Helper function to perform lexing and basic validation
+const lex = (input: string) => {
+	const result = HarloweLexer.tokenize(input);
+	if (result.errors.length > 0) {
+		console.error("Lexer errors found:", result.errors);
+	}
+	expect(result.errors).toHaveLength(0);
+	return result.tokens;
+};
+
+describe("Harlowe Lexer", () => {
+	describe("Category 1: Whitespace & Comments", () => {
+		it("should skip whitespace", () => {
+			const tokens = lex("  \t\n\r  ");
+			expect(tokens).toHaveLength(0);
+		});
+
+		it("should skip HTML comments", () => {
+			const tokens = lex("<!-- this is a comment -->");
+			expect(tokens).toHaveLength(0);
+		});
 	});
 
-	it("tokenizes a macro call", () => {
-		const input = '(set: $var to "value")';
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		expect(tokens.map((t) => t.tokenType.name)).toEqual([
-			"LParen",
-			"MacroName",
-			"Variable",
-			"Operator",
-			"StringLiteral",
-			"RParen",
-		]);
+	describe("Category 2: Punctuation & Delimiters", () => {
+		it("should tokenize parentheses", () => {
+			const tokens = lex("()");
+			expect(tokens.map((t) => t.tokenType.name)).toEqual(["LParen", "RParen"]);
+		});
+
+		it("should prioritize double square brackets over single", () => {
+			const tokens = lex("[[]]");
+			expect(tokens.map((t) => t.tokenType.name)).toEqual([
+				"LeftDoubleSquareBracket",
+				"RightDoubleSquareBracket",
+			]);
+		});
 	});
 
-	it("tokenizes plain text and variables", () => {
-		const input = "Hello $name!";
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		expect(tokens.map((t) => t.tokenType.name)).toContain("PlainText");
-		expect(tokens.map((t) => t.tokenType.name)).toContain("Variable");
+	describe("Category 3: Literals", () => {
+		it("should tokenize strings", () => {
+			const tokens = lex(`"hello" 'world'`);
+			expect(tokens.map((t) => t.tokenType.name)).toEqual([
+				"StringLiteral",
+				"StringLiteral",
+			]);
+		});
+
+		it("should tokenize numbers", () => {
+			const tokens = lex("123 -45.67 5s");
+			expect(tokens.map((t) => t.tokenType.name)).toEqual([
+				"NumberLiteral",
+				"NumberLiteral",
+				"NumberLiteral",
+			]);
+		});
 	});
 
-	it("tracks line and column numbers", () => {
-		const input = ':: Header\n(set: $x to "y")';
-		const { tokens } = HarloweLexer.tokenize(input);
-		expect(tokens[0].startLine).toBe(1);
-		expect(tokens[1].startLine).toBe(2);
+	describe("Category 4 & 5: Keywords & Identifiers", () => {
+		it("should tokenize identifiers and keywords correctly", () => {
+			const tokens = lex("to and it true_story");
+			expect(tokens.map((t) => t.tokenType.name)).toEqual([
+				"To",
+				"And",
+				"It",
+				"Identifier",
+			]);
+		});
 	});
 
-	it("produces ErrorToken for unknown input", () => {
-		const input = "@@@";
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors.length).toBe(0);
-		expect(tokens[0].tokenType.name).toBe("ErrorToken");
+	describe("Category 6: Markup", () => {
+		it("should tokenize simple markup tokens", () => {
+			const tokens = lex("// '' ~~ ** ^^");
+			expect(tokens.map((t) => t.tokenType.name)).toEqual([
+				"Italic",
+				"Bold",
+				"Strikethrough",
+				"Emphasis",
+				"Superscript",
+			]);
+		});
 	});
 
-	// Additional tests for edge cases
-	it("tokenizes lines starting with dashes and colons", () => {
-		const input = "- This is a dash line\n: This is a colon line\n";
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		expect(tokens.map((t) => t.tokenType.name)).toContain("PlainText");
-		expect(tokens.map((t) => t.tokenType.name)).toContain("Newline");
+	describe("VerbatimBlock Token", () => {
+		it("should tokenize a simple verbatim block", () => {
+			const tokens = lex("`hello`");
+			expect(tokens[0].tokenType.name).toBe("VerbatimBlock");
+			expect(tokens[0].image).toBe("`hello`");
+		});
+
+		it("should tokenize a block with nested backticks", () => {
+			const tokens = lex("`` `hello` ``");
+			expect(tokens[0].tokenType.name).toBe("VerbatimBlock");
+			expect(tokens[0].image).toBe("`` `hello` ``");
+		});
+
+		it("should tokenize a block containing Harlowe markup", () => {
+			const tokens = lex("`(print: 'hello')`");
+			expect(tokens[0].tokenType.name).toBe("VerbatimBlock");
+			expect(tokens[0].image).toBe("`(print: 'hello')`");
+		});
+
+		it("should tokenize multiple levels of nested backticks", () => {
+			const tokens = lex("``` `` `hello` `` ```");
+			expect(tokens[0].tokenType.name).toBe("VerbatimBlock");
+			expect(tokens[0].image).toBe("``` `` `hello` `` ```");
+		});
+
+		it("should correctly tokenize text surrounding a verbatim block", () => {
+			const tokens = lex("prose `verbatim` prose");
+			const tokenNames = tokens.map((t) => t.tokenType.name);
+			expect(tokenNames).toEqual(["Identifier", "VerbatimBlock", "Identifier"]);
+		});
+
+		it("should tokenize plain text with punctuation", () => {
+			const tokens = lex("Hello, world!");
+			const tokenNames = tokens.map((t) => t.tokenType.name);
+			expect(tokenNames).toEqual([
+				"Identifier",
+				"Comma",
+				"Identifier",
+				"PlainText",
+			]);
+		});
 	});
 
-	it("tokenizes macro arguments with negative numbers and newlines", () => {
-		const input = "(abs: -4)\n";
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		expect(tokens.map((t) => t.tokenType.name)).toEqual([
-			"LParen",
-			"MacroName",
-			"Operator",
-			"PlainText",
-			"RParen",
-			"Newline",
-		]);
-	});
-
-	it("tokenizes a passage header with tags", () => {
-		const input = ":: PassageName [tag1 tag2]\n";
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		// Actual output: [PassageHeader, Newline]
-		expect(tokens.map((t) => t.tokenType.name)).toEqual([
-			"PassageHeader",
-			"Newline",
-		]);
-		expect(tokens[0].image).toBe(":: PassageName [tag1 tag2]");
-	});
-
-	it("tokenizes hooks", () => {
-		const input = "[Hello [nested]]";
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		// Actual output: [LSquare, PlainText, LSquare, PlainText, RSquare, RSquare]
-		expect(tokens.map((t) => t.tokenType.name)).toEqual([
-			"LSquare",
-			"PlainText",
-			"LSquare",
-			"PlainText",
-			"RSquare",
-			"RSquare",
-		]);
-	});
-
-	it("tokenizes link syntax", () => {
-		const input = "[[Link Text->Passage]] [[Other|Passage]]";
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		// Actual output: [LinkStart, PlainText, LinkArrow, PlainText, LinkEnd, LinkStart, PlainText, LinkPipe, PlainText, LinkEnd]
-		expect(tokens.map((t) => t.tokenType.name)).toEqual([
-			"LinkStart",
-			"PlainText",
-			"LinkArrow",
-			"PlainText",
-			"LinkEnd",
-			"LinkStart",
-			"PlainText",
-			"LinkPipe",
-			"PlainText",
-			"LinkEnd",
-		]);
-	});
-
-	it("tokenizes escaped characters in string literals", () => {
-		const input = '"A \\"quoted\\" [bracket] (paren)"';
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		expect(tokens[0].tokenType.name).toBe("StringLiteral");
-		expect(tokens[0].image).toBe(input);
-	});
-
-	it("tokenizes escaped characters in plain text", () => {
-		const input = "Hello \\[escaped bracket\\] and \\(paren\\)";
-		const { tokens, errors } = HarloweLexer.tokenize(input);
-		expect(errors).toHaveLength(0);
-		expect(tokens[0].tokenType.name).toBe("PlainText");
-		expect(tokens[0].image).toBe(input);
+	describe("Comprehensive Lexing", () => {
+		it("should tokenize the entire Lexer_Passage.twee file without errors", () => {
+			const filePath = path.resolve(
+				__dirname,
+				"../documentation/Lexer_Passage.twee",
+			);
+			const content = fs.readFileSync(filePath, "utf-8");
+			const { errors } = HarloweLexer.tokenize(content);
+			expect(errors).toHaveLength(0);
+		});
 	});
 });
