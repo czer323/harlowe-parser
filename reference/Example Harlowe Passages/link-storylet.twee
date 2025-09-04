@@ -1,0 +1,24 @@
+<!--
+Rationale:
+The standard macro for accessing which storylets are currently open in the story is (open-storylets:). Combined
+with other macros such as (for:) and (link-goto:), links to storylets can be easily created. This macro provides
+a shorthand for the most basic case: creating a simple link to the first open storylet, second open storylet, and so forth.
+
+Details:
+The position functions similarly to the position number given to (subarray:) - positive numbers will count from the start,
+and negative numbers will count from the end. (link-storylet:-1) will produce a link to the last available storylet (which
+will be the one with the least (urgency:) value among open storylets). If the number 0 is given, an error will result.
+If there is no storylet available for the link (such as (link-storylet: 6) when only 4 storylets are currently open) then
+the optional final string will be displayed. If it isn't given, nothing will be displayed.
+Note that (link-storylet:), unlike (link:), doesn't accept a changer value to style the produced link. This is because, as
+this produces a command (and not a changer), you can simply attach changers to the front of it to style the link.
+--->
+:: link-storylet_1
+You look over the paddock as you ponder three ways you may spend the coming day.
+* (link-storylet: 1, "//(Unavailable)//")
+* (link-storylet: 2, "//(Unavailable)//")
+* (link-storylet: 3, "//(Unavailable)//")
+
+:: link-storylet_2
+(link-storylet: "→", where its tags contains 'episode')
+

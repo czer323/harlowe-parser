@@ -1,0 +1,24 @@
+<!--
+Rationale:
+This is a convenient and more readable shorthand for using (enchant-in:) with ?page's chars. This lets you style all of the characters within a hook, as if they were in individual hooks themselves.
+A number of strange text effects are possible with this - each character can be rotated using (text-rotate-z:), each character can have a (hover-style:), each character can have a slightly different (text-size:),
+and so forth.
+
+Details:
+As with (enchant-in:), this can be given a changer, or a lambda that produces a changer, which is run on each character individually, and can produce different changers for each, depending on
+their pos or a random macro. If the lambda doesn't produce a changer, an error will result.
+Also, as with (enchant-in:), (link:), (replace:), or any of their relatives cannot be given to this macro.
+This creates a hook-specific enchantment, similar to (enchant-in:), It will be listed under the "Enchantments" tab of the Debug Mode panel.
+Warning: using (char-style:) may cause text-to-speech assistive programs to fail to read the hook's contents correctly. If this would be unacceptable for you or your story, refrain from using this macro.
+Warning: using (char-style:) to enchant very large amounts of text at once will likely cause excessive CPU load for the reader, making their browser unresponsive.
+Due to Harlowe engine limitations, this currently does NOT work when created by a lambda given to (enchant:) or (change:), such as in (enchant: ?passage, via (char-style:(bg:(hsl:pos*30,0.5,1)))).
+--->
+:: char-style_1
+(char-style:(text-style:"fidget"))[Maybe you stayed up too late.]
+
+:: char-style_2
+(char-style: via (text-style:(either:'none','blur','blurrier')))[My memory is patchy. You'll have to fill in the gaps yourself.]
+
+:: char-style_3
+(char-style: via (text-colour:(either:red,white,white)))[Blood? What blood? You're clean as a whistle.]
+

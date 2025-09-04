@@ -1,0 +1,21 @@
+<!--
+Rationale:
+This is a variation of the (rotated:) macro. Both of these macros allow you to cycle through a sequence of values,
+wrapping back to the start, until a certain value is at the front, then provide an array of the values in that order.
+The former macro lets you specify an exact number of rotations to do; this one lets you specify what kind of value
+should be at the front, if you don't know the exact order of the passed-in strings (which may be the case if they come
+from an array).
+Note that while the lambda argument provides a lot of flexibility, if you simply want to compare each value to a known
+value, where it is (such as in an example above) is a simple enough lambda formulation to do so.
+
+Details:
+If the lambda doesn't match any of the values (that is, there's no value to rotate to) then an error will result.
+As of 3.3.0, you may give only one item after the lambda without causing an error (although an error will still occur
+if the given lambda doesn't match it).
+--->
+:: rotated-to_1
+(rotated-to: where it is 'D', 'A','B','C','D')
+
+:: rotated-to_2
+(rotated-to: where it > 3, 1, 2, 3, 4, 5)
+

@@ -1,0 +1,38 @@
+<!--
+Rationale:
+The cycling link is an interaction idiom popularised in Twine 1 which combines the utility of a dial input element with
+the discovery and visual consistency of a link: the player can typically only discover that this is a cycling link by clicking it,
+and can then discover the full set of labels by clicking through them. This allows a variety of subtle dramatic and humourous
+possibilities, and moreover allows the link to sit comfortably among passage prose without standing out as an interface element.
+The addition of a variable bound to the link, changing to match whichever text the player finally dialed the link to, allows
+cycling links to affect subsequent passages, and thus for the link to be just as meaningful in affecting the story's course as any
+other, even though no hooks and (set:)s can be attached to them.
+
+Details:
+This macro accepts two-way binds using the 2bind syntax. These will cause the link to rotate its values to match the current value of the bound
+variable, if it can - if $pressure is "Medium" when entering the passage with (cycling-link: 2bind $pressure, "Low", "Medium", "High"), then it will
+rotate "Medium" to the front, as if the link had already been clicked once. Also, it will automatically update itself whenever
+any other macro changes the bound variable. However, if the variable no longer matches any of the link's strings, then it won't update - for
+instance, if the variable becomes "It's Gonna Blow", then a cycling link with the strings "Low", "Medium" and "High" won't update.
+If one of the strings is empty, such as (cycling-link: "Two eggs", "One egg", ""), then upon reaching the empty string, the link
+will disappear permanently. If the first string is empty, an error will be produced (because then the link can never appear at all).
+If attempting to render one string produces an error, such as (cycling-link: "Goose", "(print: 2 + 'foo')"), then the error will only appear
+once the link cycles to that string.
+The bound variable will be set to the first value as soon as the cycling link is displayed - so, even if the player doesn't
+interact with the link at all, the variable will still have the intended value.
+If the bound variable has already been given a type restriction (such as by (set:num-type $candy to 1)), then, if that type isn't string or str, an error
+will result.
+If you use (replace:) to alter the text inside a (cycling-link:), such as (cycling-link: bind $tattoo, "Star", "Feather")(replace:"Star")[Claw],
+then the link's text will be changed, but the value assigned to the bound variable will not - $tattoo will still be "Star", and clicking the
+link twice will return the link's text to "Star". This differs from (dropdown:)'s behaviour in this situation.
+If only one string was given to this macro, an error will be produced.
+--->
+:: cycling-link_1
+(cycling-link: bind $head's hair, "Black", "Brown", "Blonde", "Red", "White")
+
+:: cycling-link_2
+(cycling-link: "Mew", "Miao", "Mrr", "Mlem")
+
+:: cycling-link_3
+(cycling-link: 2bind $pressure, "Low", "Medium", "High")
+

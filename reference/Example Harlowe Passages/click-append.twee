@@ -1,0 +1,7 @@
+<!--
+
+--->
+:: click-append_1
+I have nothing to fear.
+(click-append: "fear")[ but my own hand]
+

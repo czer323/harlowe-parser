@@ -1,0 +1,12 @@
+<!--
+Details:
+This is part of a suite of string pattern macros. Consult the (p:) article to learn more about string patterns, special user-created datatypes
+that can match very precise kinds of strings.
+When this datatype is used with the matches operator, it is essentially identical to (p:), in the sense that matches compares an entire string with an entire pattern, rather than just a portion.
+--->
+:: p-end_1
+(str-replaced: (p-end: ...newline), "\n", _text)
+
+:: p-end_2
+(trimmed: (p-end: ...whitespace), _text)
+

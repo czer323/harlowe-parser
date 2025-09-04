@@ -1,0 +1,32 @@
+<!--
+Rationale:
+By default, each passage in a Harlowe story features a narrow sidebar to the left, housing "Undo" and "Redo" menu icons.
+However, using the (replace:), (append:) or (prepend:) changers with the ?sidebar HookName, it is possible to dynamically change
+the sidebar, inserting or replacing its contents with any kind of prose. To that end, it is useful to be able to recreate
+the "Undo" and "Redo" menu icons exactly as they were, in case an earlier operation performed on the sidebar had removed them.
+
+Details:
+Of course, you can use this in normal passage prose, if you wish - they are merely commands, just like (link-goto:) or (print:).
+If you wish to change the icon to a different symbol, you may provide a string containing a single character to this macro.
+If none is given, the default symbol is ↷ (in HTML, &#8631;).
+You may also provide a string that contains a label for the icon. This label must have more than one character in it (so that it isn't
+confused with the optional icon string) and will be placed beneath the icon. The label's contents will NOT be interpreted as Harlowe markup, so
+everything in it will be used verbatim for the label. This is because, unlike links, the label isn't considered part of passage prose.
+If both strings given to this macro have more than one character in them, an error will result.
+This command creates an element that uses the same default CSS styling as the sidebar's icons: a <tw-icon> holding a glyph of text at 66px font size,
+with 0.2 opacity that changes to 0.4 when hovered over.
+Like all sidebar icons, these will automatically hide themselves when they cannot be clicked, leaving a conspicuous space. In the
+case of the "Redo" icon, it will be hidden if this is the latest turn of the game, and there is nothing to "re-do".
+--->
+:: icon-redo_1
+(replace:?sidebar)[(b4r:"solid")+(b4r-color:gray)+(corner-radius:12)(icon-undo: )(b4r:"solid")+(b4r-color:gray)+(corner-radius:12)(icon-redo: )]
+
+:: icon-redo_2
+(icon-redo:"👉")
+
+:: icon-redo_3
+(icon-redo:"Redo the turn")
+
+:: icon-redo_4
+(icon-redo:"👉", "Redo the turn")
+

@@ -1,0 +1,24 @@
+<!--
+Details:
+The (datatype:) macro is useful for examining and comparing the datatypes of values, but when dealing with arrays and datamaps, each of which can have radically
+different purposes and meanings throughout your story, that macro only produces array or dm when given them, which isn't too helpful when checking
+if one array is similar to another. This macro produces a more precise result - an array or datamap with datatypes replacing its values - which is compatible with
+the matches operator, the (set:) macro, parameters of the (macro:) macro, and other places where datatypes are useful.
+
+Details:
+This won't return structures containing spread datatypes, even if those could plausibly describe the passed-in data structure - an array with 26 numbers in it will,
+when given to this macro, produce an array containing num 26 times, no more or less.
+Note that this does not produce any string patterns, like those produced by (p:) - any string given to this will still result in str being returned.
+--->
+:: datapattern_1
+(datapattern: (a:15,45))
+
+:: datapattern_2
+(datapattern: (passage: ))
+
+:: datapattern_3
+$coordinate matches (datapattern: (a:15,45))
+
+:: datapattern_4
+(datapattern: $value) matches $value2
+

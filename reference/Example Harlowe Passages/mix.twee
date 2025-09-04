@@ -1,0 +1,28 @@
+<!--
+Rationale:
+While you can mix colours in Harlowe using the + operator, such as by red + yellow, this operation doesn't easily
+allow for different mix ratios, such as a one-quarter/three-quarters mix, instead mixing both colours equally.
+In addition, in Harlowe 3, this uses the sRGB mixing method, which doesn't produce the most perceptually ideal colours, often making them
+darker or grayer than expected. This macro provides a more sophisticated alternative, allowing ratios for each colour to be specified, and using the LCH colour
+space to mix the colours, which tends to preserve chromaticity (colourfulness) better.
+
+Details:
+The colours are mixed in the LCH colourspace. What this means is: the colours are converted to their LCH datamaps (accessible as $colour's lch), and then
+(omitting a few minor details) their hue, lightness and chroma values are averaged. Then, the averaged values are used to construct a new colour, as if by the
+(lch:) macro.
+The two numbers (the ratios) are decimal values from 0 to 1. Numbers above or below will produce an error when given.
+If the two ratios do not add up to 1, then they will be scaled to compensate. For instance, for (lch: 0.1, green, 0.3, blue), the 0.1 and 0.3 add up to 0.4,
+but they should add up to 1, so they are scaled up to 0.25 and 0.75, respectively.
+Additionally, if the two ratios add up to less than 1, then the difference will be converted into additional transparency, which is used to multiply
+the mixed colour's alpha. For instance, for (lch: 0.15, red, 0.45, blue), the ratios 0.15 and 0.45 add up to only 0.6, which is 0.4 less than 1.
+So, the mixed colour's alpha (of 1) is multiplied by 0.6 (and thus made 40% more transparent than it would've been otherwise).
+--->
+:: mix_1
+(mix: 0.5, red, 0.5, blue)
+
+:: mix_2
+(mix: 0.5, white, 0.5, #00f)
+
+:: mix_3
+(mix: 0.4, red, 0.1, white)
+

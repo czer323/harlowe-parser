@@ -1,0 +1,46 @@
+<!--
+Rationale:
+This macro forms a pair with (input:). This is a variation of that macro which allows multi-line text to be inputted. While the former
+macro is best used for obtaining short, informative strings from the player, this macro can be used to obtain entire sentences or
+paragraphs, which may be desirable if the story is themed around writing.
+
+Details:
+The optional sizing string is the same kind of line given to (box:) - a sequence of zero or more = signs, then a sequence of characters (preferably "X"), then zero or
+more = signs. Think of this string as a visual depiction of the box's horizontal proportions - the = signs are the space to
+the left and right, and the characters in the middle are the box itself. Also, to avoid ambiguity with the second string given to this macro,
+a string representing 100% width (no margins) must be a single character, such as just "X". If you need the initial contents of the element to be a single character,
+provide an "X" sizing string before it, so that it's clear which is which.
+The produced element always occupies an entire line of the containing area, as with (box:) and (button:). If you wish to place it alongside other text, consider using it inside the column markup.
+The optional number, which must come directly after the sizing line, is a height, in text lines. If this is absent, the box will be sized to 3
+lines. Harlowe's default CSS applies resize:none to the box, preventing it (in most browsers) from being resizable by the player.
+This macro accepts two-way binds using the 2bind syntax. These will cause the box's contents to always match the current value of the bound
+variable, and automatically update itself whenever any other macro changes it. However, if the variable no longer contains a string, then
+it won't update - for instance, if the variable becomes the number 23, the box won't update.
+If the bound variable isn't two-way, the variable will be set to the box's contents as soon as it is displayed - so, it will become the optional
+initial text string, or, if it wasn't given, an empty string.
+If the bound variable has already been given a type restriction (such as by (set:num-type $candy to 1)), then, if that type isn't string or
+str, an error will result.
+The optional initial text string given to this macro will not be parsed as markup, but inserted into the box verbatim - so, giving
+"''CURRENT SAVINGS'': $lifeSavings" will not cause the $lifeSavings variable's contents to be printed into the box, nor will "CURRENT SAVINGS"
+be in boldface.
+A note about player-submitted strings: because most string-printing functionality in Harlowe (the (print:) macro, and putting variable names
+in bare passage prose) will attempt to render markup inside the strings, a player may cause disaster for your story by placing Harlowe markup
+inside an (input-box:) bound variable, which, when displayed, produces either an error or some effect that undermines the story. In order to
+display those strings safely, you may use either the verbatim markup, the (verbatim:) changer, or (verbatim-print:).
+As of 3.3.2, Harlowe will attempt to auto-focus input elements when they are added to the passage, allowing the player to
+type into them immediately. If multiple input elements are present, the first (highest) one will be auto-focused.
+Note that any further input elements added to the passage (via (after:) or some other means) will be auto-focused
+even if the player is currently typing into an existing element.
+--->
+:: input-box_1
+(input-box: "=X=")
+
+:: input-box_2
+(input-box: "XXX=", 5)
+
+:: input-box_3
+(input-box: bind $code, "XXX=", 5)
+
+:: input-box_4
+(input-box: bind $code, "XXX=", 5, "10 PRINT 'HELLO'")
+

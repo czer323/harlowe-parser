@@ -1,0 +1,31 @@
+<!--
+Rationale:
+This macro has an identical purpose to (set:) - it creates and changes variables.
+For a basic explanation, see the rationale for (set:).
+Almost every programming language has a (set:) construct, and most of these place the
+variable on the left-hand-side. However, a minority, such as HyperTalk, place the variable
+on the right. Harlowe allows both to be used, depending on personal preference. (set:) reads
+as (set: variable to value), and (put:) reads as (put: value into variable).
+
+Details:
+Just as with (set:), a variable is changed using (put: value into variable). You can
+also set multiple variables in a single (put:) by separating each VariableToValue
+with commas: (put: 2 into $batteries, 4 into $bottles), etc.
+You can also use typed variables with (put:) - (put: 1 into num-type $days) permanently
+restricts $days to numbers. Consult the article about (set:) for more information about
+typed variables.
+it can also be used with (put:), but, interestingly, it's used on the right-hand side of
+the expression: (put: $eggs + 2 into it).
+--->
+:: put_1
+(put: "Save a " + $favouritefood + " for me!" into $battlecry)
+
+:: put_2
+(put: $altitude - $enemyAltitude into _dist)
+
+:: put_3
+(put: 0 into num-type $funds)
+
+:: put_4
+(put: (font:"Courier New") into const-type $robotText)
+

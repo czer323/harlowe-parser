@@ -1,0 +1,23 @@
+<!--
+Rationale:
+Intended for game jams and rapid prototyping, (palette:) provides a quick and simple palette for stories and passages. When you aren't
+too fussed with making your story look significantly different from the Harlowe default, but just want a certain colour scheme to provide a certain
+mood, or colour a specific passage differently to offset it from the rest of the story, you can defer the task of choosing text or background
+colours to this macro. It will choose colours which contrast with the given colour to attempt to maximise readability, while still having an
+interesting relationship with the given colour's hue.
+
+Details:
+The following type strings are accepted.
+This macro interprets the passed-in colour as a background colour, and the three colours it provides are intended as text colours -
+but you can easily use them for other purposes. The given colour could be used as a text colour, and any of the received colours
+could be used as different backgrounds.
+The three returned colours all have a luminosity chosen to provide sufficient contrast with the given colour's luminosity. If
+the given colour's luminosity is very low or very high (near 0 or 1) then the returned colours will have a luminosity near
+the other extremity.
+--->
+:: palette_1
+{(unpack: (palette: "mono", orange + black) into (a:_bg, _c, _lc, _hc))
+(enchant: ?page, (background: _bg) + (text-colour:_c))
+(enchant: ?link, (text-colour:_lc) + (hover-style: (text-colour:_hc)))}
+This passage uses (link:"(more)")[a brown palette.]
+

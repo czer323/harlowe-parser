@@ -1,0 +1,14 @@
+<!--
+Rationale:
+This macro is a shorthand form of nesting (reversed:) inside (str:). This example:
+(str: ...(reversed: "ABRAXAS")) is the same as (str-reversed: "ABRAXAS").
+
+Details:
+This accepts strings of 0 or 1 character, as well as symmetrical strings, even though their
+"reversal" is the same as their current form.
+If you wish to reverse just the words in a string, you can use the ordinary (reversed:) and (words:) macros
+like so: (reversed: ...(words: "Gilly Golly Milly Molly")).
+--->
+:: str-reversed_1
+(str-reversed: "sknahT")
+

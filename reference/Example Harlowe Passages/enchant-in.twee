@@ -1,0 +1,28 @@
+<!--
+Rationale:
+While (change:) and (enchant:) both allow hooks to have changers or styles applied to them, these macros produce commands that must be placed in the passage, and which
+affect every match within the passage. It can sometimes be convenient to restrict the effect of (enchant:) to just matches within a single area of prose, especially when matching
+using strings, the ?Link hook name, or ?Page's chars. Thus, you can use (enchant-in:), attaching it to a hook that encloses the area you want it to affect. The enchantment it
+produces will be treated as though it didn't exist outside of the attached hook.
+
+Details:
+You can use built-in hook data names such as lines and chars with this macro, such as by (enchant-in: ?page's lines, $changer), which will style all of the lines in the attached
+hook with $changer. However, this construction appears counterintuitive when written out - the HookName selects all of the lines in the page, but only those within the attached hook are
+styled. So, more readable shorthand macros exist for both of these - (line-style:) and (char-style:) - which you ought to use instead.
+This macro takes the same values as (enchant:) and (change:), and will produce the same errors for the same values. So, (link:), (replace:), or any of its relatives cannot be given as the second
+value, and neither can a lambda that doesn't produce a changer.
+Note that this macro can only affect explicit hooks or string occurrences, and can't affect just "part" of a target. For instance, (enchant-in: ?page, (background:red))[DANGER] will NOT turn
+the background of the attached hook red, but (enchant-in: ?page's lines, (background:red))[DANGER] will (because the text "DANGER" is a line of text, and is thus targeted by ?page's lines).
+This enchantment will be listed in the "Enchantments" tab of the Debug Mode panel when it's active, alongside enchantments created by (enchant:).
+Due to Harlowe engine limitations, this currently does NOT work when created by a lambda given to (enchant:) or (change:), such as in (enchant: ?passage, via (enchant-in:?frogs,(bg:(hsl:pos*30,0.5,1)))).
+--->
+:: enchant-in_1
+(enchant:?frog, (text-style:"italic"))
+"Opening remarks?"
+|frog>["Crok, crok, crok."]
+(enchant-in: ?frog, (text-colour:green))
+["Your response?"
+|frog>["Croak, croak."]
+"A stunning rebuke!"
+|frog>["Croooak."]]
+

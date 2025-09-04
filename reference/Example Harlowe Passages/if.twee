@@ -1,0 +1,18 @@
+<!--
+Rationale:
+In a story with multiple paths or threads, where certain events could occur or not occur,
+it's common to want to run a slightly modified version of a passage reflecting the current
+state of the world. The (if:), (unless:), (else-if:) and (else:) macros let these modifications be
+switched on or off depending on variables, comparisons or calculations of your choosing.
+
+Details:
+Note that the (if:) macro only runs once, when the passage or hook containing it is rendered. Any
+future change to the condition (such as a (link:) containing a (set:) that changes a variable) won't
+cause it to "re-run", and show/hide the hook anew.
+However, if you attach (if:) to a named hook, and the (if:) hides the hook, you can manually reveal
+the hook later in the passage (such as, after a (link:) has been clicked) by using the (show:) macro
+to target the hook. Named hooks hidden with (if:) are thus equivalent to hidden named hooks like |this)[].
+--->
+:: if_1
+(if: $legs is 8)[You're a spider!]
+

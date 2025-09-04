@@ -1,0 +1,18 @@
+<!--
+Rationale:
+While the (live:) macro is versatile in providing time-based text updating, one of its common uses - checking if some
+variable has changed using (if:), and then displaying a hook and stopping the macro with (stop:) - is rather
+cumbersome. This macro provides that functionality in a shorter form - the example above is roughly equivalent to:
+
+Details:
+This macro only takes a "when" lambda, which is like a "where" lambda but with "where" changed to
+"when" for readability purposes. This lambda doesn't have a temp variable before "when" - it doesn't iterate over anything,
+except, perhaps, moments in time.
+Because (event:) hooks only run once, the (stop:) macro is unnecessary here.
+Currently, you cannot attach (event:) to a command (such as in (event: when $a is 1)(link-goto:"?")). You have to wrap the command
+in a hook (such as (event:when $a is 1)[(link-goto:"?")]).
+--->
+:: event_1
+(cycling-link: bind _recall, "Dennis?", "Denver?", "Denzel?", "Duncan?", "Danny?", "Denton?")
+(event: when time > 10s or _recall is 'Denton?')[==No, you don't remember his name. [[Go east]].
+

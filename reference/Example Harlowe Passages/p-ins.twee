@@ -1,0 +1,18 @@
+<!--
+Details:
+This is part of a suite of string pattern macros. Consult the (p:) article to learn more about string patterns, special user-created datatypes
+that can match very precise kinds of strings.
+When other patterns are given to this, they are treated as if they are case-insensitive. This means that, if (p:"Opus ", (p-either:digit,"Magnum")) is stored in the variable
+$opus, then (p-ins: $opus) will create a datatype that can match "opus 1", "OPUS 2", "Opus Magnum" and so forth, even though $opus can't.
+When the two case-sensitive datatypes uppercase and lowercase are given to this, they are treated as if they are anycase.
+When typed variables are used in string patterns, such as in (p-ins: "Side ", (p-either:"A","B")-type _letter), the variable's type may sometimes appear to contradict the
+case-insensitivity imposed by an enclosing (p-ins:) - if that pattern is matched with "side a", then can "a" be stored in a (p-either:"A","B")-type variable?.
+Harlowe resolves this as follows: when a typed variable is placed inside (p-ins:), its type is wrapped in a (p-ins:) itself. So, _letter in the preceding example
+is bound to (p-ins: (p-either:"A","B"))-type data, instead of just (p-either:"A","B")-type data.
+--->
+:: p-ins_1
+"Hocus pocus" matches (p-ins:"hocus", (p-opt:" "), "pocus")
+
+:: p-ins_2
+(unpack: "Scp-991" into (p:(p-ins:"SCP-"), ...digit-type _codeNum))
+

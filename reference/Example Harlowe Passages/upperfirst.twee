@@ -1,0 +1,10 @@
+<!--
+Details:
+If the first alphanumeric character cannot change case (for instance, if it's a number) then nothing
+will change in the string. So, "4ever" won't become "4Ever".
+The results of this macro for non-ASCII characters currently depends on the player's browser's Unicode
+support. For instance, 'ß' in uppercase should be 'SS', but some browsers don't support this.
+--->
+:: upperfirst_1
+(upperfirst: "  college B")
+

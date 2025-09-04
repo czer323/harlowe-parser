@@ -1,0 +1,23 @@
+<!--
+Rationale:
+For an explanation of what datamaps are, see the Datamap article.
+This macro is the primary means of creating datamaps - simply supply a name,
+followed by a value, and so on.
+In addition to creating datamaps for long-term use, this is also used to
+create "momentary" datamaps which are used only in some operation. For instance,
+to add several values to a datamap at once, you can do something like this:
+You can also use (dm:) as a kind of "multiple choice" structure, if you combine it with
+the 's or of syntax. For instance...
+...will set $element to one of those elements if $monsterName matches the correct name. But, be warned: if
+none of those names matches $monsterName, an error will result.
+--->
+:: dm_1
+(dm:)
+
+:: dm_2
+(dm:
+    "Susan", "A petite human in a yellow dress",
+    "Tina", "A ten-foot lizardoid in a three-piece suit",
+    "Gertie", "A griffin draped in a flowing cape",
+)
+

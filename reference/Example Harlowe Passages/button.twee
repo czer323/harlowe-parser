@@ -1,0 +1,28 @@
+<!--
+Rationale:
+Harlowe links, by default, are designed to appear inside and among prose, in the manner of HTML prose. That being said, a story written in a more
+traditional interactive fiction style will often want to finish a passage with a series of exit links. These links can benefit from being more
+visually prominent and inviting, rather than just single fragments of text. The (button:) changer provides links with a styling that is more typical
+of other interactive fiction engines' link options.
+
+Details:
+This is essentially a shortcut for a number of other changers added together. (link: "Link Text", (button:)) is similar to
+(link:"Link Text",(align:"=><=")+(box:"X")+(b4r:"solid")+(css:"padding:0px")+(corner-radius:16)). However, unlike the latter,
+this changer is designed to work correctly with (click:) and (enchant:"text"), so that the button border matches the current link colour.
+The optional sizing string is the same kind of line given to (box:) - a sequence of zero or more = signs, then a sequence of characters (preferably "X"), then zero or
+more = signs. Think of this string as a visual depiction of the button's horizontal proportions - the = signs are the space to
+the left and right, and the characters in the middle are the button itself.
+To make (button:) links appear in two or more columns, or make two (button:) links appear side-by-side, consider using the column markup.
+This changer can be provided to non-link hooks or commands, but since the result will have the same borders and spacing as a button while not
+being clickable, it is not recommended to use it this way.
+This changer adds the class "enchantment-button" to <tw-link> and <tw-enchantment> elements.
+--->
+:: button_1
+(button:)[[Go to the cemetery]]
+
+:: button_2
+(button:"=XXX=")[[Hug your husband]]
+
+:: button_3
+(enchant:?link's 2ndlast + ?link's last, (button:))
+

@@ -1,0 +1,28 @@
+<!--
+Rationale:
+Using the visits keyword, or the (history:) array, as a way to track the player's progress instead of using Boolean variables and (set:)
+can produce simpler, more understandable code - it's obvious what (if: visits is > 2) means just by looking at it. But, it comes
+with a cost: when testing your story using the "Play from here" feature in the Twine editor, you may want to pretend that you have visited the
+requisite passages a given number of times, so as to examine the resulting prose. If you were using variables, you could add a few temporary
+(set:) macros to the passage, or put them in a "debug-header" tagged passage, to adjust the variables to match a game in progress. This macro
+provides that same functionality to the visits keyword and (history:) array, letting you temporarily adjust it for testing purposes.
+
+Details:
+It's critical to understand that these are mock visits - the passages listed are not actually visited, and code inside them is not run by this macro.
+As stated above, this macro will cause an error if it's used outside debug mode. This is NOT intended for use in a final game - while temporarily
+tweaking the meaning of visits and (history:) is convenient for testing, the author should be able to trust that in the "real" game, they
+correctly report the visits the player has actually made, so that the story's code can be properly understood.
+Each occurrence of a passage name given to this macro counts as a single mock visit. Add multiples of the same passage name to register multiple mock
+visits to that passage.
+If this macro is used multiple times, only the final usage will count - all the rest will be forgotten. (mock-visits:"A")(mock-visits:"B"), for instance,
+will only cause the "B" passage to be considered visited 1 time. This allows you to remove mock visits in the middle of a story by writing (mock-visits:).
+The effects of (mock-visits:) are saved by (save-game:) as of version 3.2.3.
+If you undo past a passage that used (mock-visits:), the effects of that macro call will be removed, as if it had been a (set:) macro call.
+This command can't have changers attached - attempting to do so will produce an error.
+--->
+:: mock-visits_1
+(mock-visits:"Juice Temple", "Milk Temple", "Water Temple")
+
+:: mock-visits_2
+(mock-visits:"Lobby","Lobby","Lobby")
+

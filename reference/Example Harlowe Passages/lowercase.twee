@@ -1,0 +1,8 @@
+<!--
+Details:
+The results of this macro for non-ASCII characters currently depends on the player's browser's Unicode
+support. For instance, 'İ' in lowercase should be 'i̇', but some browsers don't support this.
+--->
+:: lowercase_1
+(lowercase: "GrImAcE")
+

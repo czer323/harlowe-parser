@@ -1,0 +1,8 @@
+<!--
+Details:
+This is one of the features that uses Harlowe's pseudo-random number generator. If you use (seed:) at the start of the story,
+the number will be predetermined based on the seed string, and how many other random macros and features have been used before it.
+--->
+:: random_1
+(random: 1,6)
+

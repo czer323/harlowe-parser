@@ -1,0 +1,23 @@
+<!--
+Rationale:
+This macro, as well as (range:), are the means by which you can create a large array of
+similar or regular data, quickly. Just as an example: you want, say, an array of several
+identical, complex datamaps, each of which are likely to be modified in the game,
+you can use (repeated:) to make those copies easily. Or, if you want, for instance, a
+lot of identical strings accompanied by a lone different string, you can use (repeated:)
+and add a (a: "string")to the end.
+When you already have an array variable, this is similar to simply adding that variable
+to itself several times. However, if the number of times is over 5, this can be much
+simpler to write.
+
+Details:
+An error will, of course, be produced if the number given is negative, or contains a fraction.
+As of 3.2.0, however, it will no longer error if the number is 0.
+If you wish to repeat a string multiple times, please use (str-repeated:).
+--->
+:: repeated_1
+(repeated: 5, false)
+
+:: repeated_2
+(repeated: 3, 1,2,3)
+

@@ -1,0 +1,28 @@
+<!--
+Rationale:
+Some lines of prose you write in your story will tend to have identical beginnings, be they punctuation, dialogue tags, or otherwise,
+which you may tire of repetitively writing. This macro and (prepend-with:) allow you to automatically attach text without
+having to manually write it in full - simply save this changer to a variable, and attach it to the hook. While, it should
+be noted, you can use (prepend:) inside of a "footer" tagged passage to also automate this hook modification, this can, at
+times, be more convenient than having to modify a separate passage. Also, this macro is especially useful
+when combined with other changers, such as (text-style:), (font:) or (text-colour:).
+
+Details:
+The way this changer amends the text of the hook is similar to how (prepend:) amends hooks. To be precise, the full text of the hook is
+rendered before it is amended with these changers. This means that, among other things, code structures can't cross the boundary between
+the prepended text and the hook - (prepend-with:"<b>")[Bold</b>] will NOT work as it seems - the <b> tag will not be matched with the </b>.
+Multiple (append-with:) and (prepend-with:) changers can be added together. When this combined changer is attached to a hook,
+each constituent changer is applied in left-to-right order. So, (prepend-with:"RE:")+(prepend-with:"FWD:")[ARE YOUR EYES UPSIDE-DOWN?]
+will result in the hook reading RE:FWD:ARE YOUR EYES UPSIDE-DOWN?.
+This macro can't be used with (enchant:) or (change:) - attempting to do so will produce an error. You'll want to instead use (append:) or (prepend:),
+which accomplish the same effect of amending a hook or text occurrence remotely.
+--->
+:: prepend-with_1
+(set: $commandPrompt to (prepend-with:">")+(font:"Courier"))
+
+:: prepend-with_2
+(set: $dateStamp to (prepend-with:[**$location, $date.**<br>]))
+
+:: prepend-with_3
+(set: $mattias to (prepend-with:'MATTIAS:"')+(append-with:'"'))
+

@@ -1,0 +1,28 @@
+<!--
+Rationale:
+The contains and is in operators can be used to quickly check if a sequence of values contains an exact value or values, and, combined with the
+all and some data names, can check that the values in a sequence merely resemble a kind of value - for instance, that they're positive
+numbers, or strings beginning with "E". But, they are times when you're writing the same check over and over, like is an empty or is a whitespace,
+or something more complicated, and would like the ability to store the check in a lambda and reuse it.
+The (all-pass:) macro lets you perform these checks easily using a lambda, identical to that used with (find:) - simply write a "temp variable
+where a condition" expression, and every value will be put into the temp variable one by one, and the condition checked for each.
+Additionally, you can use (all-pass:) just to run a single "where" lambda against a single value - for instance, as a variation of
+(if:). This is permitted, too - simply write the lambda and the single value. For those cases, you may wish to write it as (pass:),
+a shorthand form that visually indicates that you're only checking one value rather than "all".
+
+Details:
+Of course, if any condition should cause an error, such as checking if a number contains a number, then the error will appear.
+If zero values are given to (all-pass:), then it will return true by default.
+The temp variable (if you choose to name it instead of using it) is controlled entirely by the lambda - it doesn't exist
+outside of it, it won't alter identically-named temp variables outside, and you can't manually (set:)
+it within the lambda.
+You can refer to other variables, including other temp variables, in the where condition. For instance, you can
+write (set: _name to "Eva")(all-pass: _item where _item is _name, "Evan", "Eve", "Eva"). However, for obvious reasons,
+if the outer temp variable is named the same as the lambda's temp variable, it can't be referred to in the condition.
+--->
+:: all-pass_1
+(all-pass: _num where _num > 1 and < 14, 6, 8, 12, 10, 9)
+
+:: all-pass_2
+(all-pass: _room where "Egg" is not in _room's objs, ...$rooms)
+

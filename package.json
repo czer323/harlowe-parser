@@ -19,7 +19,7 @@
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage"
   },
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "^2.1.1",

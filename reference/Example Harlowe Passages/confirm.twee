@@ -1,0 +1,18 @@
+<!--
+Details:
+The dialog that is produced is implemented entirely in HTML. User CSS stylesheets can be used to
+style it, and (enchant:) macros that affect ?Link can affect the dialog links.
+The order of the two optional strings is: the cancel link text, followed by the confirm link text. If
+one or neither of these is provided, the defaults for each are "Cancel" and "OK". Giving a blank string
+for the cancel link will cause that link to disappear. Giving an empty string for the confirm link will
+cause an error (because that link must be clickable for the dialog to work).
+In Harlowe versions prior to 3.1.0, this macro used the built-in confirm() function of the browser, but to
+support certain newer browsers that no longer offer this function, the macro was changed.
+When the dialog is on-screen, the entire game is essentially "paused" - until it is dismissed,
+no further computations are performed, links can't be clicked (except links inside the dialog text itself),
+(click:) enchantments shouldn't work, and (live:) and (event:) macros
+shouldn't fire.
+--->
+:: confirm_1
+(set: $makeCake to (confirm: "Transform your best friend into a cake?", "Do not", "Please do"))
+

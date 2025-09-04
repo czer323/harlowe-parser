@@ -1,0 +1,34 @@
+<!--
+Rationale:
+This macro is a shorthand form of (event:) that only is given an amount of time to wait. (after:2s) is the same as (event: when time > 2s).
+It is also similar to (live:), except that it only runs the hook at most once.
+One significant difference this has over (event:) is that it can offer the player the ability to speed up transitions. Frequently asking the player to wait for timed delays
+can be detrimental to the pacing of a story, especially if they are revisiting earlier passages, and providing an option to skip or expedite them is often
+greatly appreciated.
+
+Details:
+Numbers given to macros such as (after:) can be suffixed with ms or s to indicate whether you mean milliseconds or
+seconds (see the article on number data for more information). If you give a bare number, the macro interprets it as milliseconds.
+The optional second number given is an amount of milliseconds (or, if suffixed with s, seconds) to advance the transition. For each
+millisecond of the transition, Harlowe checks if a key or button is held, and if so, then it is advanced
+by the given number (in addition to the elapsed millisecond).
+As of Harlowe 3.3.4, when testing your story in Debug Mode, you can alter the speed at which (after:) waits (so as to quickly advance
+the passage to an important part, or linger on an important part) by using the "Speed" dropdown in the Tools panel. If you change it to 0.5x,
+(after:) will wait twice as long as instructed: a 1s wait will behave as if it was 2s, and so forth. Changing it to 2x will half (after:)'s wait
+time, conversely. Note that this option will currently not affect the speed of transitions (using (t8n-delay:) or (t8n-time:)).
+A note about timing: due to browser security and resource limitations, modern browsers may arbitrarily increase the delay given to (after:)
+by about 5-10ms, based on how long the (after:) macro has been in the passage, and how hard the CPU is working. More importantly,
+if the browser tab becomes inactive (such as by the player switching to another tab), modern browsers will often increase the
+delay by over 1 second, or, if the tab is inactive for a long time, any arbitrary length of time it wishes! In short, there is
+no guarantee that the time interval given to (after:) will actually be the time that will elapse before the hook appears! Please
+use this macro with that limitation in mind.
+--->
+:: after_1
+time + 2s
+
+:: after_2
+There she was. (after: 2s, (cond: visits > 0, 200ms, 0))[=
+Covered in fur, (after: time + 2s, (cond: visits > 0, 200ms, 0))[=
+sitting on all fours, (after: time + 2s, (cond: visits > 0, 200ms, 0))[=
+and howling at the moon.
+

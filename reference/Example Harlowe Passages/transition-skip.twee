@@ -1,0 +1,17 @@
+<!--
+Rationale:
+It's tempting to use transitions a lot in your story, but these can come at a cost to the player - watching
+and waiting for transitions to complete can be tiring and detrimental to your story's pacing, especially
+if they have to revisit certain parts of your story a lot. This macro can help by providing them with a means
+of skipping or accelerating the transitions if they so choose.
+
+Details:
+The number given is an amount of milliseconds (or, if suffixed with s, seconds) to advance the transition. For each
+millisecond of the transition, Harlowe checks if a key or button is held, and if so, then it is advanced
+by the given number (in addition to the elapsed millisecond).
+If a non-positive number is given, an error will be produced.
+This effect advances both a transition's (transition-time:)s and (transition-delay:)s.
+--->
+:: transition-skip_1
+(t8n:"slide-right")+(t8n-time:3s)+(t8n-skip:0.2s)[OK! I'm comin'!]
+

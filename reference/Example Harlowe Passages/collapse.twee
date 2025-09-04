@@ -1,0 +1,22 @@
+<!--
+Rationale:
+While the collapsing whitespace markup allows specific sections of passage prose to be collapsed, there are times when you want
+this functionality available as a changer, such as to style the whole page using (change:), or to add it to another changer.
+This macro provides that functionality.
+
+Details:
+Unlike most macros, this takes no values - there is only one way of collapsing whitespace (for now).
+This collapses whitespace in the same manner as the collapsing whitespace markup, so consult its documentation for more information.
+There is no way to reverse this whitespace-collapsing effect - it is permanently removed.
+When this is used with (change:) or (enchant:) to affect an existing hook, its excess whitespace will be deleted immediately, with no transition.
+Moreover, the whitespace-collapsing effect is ongoing, not just a once-off effect. This becomes clear when you consider
+the following code.
+Because the enchantment is an ongoing effect, the text appended to ?1 will be collapsed, even though it's written outside of the collapsing hook.
+This would not occur if ?1 was a span of collapsing whitespace markup.
+--->
+:: collapse_1
+(collapse:)[This text is (set:$a to 1) collapsed.]
+
+:: collapse_2
+(enchant: ?page, (collapse:))
+

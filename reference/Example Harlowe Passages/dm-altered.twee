@@ -1,0 +1,26 @@
+<!--
+Rationale:
+Generally, datamaps (unlike arrays) are not designed to have all of their values looped over and altered in one go, as each value is meant to have its own distinct meaning
+relative to the others. But, there are a few situations where this is desirable, such as altering multiple numbers in a statistics datamap to fit a particular range (such as from 1 to 100).
+This essentially combines (dm-entries:) with (altered:) (or perhaps (folded:)) by letting you operate on each value while also having access to its name, and automates the process of
+creating the new datamap from the altered (dm-entries:).
+
+Details:
+Unlike (altered:), you must supply a datamap as the second value. Additionally, similar to (dm-entries:), only one datamap can be given to this macro. If
+you want to alter multiple datamaps with the same lambda, you may want to combine this with (altered:), in a manner
+similar to this: (altered: _dm, via (dm-altered: $lambda, _dm), ...$arrayOfDatamaps).
+Of course, if any operation should cause an error, such as trying to add a string to a number, an error will result.
+The temp variable (if you choose to name it instead of using it) is controlled entirely by the lambda - it doesn't exist
+outside of it, it won't alter identically-named temp variables outside, and you can't manually (set:)
+it within the lambda.
+You can refer to other variables, including other temp variables, in the via expression. For instance, you can write
+(dm-altered: _accessory via _name + "'s " + _accessory's value, "Glove", "Hat", "Purse"). However, for obvious reasons,
+if the outer temp variable is named the same as the lambda's temp variable, it can't be referred to in the expression.
+If the given datamap is empty (has no values) then another empty datamap will be returned.
+--->
+:: dm-altered_1
+(dm-altered: via its value + 10 where its name is not 'Pluck', (dm: 'Caution', 2, 'Pluck', 5, 'Suspicion', 1))
+
+:: dm-altered_2
+(dm-altered: _a via 1 where _a's value is a num, $dm)
+

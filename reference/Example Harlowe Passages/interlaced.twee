@@ -1,0 +1,20 @@
+<!--
+Rationale:
+There are a couple of other macros which accept data in pairs - the most notable being
+(dm:), which takes data names and data values paired. This macro can help
+with using such macros. For instance, you can supply an array of (dm-names:) and
+(dm-values:) to (interlaced:), and supply that to (dm:), to produce the original
+datamap again. Or, you can supply just the names, and use a macro like (repeated:) to
+fill the other values.
+However, (interlaced:) can also be of use alongside macros which accept a sequence: you
+can use it to cleanly insert values between each item. For instance, one can pair
+an array with another array of spaces, and then convert them to a string with (str:).
+(str: ...(interlaced: $arr, (repeated: $arr's length, ' '))) will create a string containing
+each element of $arr, followed by a space.
+
+Details:
+If one of the arrays provided is empty, the resulting array will be empty, as well.
+--->
+:: interlaced_1
+(interlaced: (a: 'A', 'B', 'C', 'D'), (a: 1, 2, 3))
+

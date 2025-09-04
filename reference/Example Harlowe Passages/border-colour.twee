@@ -1,0 +1,20 @@
+<!--
+Details:
+The border macros accept up to four values. These values refer to sides of a rectangle, going clockwise
+from the top: the first value is the top edge (12 o'clock), second is the right edge (3 o'clock),
+third is the bottom edge (6 o'clock), fourth is the left edge (9 o'clock). You can stop giving
+values anywhere. If an edge doesn't have a value, then it will use whatever the opposite edge's value is
+(or the top value if it's the only one).
+Much like (text-colour:), this accepts either a Colour (such as those produced by (hsl:) or (rgb:), or plain literals
+like #fff), or a CSS colour string.
+Certain (border:) styles, namely "ridge", "groove", "inset" and "outset", will modify the colour,
+darkening it for certain parts of the border to produce their namesake appearance.
+Selecting "transparent" as the colour will cause the border to "disappear", but also cause the space surrounding
+the hook to remain.
+--->
+:: border-colour_1
+(b4r-color:magenta)+(b4r:"ridge")[LEVEL 01: DREAM WORLD]
+
+:: border-colour_2
+(b4r-color:red,yellow,green,blue)+(b4r:"dotted")[Isn't it a lovely time?]
+

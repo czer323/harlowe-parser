@@ -1,0 +1,35 @@
+<!--
+Rationale:
+Even though Harlowe (and Twine in general) is primarily a tool for writing serious non-linear prose works, it is also meant as a tool
+for playful, experimental, and abstract works where the act of interaction with the text is put into focus. To that end,
+macros like this one exist to provide alternative, unusual or unexpected ways for the player to interact with links.
+Since these actions (especially double-clicking) differ from the usual convention of hyperlinks, it is recommended that your story
+explains these kinds of links to the player. Or, if you'd prefer to surprise or conceal something from the player, you may choose not to,
+and leave them to discover these interactions for themselves.
+
+Details:
+The string values this accepts are listed below. Note that these strings are case-insensitive and dash-insensitive.
+These actions cannot be combined - (action:'doubleclick')+(action:'click') will only behave like (action:'click').
+Each of these actions causes the links to have a slightly different sensation and mood to a normal link. "mouseover" conveys a mood of fragility and spontaneity in your stories, of text reacting to the merest of touches.
+"mouseout" conveys a sense of "pointing" at the element to interact with it rather than "touching" it, and gives a dream-like or unearthly air to scenes or places.
+"doubleclick" requires a more forceful interaction than clicking, and is commonly associated with desktop operating systems and the concept of "opening".
+Because this fundamentally changes the manner in which the link is interacted with, this currently does nothing when given to (enchant:), (enchant-in:), (line-style:), or other such macros.
+It is not recommended using this with (click:) to enchant a hook which already contains a link.
+While you can write something like (click:?Page, (action:"mouseover")), the result won't be that interesting: if the mouse pointer is anywhere
+on the page, the hook to which the (click:) changer is attached will immediately run.
+--->
+:: action_1
+(action:'mouseover')[[Now isn't the time to think about that. Look!->Test]]
+
+|1>[Hey, c'mover here, cutie.](click:?1, (action:'mouseover'))[ Wanna merge brains over this printer cable?]
+
+(box:"X")|A>[You can't touch me!](click-replace: ?A,(action:'mouseover'))[Aah! That tickles!]
+
+You reach into the box...(click-append: "box...", (action:'mouseover'))[ ...and pull out the final jewel.]
+
+(link:"CORE OVERRIDE",(action:'mouseout'))[Core overridden. The programs are going wild.]
+
+You kiss her on the (link: "lips.",(action:'mouseout'))[mouth that once sneered so cruelly at you.]
+
+Hold my (link-reveal:"hand.",(action:'mouseout'))[ Thank you.]
+

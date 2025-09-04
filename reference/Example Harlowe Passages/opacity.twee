@@ -1,0 +1,13 @@
+<!--
+Details:
+This affects the entire hook, including its background, any borders added by (border:), and so forth. Moreover, this does not override
+"alpha" opacity values of colours produced by (hsl:), (rgb:) and (lch:) – the multiple transparency effects produced by these will
+multiplicatively stack with one another.
+Each nested usage of (opacity:) also multiplicatively stacks with one another. If two hooks with opacity 0.5 are nested, such as by (opacity:0.5)[(opacity:0.5)[Faded]],
+then the inner hook will have an opacity equivalent to 0.25. As a consequence of this, you can't use (opacity:) inside a partially transparent hook
+to bring the inner hook up to 100% opacity.
+Two (text-style:) styles, "fade-in-out" and "opacity", will override this changer if it's affecting the same hook.
+--->
+:: opacity_1
+(opacity: 0.5)[You don't think there's (color:green)[a revenant] nearby, do you?]
+

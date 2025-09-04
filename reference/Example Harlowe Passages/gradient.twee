@@ -1,0 +1,37 @@
+<!--
+Rationale:
+An easy way to add a subtle sense of depth, texture, direction or variety to elements in Harlowe, without having
+to create and import background images from outside of Twine, is to use this macro to generate a gradient, a
+dynamically-generated background which can be used with (background:).
+A gradient consists of a series of flat colours. One of those colours will be used on one side of the element,
+one on the other, and the space in between will smoothly fade between them. You can supply additional colours
+that the gradient will smoothly fade to in between the start and end colours, too.
+To specify where exactly these intermediate colour fades will occur on the element, the colours are paired with
+a percentage number - 0 being one side of the element, 1 being the other, 0.5 being exactly in-between. This pairing
+is called a "colour stop".
+Consider this (gradient:) call, with six colour stops.
+(gradient:90, 0,#bf3f3f, 0.2,#a5bf3f, 0.4,#3fbf72, 0.6,#3f72bf, 0.8,#a53fbf, 1,#bf3f3f)
+The six colour stops are 0,#bf3f3f ,
+0.2,#a5bf3f ,
+0.4,#3fbf72 ,
+0.6,#3f72bf ,
+0.8,#a53fbf ,
+and 1,#bf3f3f .
+This corresponds to the following gradient, which for documentation purposes has its colour stops marked.
+Any angle can be given to (gradient:), including diagonal values like 40 or 66.
+
+Details:
+An error will be produced if you give colour-stop percentages that aren't between 0 and 1, or give less than 2 colour-stops. However,
+any number of degrees given to (gradient:), even below 0 or above 359, will automatically be rounded to fit the 0-359
+degree range - so, a value of 380 will become 20.
+You do not necessarily need to supply colour-stops at positions 0 and 1 - instead, the nearest colour-stop to those positions will be extended
+to the edge of the gradient. Furthermore, you don't need to supply colour-stops in ascending order - they will be reordered by Harlowe if they are not.
+Gradients in Harlowe are implemented using CSS linear-gradients, and have the same limitations in output and browser support.
+Note, however, that the order of values for a colour stop is reversed from that of the CSS syntax (numbers go first, then colours).
+This is to help ensure that the initial degree number is not confused for a colour-stop percentage. Additionally, CSS
+linear-gradient "colour hints", which are used to adjust the midpoints between colour stops, are currently not supported by this macro.
+--->
+:: gradient_1
+(set: $desertChrome to (gradient: 0, 0, #e6a860, 0.49, black, 0.5, white, 1, blue))
+(background: $desertChrome)+(text-color:white)[Sunshine Desert]
+

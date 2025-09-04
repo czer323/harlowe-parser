@@ -1,0 +1,29 @@
+<!--
+Rationale:
+When you're using a large number of prose-altering macros in your story, such as (replace:) or (show:), you'll often want to make
+sure the player can see the changed text immediately. This may be complicated by the fact that they could be playing the story on a small
+screen. The (scroll:) command lets you force the page to be in a particular scroll position whenever you want, ensuring that the affected
+prose is visible.
+Alternatively, when using scrollable boxes like (box:), you may want to change their initial scroll position from the default (the top),
+for any number of reasons.
+
+Details:
+This command only changes the Y (vertical) scroll position of the given hooks.
+This command does nothing if no hooks of the given name exist in the passage, or if none of them have vertical scroll bars. Also,
+it does nothing if the second HookName doesn't correspond to any hooks inside the first hook.
+Obviously, giving a non-fractional number will cause an error.
+Due to browser limitations, giving a fractional number will not work in Internet Explorer 10. If you wish for your story to support that browser,
+please give a second HookName instead of a percentage.
+--->
+:: scroll_1
+(scroll:?page, 1)
+
+:: scroll_2
+(scroll:?page, 0.5)
+
+:: scroll_3
+(scroll:?page, ?danger)
+
+:: scroll_4
+(scroll:?A, ?C)
+

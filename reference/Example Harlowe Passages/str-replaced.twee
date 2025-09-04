@@ -1,0 +1,45 @@
+<!--
+Rationale:
+This macro accompanies (str-find:) - in addition to finding matches of a given pattern, this also lets you replace them there and then, producing a new
+version of the string. This can serve a variety of uses. Player-inputted text, such as by (input-box:), will often
+need to have unwanted characters (such as newlines) removed. Strings used for procedurally describing certain objects or game states, like the player's
+physical status, may need to be subtly modified to fit in specific sentences. Or, you may want to do something more esoteric, like "corrupting" or "censoring" a string
+by replacing certain characters arbitrarily.
+While you can replace text that's already been rendered into the passage using (replace:) or (replace-with:), this macro is better suited for modifying strings that
+are stored in variables and used throughout the story.
+
+Details:
+While this macro does have the shorter alias as (replaced:), it is recommended that (str-replaced:) be used to avoid confusion with the (replace:) macro, which is a changer that
+performs immediate replacements (using the attached hook) on passage hooks and text, not strings.
+Matches and replacements are non-overlapping - if the search string or pattern would overlap certain locations in the string, only the leftmost location is replaced.
+So, (str-replaced: "1010", 'X', "101010") will produce "X10", not "10X" or "XX".
+You can supply a "via" lambda to specify a more complicated replacement than just a single string. The it identifier in the lambda will be the matched portion of the string.
+In the case of (str-replaced: alnum, via it + "-", "Fred...?"), it will be "F", "r", "e", and "d", respectively.
+Of course, as always, you can provide a temp variable in front of the "via" keyword, which will be usable in the lambda as a more readable alternative  to the it identifier.
+In the case of (str-replaced: (p:(p-many:digit), "-", (p-many:digit)), _phoneNum via "(131) " + _phoneNum, "Call me on 999-000!"), both _phoneNum and it will be "999-000".
+Interestingly, any pattern (using the (p:) macro and its relatives) given to (str-replaced:) can have TypedVars inside it. These TypedVars will be accessible within the "via" lambda.
+In the case of (str-replaced: (p: (p-many:digit)-type _a, "%"), via _a + " percent", "5% 10%"), above, the "via" lambda will be run twice: the first time, it will be "5%", and _a will be "5"
+(because it contains only the (p-many:digit) portion of the matched string). The second time, it will be "10%", and _a will be "10". This feature allows you to
+capture "sub-groups" within the matched sub-string, and use them in the "via" lambda to make a custom replacement for every match in the content string.
+By the way, the pos identifier can also be used inside the "via" lambda. It equals the number of replacements before and including this one.
+Here's a short table summarising some of the above information.
+The TypedVars used in the pattern are only usable in the lambda. They essentially do not exist outside of the macro call, and will not be accessible to macros elsewhere in the passage.
+The optional number decides how many replacements, starting from the left of the content string, should be made. If no string is given, all possible replacements are made.
+If 0 is given, no replacements will be made, the content string will be returned as-is, and no error will occur. Giving negative numbers or non-whole numbers will produce an error, though.
+If an empty or meaningless pattern is given as a search value (for instance, (p:) or "") then no replacements will be made and the content string will be returned as-is.
+--->
+:: str-replaced_1
+(str-replaced: "http://", 'https://', $URL)
+
+:: str-replaced_2
+(str-replaced: (p-many: whitespace), ' ', $playerName)
+
+:: str-replaced_3
+(str-replaced: 1, '*', '☆', _nextLine)
+
+:: str-replaced_4
+(str-replaced: (p-many:alnum), via (str-reversed: it), "09-4128-3253")
+
+:: str-replaced_5
+(str-replaced: (p: (p-many:digit)-type _a, "%"), via _a + " percent", "5% 10%")
+

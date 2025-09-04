@@ -1,0 +1,18 @@
+<!--
+Rationale:
+There are times when you wish to examine the data of the story as it is running - for instance, checking which
+of the story's passages has a certain tag, or a certain word in its source. While you could manually write an array of
+such passages' data yourself and include them as an array, it is usually easier to use this macro (or the (passage:) macro)
+to produce such an array automatically.
+
+Details:
+The datamaps for each passage resemble those returned by (passage:). They initially contain the following names and values.
+However, if the passage contained a (metadata:) macro call, then the data provided to that macro call will be added to that
+passage's datamap. So, you can have any amount of author-defined data in it as well.
+If no passage matches the lambda, then the array will be empty.
+If you wish to take the array of passages and reduce them to just their names, the (altered:) macro can be
+used. For instance, (altered: via its name, ...(passages:)) produces an array of every passage's name.
+--->
+:: passages_1
+(passages: where its name contains "Fight")
+

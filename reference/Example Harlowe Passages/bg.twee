@@ -1,0 +1,28 @@
+<!--
+Details:
+Combining two (bg:) changers will do nothing if they both influence the
+colour or the image. For instance (bg:red) + (bg:white) will simply
+produce the equivalent (bg:white). However, (bg:red) + (bg:"mottled.png")
+will work as intended if the background image contains transparency, allowing the background
+colour to appear through it. Note that gradients count as background images, not colours - you can
+combine gradients whose colours are partially transparent with flat colours, such as
+(bg: (gradient: 90, 0, (hsla:0,0,0,0.5), 1, (hsla:0,0,0,0))) + (bg: red)
+Currently, supplying other CSS colour names (such as burlywood) is not
+permitted - they will be interpreted as image URLs regardless.
+No error will be reported if the image at the given URL cannot be accessed.
+--->
+:: bg_1
+(bg: red + white)[Pink background]
+
+:: bg_2
+(bg: (gradient: 0, 0,red, 1,black))[Red-black gradient background]
+
+:: bg_3
+(bg: #663399)[Purple background]
+
+:: bg_4
+(bg: "#663399")[Purple background]
+
+:: bg_5
+(bg: "marble.png")[Marble texture background]
+

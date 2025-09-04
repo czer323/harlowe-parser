@@ -1,0 +1,10 @@
+<!--
+Details:
+This will, of course, cause an error if it's encountered on the first turn of the game (when there's nothing to undo).
+You can attach the (t8n-depart:) and (t8n-arrive:) changers to (click-undo:), such as by (t8n-depart:"dissolve")(click-undo:?page),
+and the passage transition will be applied when you click the indicated area. In the former construction, you'd have to attach the (t8n-depart:) and (t8n-arrive:)
+macros to the interior (undo:) command rather than the (click:) command.
+--->
+:: click-undo_1
+You might have gotten yourself into a pickle that only time travel can get you out of. (click-undo: ?page)
+

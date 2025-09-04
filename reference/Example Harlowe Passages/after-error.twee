@@ -1,0 +1,22 @@
+<!--
+Rationale:
+While you should generally test your story enough to be fairly certain that no error messages will occur,
+it can sometimes be difficult to be absolutely certain. As such, you may want to be prepared for the worst.
+If an error message does occur, you might want to show a custom message of your own to the player, instructing
+them to report the bug in your story, or giving them a chance to continue the story from a later passage. (You may want
+to use this in a "header" or "footer" tagged passage, so that this notification message may appear anywhere in the story.)
+Alternatively, you may want to use it during testing, by combining it with the (debug:) command macro, so that
+the Debug Mode panel will pop up when the first error occurs, potentially letting testers obtain deeper information
+about the game's current state.
+
+Details:
+This will only display the attached hook at the moment an error message is displayed. If this is used inside a larger hook
+which only appears after an error is displayed, its attached hook won't appear until another error occurs.
+--->
+:: after-error_1
+(after-error:)[
+    (dialog:"Sorry, folks, seems like I messed up.
+DM me on GregsGameMakingBungalow with a screenshot!")
+]\
+(link:"Click here for an error")[Can't use (metadata: ) here!]
+

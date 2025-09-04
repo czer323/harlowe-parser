@@ -1,0 +1,34 @@
+<!--
+Rationale:
+By default, each passage in a Harlowe story features a narrow sidebar to the left, housing "Undo" and "Redo" menu icons.
+However, using the (replace:), (append:) or (prepend:) changers with the ?sidebar HookName, it is possible to dynamically change
+the sidebar, inserting or replacing its contents with any kind of prose. To that end, it is useful to be able to recreate
+the "Undo" and "Redo" menu icons exactly as they were, in case an earlier operation performed on the sidebar had removed them.
+
+Details:
+Of course, you can use this in normal passage prose, if you wish - they are merely commands, just like (link-goto:) or (print:).
+If you wish to change the icon to a different symbol, you may provide a string containing a single character to this macro.
+If none is given, the default symbol is ↶ (in HTML, &#8630;).
+You may also provide a string that contains a label for the icon. This label must have more than one character in it (so that it isn't
+confused with the optional icon string) and will be placed beneath the icon. The label's contents will NOT be interpreted as Harlowe markup, so
+everything in it will be used verbatim for the label. This is because, unlike links, the label isn't considered part of passage prose.
+If both strings given to this macro have more than one character in them, an error will result.
+This command creates an element that uses the same default CSS styling as the sidebar's icons: a <tw-icon> holding a glyph of text at 66px font size,
+with 0.2 opacity that changes to 0.4 when hovered over.
+Like all sidebar icons, these will automatically hide themselves when they cannot be clicked, leaving a conspicuous space. In the
+case of the "Undo" icon, it will be hidden if it's the first turn of the game, and there is nothing to undo - or if (forget-undos:)
+is used to prevent undos. If this is used in a passage, and (forget-undos:) is used later in the passage to prevent undoing, then this will automatically,
+instantly hide itself.
+--->
+:: icon-undo_1
+(replace:?sidebar)[(icon-undo: )(size:2)[(str-repeated:$flowers + 1, "✿ ")]]
+
+:: icon-undo_2
+(icon-undo:"👈")
+
+:: icon-undo_3
+(icon-undo:"Undo the turn")
+
+:: icon-undo_4
+(icon-undo:"👈", "Undo the turn")
+

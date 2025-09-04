@@ -1,0 +1,22 @@
+<!--
+Details:
+It is capable of printing things which (str:) cannot convert to a string,
+such as changers - but these will usually become bare descriptive
+text like [A (font:) command]. You may find this useful for debugging purposes.
+This command can be stored in a variable instead of being performed immediately.
+Notably, the expression to print is stored inside the command, instead of being
+re-evaluated when it is finally performed. So, a passage
+that contains:
+will still result in the text Count Dracula. This is not particularly useful
+compared to just setting $p to a string, but is available nonetheless.
+Note that, once stored in a variable, a (print:) command is not a string. So, you
+can't provide it to (upperfirst:) and other such macros. (upperfirst: (print: $name))
+will produce an error. However, if $name contains a string, you can provide it to
+(upperfirst:) before giving it to (print:), such as (print: (upperfirst: $name)).
+If you need this command to print strings without the markup in the string
+being rendered, you may use the (verbatim:) changer to change the command, or
+use the (verbatim-print:) variant instead.
+--->
+:: print_1
+(print: $var + "s")
+

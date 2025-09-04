@@ -1,0 +1,20 @@
+<!--
+Rationale:
+If you have variables in your story holding number data, you'll often want to display that data to the player textually. If that
+number refers to a quantity of some object or substance, and your game is in English, you'll want to pluralise the noun form of that
+object or substance, which requires checking if the number is or is not 1 or -1. This macro is a shortcut for that small bit of busywork,
+letting you simply supply the number and the noun to produce the plural.
+
+Details:
+If the number isn't a whole number (such as 2.3), then an error will result. Furthermore, if any of the given strings are empty, an error
+will result.
+--->
+:: plural_1
+(plural: 1, "bandage")
+
+:: plural_2
+(plural: -7, "bandage")
+
+:: plural_3
+(plural: 2, "elf", "elves")
+

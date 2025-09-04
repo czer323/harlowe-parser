@@ -1,0 +1,18 @@
+<!--
+Rationale:
+The (open-storylets:) macro provides you with an array of all currently-open storylets, but that typically isn't the amount of options
+you'd like to show to the player each time. Often you'll just limit it to a few values using array data names like 1stto4th. In that case, the
+order of the returned array matters a lot - being one of the first few values determines whether it'll be seen among the others. In those cases,
+it can sometimes be helpful to guarantee a certain storylet or storylets, when available, are always present in the first few values.
+The (urgency:) macro allows for this - give it a number, and it will be sorted above open storylets with a lower or no urgency number.
+
+Details:
+This is essentially a shorthand for calling (metadata:) with "urgency" - it adds an "urgency" data name and value to the passage's (passage:)
+datamap - except that it will error if a non-number is given to it.
+Storylets without an "urgency" metadata number, added by this macro or by (metadata:), are treated as having (urgency: 0). This means
+that a storylet with a negative urgency, such as (urgency: -11), will appear at the end of the (open-storylets:) array, unless a storylet
+with an even lower urgency is also open.
+--->
+:: urgency_1
+(urgency: 2)
+

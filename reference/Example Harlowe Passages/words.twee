@@ -1,0 +1,17 @@
+<!--
+Rationale:
+It can be useful to explicitly distinguish individual words within a string, in a manner not possible
+with just the contains operator - for instance, seeing if a string contains the bare word "to" - not "torn"
+or any other larger word. This macro allows a string's words to be split up and examined individually -
+you can safely check if (words: $a) contains "to", or check on a particular word in the sequence by
+asking if, say, (words: $a)'s 2nd is 'goose'.
+
+Details:
+If the string was empty or contained only whitespace, then this will create an empty array. Moreover,
+if the string contained no whitespace, then the array will contain just the entire original string.
+If you wish to split up a string into an array based on a more specific separator than just whitespace
+(for instance, by just newlines) then you may use the (split:) macro.
+--->
+:: words_1
+(words: "god-king Torment's peril")
+

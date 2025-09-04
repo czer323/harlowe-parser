@@ -1,0 +1,19 @@
+<!--
+Rationale:
+Storylets are very useful for creating non-linear stories, in which the player's available choices and directions are determined entirely
+by the game state, rather than an explicit web of links. But, sometimes it's necessary to pen the player in and prevent them from having the same
+range of choices. An example is a climactic final event in a story, which has its own storylet lambda, but which, when available, shouldn't
+be avoidable by picking another storylet. While you could code this by wording each other passage's storylet lambdas very carefully, such that no
+others are open when the final event is open, that would be very cumbersome. The (exclusivity:) macro lets you specify that
+a storylet should be an exclusive option that prevents more common options from being available.
+
+Details:
+This is essentially a shorthand for calling (metadata:) with "exclusivity" - it adds an "exclusivity" data name and value to the passage's (passage:)
+datamap - except that it will error if a non-number is given to it.
+Storylets without an "exclusivity" metadata number, added by this macro or by (metadata:), are treated as having (exclusivity: 0). This means
+that a storylet with a negative exclusivity, such as (exclusivity: -0.001), will not be able to appear in (open-storylets:) if any other storylets
+lacking an explicit (exclusivity:) call are also open.
+--->
+:: exclusivity_1
+(exclusivity: 2)
+

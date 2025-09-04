@@ -1,0 +1,58 @@
+<!--
+Rationale:
+The main purpose of arrays is to store data values in a specific order - feats the player has performed,
+names of open storylets from (open-storylets:), visited passage names from (history:), names of file slots as produced
+by (dm-entries:(saved-games:)), to name just a few examples. However, there are times when you want to work with
+the same array in a different order, either because the default ordering isn't to your needs - for instance, you wish to list open
+storylets by one of their metadata values - or you need to include special exceptions to the normal ordering - for instance, you want to sort
+(history:) passages with a certain tag higher than others. This macro can be used to create a sorted array,
+organising the given values in either alphanumeric order, or by a particular alphanumeric key.
+
+Details:
+The optional "via" lambda must translate each value into either a number or string - otherwise, it will produce an error. It can be provided even if
+any of the values are already numbers or strings.
+The values are sorted as if they were the value that the "via" lambda produced. In the example of (sorted: via its length * -1, "Gus", "Arthur", "William"). the string
+"Gus" is sorted as if it was "Gus"'s length * -1 (which is -3), "Arthur" is sorted as if it was "Arthur"'s length * -1 (which is -6),
+and "William" is sorted as if it was "William"'s length * -1 (which is -7). This allows a variety of sorting options.
+Datamaps may be sorted by any one of their string or number values, and strings may be sorted in different ways than just their alphanumeric order.
+Values sorted by a "via" lambda, but which have the same value to that lambda, are kept in the same order. This is known as a "stable" sort.
+(sorted:via its 1st, 'Bob', 'Alice', 'Blake', 'Bella', 'Bertrude'), which only sorts the strings by their first letter,
+will always produce (a:"Alice","Bob","Blake","Bella","Bertrude"), even though "Blake" is alphabetically sooner than "Bob". This means that, if one needs
+to sort an array of datamaps by multiple values (such as sorting a set of characters by name, then by age), 
+Unlike other programming languages, strings (either produced by the "via" lambda, or sorted by themselves when no lambda was given)
+aren't sorted using ASCII sort order, but alphanumeric sorting:
+the string "A2" will be sorted after "A1" and before "A11". Moreover, if the player's web browser
+supports internationalisation (that is, every current browser except IE 10), then
+the strings will be sorted using English language rules (for instance, "é" comes after "e" and before
+"f", and regardless of the player's computer's language settings. Otherwise, it will sort
+using ASCII comparison (whereby "é" comes after "z").
+If there is no "via" lambda, and a non-string, non-number is given to this macro, an error will be produced.
+Currently there is no way to specify an alternative language locale to sort by, but this is likely to
+be made available in a future version of Harlowe.
+As of 3.3.0, giving zero or more values (after the optional lambda) to (sorted:) will cause an empty array (such as by (a:)) to be returned,
+rather than causing an error to occur.
+--->
+:: sorted_1
+(set: $a to (a: 'A','C','E','G', 2, 1))(sorted: ...$a)
+
+:: sorted_2
+(sorted: via its name, ...$creatures)
+
+:: sorted_3
+(sorted: via its length * -1, "Gus", "Arthur", "William")
+
+:: sorted_4
+(sorted: via its tags's length, ...(passages: ))
+
+:: sorted_5
+(sorted: via (passage:it)'s exclusivity, ...(history: ))
+
+:: sorted_6
+(sorted: via its h, orange, red, blue, yellow)
+
+:: sorted_7
+(sorted: via (random:1,100), ...$arr)
+
+:: sorted_8
+(sorted: via its urgency, ...(sorted: via its exclusivity, ...(passages: )))
+

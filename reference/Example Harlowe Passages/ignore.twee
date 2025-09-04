@@ -1,0 +1,16 @@
+<!--
+Rationale:
+If you want to quickly test some aspect of your passage, you may wish to remove one or more of the commands in it, such as
+(enchant:) or (hide:). These commands can have a large and cumbersome set of data given to them, and removing and adding them
+can be bothersome. The (ignore:) macro can be of assistance here: simply change the command's name to "ignore", and it will
+do nothing, while NOT causing an error regardless of what sort of data is given to it. Then, you can quickly change it back
+to the original name after testing.
+
+Details:
+While it will ignore all well-formed data given to it, (ignore:) will NOT suppress errors that are already present in the data.
+For instance, (ignore: 4 + "2") will still cause an error.
+This command can have changers attached, but will, of course, ignore them.
+--->
+:: ignore_1
+(ignore: ?ghost, (text-style:'outline'))
+

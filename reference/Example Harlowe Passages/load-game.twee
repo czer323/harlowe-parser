@@ -1,0 +1,23 @@
+<!--
+Details:
+Just as (save-game:) exists to store the current game session, (load-game:) exists to retrieve a past
+game session, whenever you want. This command, when given the string name of a slot, will attempt to
+load the save, completely and instantly replacing the variables and move history with that of the
+save, and going to the passage where that save was made.
+This macro assumes that the save slot exists and contains a game, which you can check by seeing if
+(saved-games:) contains the slot name before running (load-game:).
+This command can't have changers attached - attempting to do so will produce an error.
+To avoid a potential infinite loop, whereby (load-game:) loads a game whose current passage contains
+another (load-game:) call, an error will occur if (load-game:) is run immediately after a game is loaded.
+("Immediately" means that the second (load-game:) call occurs with no time delay, such as by (after:), or with
+no player input, such as by (link:).)
+In the event that the saved data exists, but contains an error - for instance, if it refers to a passage
+which doesn't exist in this story, which could happen if one version of the story is used to save it, and
+another is used to open it - then a polite dialog box will appear asking the reader whether or not the data
+should be deleted. An example of such a dialog is below.
+--->
+:: load-game_1
+{(if: (saved-games: ) contains "Slot A")[
+  (link: "Load game")[(load-game:"Slot A")]
+]}
+

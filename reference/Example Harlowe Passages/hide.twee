@@ -1,0 +1,21 @@
+<!--
+Rationale:
+There are times when you need to remove a hook from visibility, but don't want its contents to be forgotten or re-run,
+as would happen if you used (replace:). The (hide:) macro simply makes a hook invisible, keeping its contents stored
+as they are until you use (show:) to reveal them again.
+
+Details:
+(hide:) will hide every hook with the given names. To only hide a specific hook, you can use the
+possessive syntax, as usual: (hide: ?1's 1st).
+If you want to remove the hook's contents all together, and re-create it anew later, consider using (replace:) and (rerun:)
+rather than (show:) and (hide:).
+If you give ?page to (hide:), an error will result - the entire page can't ever be "hidden".
+This command can't have changers attached - attempting to do so will produce an error.
+--->
+:: hide_1
+The exam paper sits before you.
+|2>[(link-rerun:"Peek at palm")[(show:?1)(hide:?2)]]
+|1)[It says:
+(random:10,90)0m, (random:2,10)deg, 1/(either:2,3,4)
+(link-rerun:"Hide palm")[(hide:?1)(show:?2)]]
+

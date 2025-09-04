@@ -1,0 +1,16 @@
+<!--
+Rationale:
+While testing your passage, you may wish to examine what would happen if a changer, such as (if:) or (else:), were to have no effect on its hook.
+But, removing and adding the macro from your passage code may get tedious and error-prone, especially if you need to disable several such
+changers at once. Instead, you can simply temporarily change the macro's name to (test-true:), and change it back later. Regardless of what data is given
+to this macro (colour data for (bg:), booleans for (if:), hooks for (replace:)), this macro won't cause an error.
+
+Details:
+While it will ignore all well-formed data given to it, (test-true:) will NOT suppress errors that are already present in the data.
+For instance, (test-true: 5 + "3")[] will still cause an error.
+If (test-true:) and another changer are added together, such as in (test-true:)+(if:visits is 1), then the latter changer will take precedence and
+override it.
+--->
+:: test-true_1
+(test-true: $eggs is 1)[Only one egg remaining!]
+

@@ -1,0 +1,16 @@
+<!--
+Rationale:
+If you have a list of strings stored in an array, which may be the names of related concepts, such as inventory objects or suspect names,
+you'll often want to display all of them, or a certain number of them, to the player. This will involve adding some kind of separator between them,
+such as a single space, a line break and bullet point, or something more complicated.
+
+Details:
+The separator value will only be used to separate each string value, and won't be appended or prepended to the end of the string.
+If only one string is provided (that is, just the separator value) then the empty string will be returned.
+--->
+:: joined_1
+(joined:" ", "Philias", "Silus", "Sebastus", "Brotch")
+
+:: joined_2
+(joined:" or ", ...(dm-values: (dm: "Breakfast", "Toast", "Dinner", "Pasta", "Lunch", "Soup")))
+

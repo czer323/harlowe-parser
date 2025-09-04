@@ -1,0 +1,9 @@
+<!--
+Details:
+Much like (live:), this macro should be given a number of milliseconds (such as 50ms) or seconds
+(such as 10s). Providing 0 or fewer seconds/milliseconds is not permitted and will result in an error.
+This can be attached to links, much like (t8n:) itself.
+--->
+:: transition-time_1
+(set: $slowTransition to (transition:"shudder") + (transition-time: 2s))
+

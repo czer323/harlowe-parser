@@ -1,0 +1,36 @@
+<!--
+Rationale:
+By default, each passage in a Harlowe story features a narrow sidebar to the left, housing "Undo" and "Redo" menu icons.
+However, other functions may be desirable to have available to the player at all times, such as the capability to toggle fullscreen mode in the browser.
+While you could place a (link-fullscreen:) or (checkbox-fullscreen:) in your passage prose, placing the icon produced by this macro is a slightly more concise solution that fits with
+the use of the sidebar for view utility commands.
+
+Details:
+Of course, you can use this in normal passage prose, if you wish - they are merely commands, just like (link-goto:) or (print:).
+If you wish to change the icon to a different symbol, you may provide a string containing a single character to this macro.
+If none is given, the default symbol is ⛶ (in HTML, &#9974;).
+You may also provide a string that contains a label for the icon. This label must have more than one character in it (so that it isn't
+confused with the optional icon string) and will be placed beneath the icon. The label's contents will NOT be interpreted as Harlowe markup, so
+everything in it will be used verbatim for the label. This is because, unlike links, the label isn't considered part of passage prose.
+If both strings given to this macro have more than one character in them, an error will result.
+This command creates an element that uses the same default CSS styling as the sidebar's icons: a <tw-icon> holding a glyph of text at 66px font size,
+with 0.2 opacity that changes to 0.4 when hovered over.
+When activated, this will make the page's <html> element be the fullscreen element, not <tw-story>. This is because, in most browsers,
+removing the fullscreen element from the page, however briefly, will deactivate fullscreen mode. Since the (enchant:) macro, when given ?Page,
+will often need to wrap <tw-story> in another element, those macro calls will deactivate fullscreen mode if <tw-story> was the fullscreen element.
+So, if you have edited the compiled HTML to add elements before and after it, such as a navigation bar, that will remain visible while the story
+is in fullscreen mode. Additionally, this means that the Debug Mode panel is still visible when fullscreen mode is activated.
+If the browser reports to Harlowe that fullscreen mode is unavailable, then the icon will be hidden, leaving a conspicuous space.
+--->
+:: icon-fullscreen_1
+(prepend:?sidebar)[(icon-fullscreen: )]
+
+:: icon-fullscreen_2
+(icon-fullscreen:"▢")
+
+:: icon-fullscreen_3
+(icon-fullscreen:"Fullscreen")
+
+:: icon-fullscreen_4
+(icon-fullscreen:"▢", "Fullscreen")
+

@@ -1,0 +1,20 @@
+<!--
+Rationale:
+It's common to use hook-revealing macros like (link:) to provide elaboration on a scene, which the player can encounter in any order
+they wish. You may want to require each of these elaborations and details be visited by the player, only displaying the link to
+the next passage (or further story-setting material) after they have all been explored. You could implement this using (event: when exits is 0),
+but this macro, (more:), provides a shorter and more readable alternative.
+
+Details:
+This is functionally identical to (event: when exits is 0). For more information on what is and is not considered an "exit", see the article
+for the "exits" keyword.
+If multiple (more:) elements are in the passage, they will appear in the order they appear. This may cause earlier ones to reveal
+links inside their hooks, and thus "block" the subsequent ones from revealing. In the case of
+(more:)[You see [[an exit]] ahead.] (more:)[But you hear chuckling behind you...], the first (more:) hook will reveal
+a passage link, thus causing the second hook to not be revealed.
+--->
+:: more_1
+(link:"Look at the duck.")[The duck drifts on the lake's surface.]
+(link:"Look at the clouds.")[Seems like rain, which is bad news for just one of you.]
+(more:)[You've looked at the duck, and the clouds.]
+

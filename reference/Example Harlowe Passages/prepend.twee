@@ -1,0 +1,12 @@
+<!--
+Rationale:
+As this is a variation of (replace:), the rationale for this macro can be found in
+that macro's description. This provides the ability to prepend content to a target, adding
+preceding sentences or words to a text to change or reveal a deeper meaning.
+--->
+:: prepend_1
+(prepend: "Emily")[Miss ]
+
+:: prepend_2
+(prepend: ?dress)[my wedding ]
+

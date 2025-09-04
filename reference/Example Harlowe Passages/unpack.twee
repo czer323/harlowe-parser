@@ -1,0 +1,59 @@
+<!--
+Rationale:
+Extracting values from data structures into variables using just the (set:) and (put:) macros can be rather cumbersome, especially if you need to extract
+values from the same array or datamap. The (unpack:) macro provides a means to efficiently access multiple values in such structures, by describing the locations of those values within
+the structure - if you want to obtain the first, second, and fourth values in an array and put them into $a, $b and $c, just write (a: $a, $b, any, $c), in exactly those positions,
+to the right of into. The visual clarity of this can provide great assistance in understanding and reminding you of what the data structure is, and the relationship of the destination variables to
+their source values.
+The (unpack:) macro also lets you use string patterns (produced by (p:) and other such macros) to unpack strings into multiple components. To obtain all the digit characters at the
+start of a string, and nothing else, and put them into $a, just write (p: ...digit-type $a). No long-winded (for:) loops and individual character checks are needed - simply describe the
+string using the pattern macros, using typed variables to mark parts to extract, and they can be easily extracted.
+
+Details:
+Harlowe checks that each value on the right side (henceforth called the "pattern side") has a value that matches it (using the same rules as the matches operator)
+on the left side (the "data side"), and overwrites the pattern side with the data side, causing the variables at various positions in the pattern side to be overwritten with values from
+the data. (Remember that datamaps' "positions" are determined by their datanames, not their locations in the (dm:) macro that created them, as,
+unlike arrays, they are not sequential.)
+For extracting substrings from strings, use the (p:) macro and its related macros to construct a string pattern, resembling
+array patterns. For instance, (unpack: "Slime Ball" into (p: (p-either: "Silt", "Mud", "Peat", "Slime")-type _element, " ", (p-either: "Ball", "Blast", "Shot", "Beam")-type _shape))
+extracts the words "Slime" and "Ball" from the value, and puts them in the _element and _shape temp variables. Note that
+when this is done, the _element variable is restricted to (p-either: "Silt", "Mud", "Peat", "Slime")-type data, so putting
+any other kind of string into it will cause an error. Generally, it's recommended to use temp variables for string destructuring, and then,
+if you need more general variables to hold the extracted substrings, place them in a less restricted variable afterward.
+Note that the pattern side's data structure can have any number of nested data structures inside it.
+(unpack: (a: (a: 1), 2, (dm: "A", 3)) into (a: (a: $x), 2, (dm: "A", $y))) also sets $x to 1 and $y to 3. If you need to reach deeply
+into a data structure (such as one produced by (passages:), (saved-games:) or (open-storylets:)) to get a certain set of values,
+this can come in handy.
+You may have noticed that the data structures on the pattern side may have values that aren't variable names, such as the 2 in the
+preceding example. These can be used as error-checking values - if a matching value isn't present on the right side at that same position,
+then an error will be reported. To ensure that the data side does indeed contain the values you expect it to, you may include these
+values in the pattern side. Of course, you may want to simply enforce that a value of a given datatype is in that position, rather a specific
+value - this can be done by placing a datatype name at that position, like num or str or empty. Consult the datatype article for more
+information on datatype names.
+As you may have also noticed, this syntax is convenient for extracting values from the left side of arrays. But, what if you wish to only select
+values from the middle, or to skip certain values without putting them in variables? You could use a value or a datamap name at that position,
+such as by writing (set: (a: num, $y, $x) to $array) - though, if you aren't even certain of the data types that could be at those positions,
+you may find the special any data type to be a big help - (set: (a: any, $y, $x) to $array) sets $x to the 3rd value in $array and $y to the
+2nd value, without needing to worry about what the first value might be.
+(When dealing with string patterns, the equivalent of any is simply str, as strings can't contain non-string data.)
+This syntax can be combined with typed variables - simply place the typed variable where a normal variable would be
+within the pattern side. (unpack: $array into (a: num, num-type $y, num-type _x)) not only sets $y and _x, but it also
+restricts them to number data, all in one statement. If the typed variable is inside an array, and involves a spread datatype (like ...num)
+then it is restricted to data that matches (a: ...num) (i.e. arrays of zero or more num values), and it automatically gathers multiple values from the
+right-hand-side that match the datatype. (set: (a: str, ...bool-type $examAnswers) to (a: "ANSWER KEY", true, false, false, true, false))
+sets $examAnswers to (a:true, false, false, true, false).
+If the destination doesn't contain any variables - for instance, if you write (unpack: (a:2,3) into (a:3,2)) - then an error will be printed.
+For obvious reasons, (unpack:) can't be used with datasets - you'll have to convert them to arrays on the right side.
+--->
+:: unpack_1
+(unpack: (a:"north","northeast","south") into (a: _mainPath, _sidePath, _backPath))
+
+:: unpack_2
+(unpack: $characterStats into (dm: "Maths", _Maths, "Science", _Science))
+
+:: unpack_3
+(unpack: "The Safecracker" into (p:"The ", str-type _job))
+
+:: unpack_4
+(unpack: (a: "Daria", 25, 14, 25) into (a: str, ...num-type $stats))
+

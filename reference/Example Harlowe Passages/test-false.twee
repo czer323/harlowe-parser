@@ -1,0 +1,17 @@
+<!--
+Rationale:
+This is a counterpart of (test-true:), designed specifically for testing hooks with (if:), (unless:) and (else-if:) changers attached. For most
+changers, using (test-true:) is sufficient to temporarily suppress the effect of the changer. However, if you want the hook to remain
+hidden by default during the test, then using (test-true:) would still cause the hook to be displayed. While you could temporarily attach
+(hidden:) to the hook as well, this can be cumbersome, especially if that would involve adding an additional changer to a long
+sequence of changers attached to that hook. (test-false:) provides a more convenient alternative.
+
+Details:
+While it will ignore all well-formed data given to it, (test-false:) will NOT suppress errors that are already present in the data.
+For instance, (test-false: 5 + "3")[] will still cause an error.
+If (test-false:) and another changer are added together, such as in (test-false:)+(if:visits is 1), then the latter changer will take precedence and
+override it.
+--->
+:: test-false_1
+(test-false: $eggs is 1)[Only one egg remaining!]
+

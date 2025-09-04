@@ -1,0 +1,7 @@
+<!--
+
+--->
+:: none-pass_1
+(set: $partyMembers to (a: (dm: "name", "Alan", "curseLevel", 0), (dm: "name", "Jess", "curseLevel", 0)))
+(set: $noMelvins to (none-pass: where its name is "Melvin", ...$partyMembers))
+

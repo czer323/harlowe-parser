@@ -1,0 +1,30 @@
+<!--
+Rationale:
+If you use the (if:) macro, you may find you commonly use it in forked branches of
+source: places where only one of a set of hooks should be displayed. In order to
+make this so, you would have to phrase your (if:) expressions as "if A happened",
+"if A didn't happen and B happened", "if A and B didn't happen and C happened", and so forth,
+in that order.
+The (else-if:) and (else:) macros are convenient variants of (if:) designed to make this easier: you
+can merely say "if A happened", "else, if B happened", "else, if C happened" in your code.
+
+Details:
+Just like the (if:) macro, (else-if:) only checks its condition once, when the passage or hook contaning
+it is rendered.
+The (else-if:) and (else:) macros do not need to only be paired with (if:)! You can use (else-if:) and
+(else:) in conjunction with boolean variables, like so:
+If you attach (else-if:) to a named hook, and the (else-if:) hides the hook, you can reveal the hook later
+in the passage by using the (show:) macro to target the hook.
+if you want to conditionally display very short strings, or small values inside a macro call, you may want to use
+the shorter (cond:) macro instead.
+--->
+:: else-if_1
+Your stomach makes {
+(if: $size is 'giant')[
+    an intimidating rumble! You'll have to eat plenty of trees.
+](else-if: $size is 'big')[
+    a loud growl. You're hungry for some shrubs.
+](else: )[
+    a faint gurgle. You hope to scavenge some leaves.
+]}
+

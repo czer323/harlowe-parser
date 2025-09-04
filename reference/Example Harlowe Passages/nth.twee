@@ -1,0 +1,26 @@
+<!--
+Rationale:
+This macro is designed to be used in passage prose, letting you quickly display one of a varying range of phrases or sentences based
+on a certain value. In addition to being useful with story variables, it's useful with the visit identifier, allowing you to
+vary the text shown on each subsequent visit to a passage, with more consistent variation than if you were using (either:).
+However, you can use (nth:) with any kind of value, not just strings. For instance, (text-colour: (nth: $wounds, white, yellow, red))
+will produce a (text-colour:) changer that differs in colour based on the number in $wounds (up to 3).
+
+Details:
+You can, of course, access a specific value in a sequence using the (a:) macro and the 's or of syntax - (a: 1,2,3)'s ($n)
+is functionally very similar to (nth: $n, 1, 2, 3), and other uses of the (nth:) macro. (nth:), however, allows the given value to
+exceed the bounds of the sequence - (nth: 4, 1, 2, 3) would produce 1, whereas (a: 1,2,3)'s 4th would produce an error.
+If you wish to use (nth:) to display very large blocks of prose, you may wish to simply put that prose in hooks, and use (if:) to selectively display
+one, such as by writing (if: visits is 3).
+If you don't want the "looping" to occur - if you want to only return the final value if the number exceeds the sequence - you can combine
+this macro with (min:). (nth: (min: 3, visit), "", "", "")
+You may be tempted to combine this macro with (shuffled:), as in (nth: visit, ...(shuffled: "A", "B", "C")) - however, this will NOT
+behave any differently from just using (either:) - each visit, the (shuffled:) macro will shuffle the sequence in a different way, so you
+can't guarantee that different values will be shown.
+--->
+:: nth_1
+(nth: visit, "Hi!", "Hello again!", "Oh, it's you!", "Hey!")
+
+:: nth_2
+(nth: turn, "Full Moon", "Waning", "Halfmoon", "Crescent", "New Moon", "Crescent", "Halfmoon", "Waxing")
+

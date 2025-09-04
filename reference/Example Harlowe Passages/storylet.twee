@@ -1,0 +1,32 @@
+<!--
+Rationale:
+Storylets are mini-stories within a story - disconnected sequences of passages that can be visited non-linearly when certain conditions are fulfilled.
+They allow a different way of writing interactive fiction than the rigid tree structure of typical Twine games: instead,
+simply write scenes and events that occur in the story, use this macro in the first passage of these mini-stories to write a programming condition that
+determines when it would make sense for that scene to occur, and use macros like (open-storylets:) or (link-storylet:) to dynamically create links to the storylets.
+This authoring style allows content to be added to the story without having to dramatically rearrange the story's structure.
+Examples of narrative structures that can be represented as storylets include: jobs on a job board that are available at different times but only
+acceptable once; encounters in a role-playing-game that vary based on randomness and location; random dream sequences between linear chapters;
+chores to perform in a housekeeping or farming simulation. Simply create clumps of passages containing each of these sequences, mark the first passage
+of each with this macro, and make the end of each (or a central "hub" passage that they link back to) with code that uses (open-storylets:)
+to create links elsewhere.
+
+Details:
+This macro adds a "storylet" data name to the (passages:) datamap for this passage, letting you access the passed-in lambda. In fact, you can use (metadata:)
+in place of (storylet:) if you wish - (storylet: when $hour is 12) is actually just a shorthand for (metadata:"storylet", when $hour is 12). (metadata:)
+can be used instead if you're already using it to attach other data. if you use both (storylet:) and (metadata: "storylet", an error will result.
+Being a metadata macro, a (storylet:) macro call must appear in the passage before every other non-metadata macro in the passage, such as (set:) and (if:).
+(This doesn't include macros inside a "header" tagged passage.) The recommended place to put it is at the top of the passage. This restriction is because
+the (storylet:) call's lambda is only ever checked outside the passage. Variable-changing macros in the passage, such as (set:), are not run until the
+passage is visited, even if they appear before a (storylet:) macro. So, the code (set: $a to 2)(storylet: when $a is 2) is misleading, because it won't
+cause $a to always be 2 when the lambda is checked.
+Inside a (storylet:) macro's lambda, the "visit" and "visits" identifiers refer to the containing passage, so they will often be 0. Checking visits
+(such as by visits is 0) allows you to make a storylet only be available once (because after that, it will have become visited). Also,
+the "exits" identifier cannot be used here (because it's meaningless in this context).
+--->
+:: storylet_1
+(storylet: when $season is "winter" and $married is false and visits is 0)
+
+:: storylet_2
+(storylet: when (visited: "mortuary"))
+

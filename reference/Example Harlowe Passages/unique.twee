@@ -1,0 +1,27 @@
+<!--
+Rationale:
+Arrays are used to hold values whose ordering matters, such as the sequentially visited passages in the array that (history:) produces.
+Sometimes, though, you want to eliminate duplicate data from the array in order to use it for some purpose. For instance, you may
+want to show a list (using (for:)) of every passage the player has visited, in the order they've visited, but without duplicate entries in the
+list. While (dataset:) and the spread ... syntax can be used to eliminate duplicate entries from an array, such as by (a:...(ds: ...(history:))),
+this has a small problem: datasets only hold unordered data, and when the dataset is spread using ..., the values are sorted instead of
+in their original order. (unique:) provides an easier method of removing duplicates from an a sequence of values.
+
+Details:
+Two values are considered unique if the is operator, when placed between them, would produce false. This is the same method of uniqueness
+used by datasets.
+When given no values, this simply returns the empty array (a:). When given values that are all unique, this returns an array of all the
+values, with no error occurring.
+--->
+:: unique_1
+(unique: 1,2,1,2,3,5,5,6,3)
+
+:: unique_2
+(unique: ...(history: ))
+
+:: unique_3
+(reversed: ...(unique: ...(reversed: ...(history: ))))
+
+:: unique_4
+(unique: ...(altered: via its address, ...$emails))
+

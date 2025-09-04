@@ -1,0 +1,28 @@
+<!--
+Rationale:
+You'll often use data structures such as arrays or datamaps as storage for values
+that you'll only use once, such as a list of names to print out. When it comes time
+to use them, you can remove it from the structure and retrieve it in one go.
+
+Details:
+You must use the into keyword, like (put:), with this macro. This is because, like (put:),
+the destination of the value is on the right, whereas the source is on the left.
+As with (set:) and (put:), you can also change multiple variables in a single (move:) by
+separating each VariableToValue with commas: (move: $a's 1st into $b, $a's 2nd into $c), etc. Also,
+unpacking syntax (described in detail in (unpack:)'s article) can be used with (move:) as well -
+(move: $array into (a: $x, $y)) will cause only the first and second values of $array to be moved into $x and $y.
+If the data value you're accessing cannot be removed - for instance, if it's an array's length -
+then an error will be produced.
+This macro works very well with the random data value of arrays: (move: $deck's random into $card)
+will remove a random value from $deck and put it into $card. Thus, you can use arrays as random "decks"
+of values that you can draw from and use once in your story.
+Note that this will only delete the data from the source if the source is inside a data structure.
+Moving from variable to variable, such as by (move:$p into $q), won't cause $p to be deleted.
+Just as with (set:) or (put:), typed variables can also be used with the destination variable of (move:).
+Writing (move: $enemies's 1st into dm-type $currentEnemy) will move a datamap from $enemies's 1st and
+put it into $currentEnemy, while also restricting $currentEnemy to datamap data for the rest of the story.
+Note that if $enemies's 1st is not, in fact, a datamap, an error will result.
+--->
+:: move_1
+(move: $arr's 1st into $var)
+

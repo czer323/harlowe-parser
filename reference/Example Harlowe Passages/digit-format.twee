@@ -1,0 +1,31 @@
+<!--
+Rationale:
+The (str:) macro is a general-purpose conversion macro for creating strings out of other Harlowe datatypes. However,
+numbers have a number of different writing conventions depending on their context - in English, thousands separators
+are common for larger numbers, and some contexts, like prices, need trailing or leading zeros. Other languages
+have different separators than thousands separators, or use different decimal point characters. This macro lets you provide
+a specific format in which a number is to be converted to a string, allowing the separators, zeros
+and decimal point to be customised.
+
+Details:
+The decimal point in the format string is decided as follows: the rightmost character that isn't # or 0 is the decimal
+point, unless it is , and the leftmost character that isn't # or 0 is also ,. This is under the assumption that
+most Harlowe users will be writing in English (the same assumption used for (str-nth:)) and thus formats like "###,###,###"
+intend to use , in its English sense as a thousands separator.
+If the decimal point has no digits (# or 0 characters) to its right, or the leftmost separator has no digits to its left,
+then they are left off altogether. This can be used to precisely specify the decimal point and separator characters without
+requiring them to appear in the final string: "##.###," uses a trailing , to indicate that , is the decimal point, and
+. is the thousands separator.
+As a result of these two rules, it is not recommended that you include more formatting or context characters than what is required.
+For instance, a format string like "$00.00" will not cause the final string to have "$", because the $ will be interpreted as
+a thousands separator, and thus removed.
+If a number bigger than 99999999999999999999 is given, this macro will produce an error.
+Errors in decimal representation caused by the underlying browser Javascript platform's floating-point number format,
+such as (digitformat: "##.##", 35.3) producing "35.29", are currently not compensated for by Harlowe.
+--->
+:: digit-format_1
+(joined:" ", "Philias", "Silus", "Sebastus", "Brotch")
+
+:: digit-format_2
+(joined:" or ", ...(dm-values: (dm: "Breakfast", "Toast", "Dinner", "Pasta", "Lunch", "Soup")))
+

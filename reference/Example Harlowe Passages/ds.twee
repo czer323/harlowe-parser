@@ -1,0 +1,12 @@
+<!--
+Rationale:
+For an explanation of what datasets are, see the Dataset article. This macro is the primary
+means of creating datasets - simply supply the values to it, in any order you like.
+
+Details:
+You can also use this macro to remove duplicate values from an array (though also eliminating the array's
+order) by using the spread ... operator like so: (a: ...(ds: ...$array)).
+--->
+:: ds_1
+(ds:)
+

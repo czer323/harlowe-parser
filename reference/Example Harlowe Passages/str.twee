@@ -1,0 +1,21 @@
+<!--
+Rationale:
+Unlike in Twine 1 and SugarCube, Twine 2 will only convert numbers into strings, or strings
+into numbers, if you explictly ask it to. This extra carefulness decreases
+the likelihood of unusual bugs creeping into stories (such as adding 1 and "22"
+and getting "122"). The (str:) macro offers a quick way to convert
+non-string values to a string (and its counterpart, (num:), offers the reverse).
+
+Details:
+If you give an array to (str:), it will attempt to convert every element
+contained in the array to a string, and then join them up with commas. So,
+(str: (a: 2, "Hot", 4, "U")) will result in the string "2,Hot,4,U".
+If you'd rather this not occur, you can also pass the array's individual
+elements using the ... operator - this will join them with nothing in between,
+as if they were given individually. So, (str: ...(a: 2, "Hot", 4, "U")) will result in the string "2Hot4U".
+If you want to convert numbers into strings in a more sophisticated way, such as by
+including thousands separators or leading zeros, consider using (digit-format:).
+--->
+:: str_1
+(print: "YOU NEED: $" + (str: $cash + 200))
+

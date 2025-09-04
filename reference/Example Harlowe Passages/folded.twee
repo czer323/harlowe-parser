@@ -1,0 +1,35 @@
+<!--
+Rationale:
+The (for:) macro, while intended to display multiple copies of a hook, can also be used to run a single macro call multiple times. You may
+wish to use this to repeatedly (set:) a variable to itself plus one of the looped values (or some other operation). (folded:) is meant
+to let you perform this in a shorter, more fluid fashion.
+Consider, first of all, a typical (for:) and (set:) loop such as the following:
+This can be rewritten using (folded:) as follows. While this version may seem a little harder to read if you're not used to it, it
+allows you to accomplish the same thing in a single line, by immediately using the macro's provided value without a variable:
+If you need to perform this operation at various different times in your story, you may wish to (set:) the lambda into a variable,
+so that you, for instance, might need only write:
+
+Details:
+Let's look at this example usage again.
+This macro call uses a "making" lambda (which is the "temp variable making another temp variable via expression" expression) to run the
+expression using every provided value, much like those repeated (set:) calls. The temp variable in the "making" clause, _allHP, is the total,
+and at the start, it is set to the first provided value (in this case, 0). The temp variable at the start, _enemy, is then set to the next value
+after that (which in this case would be the "Mossling" datamap), and the "via" clause is used to set _allHP to a new value.
+This repeats until all of the values have been handled. Then, the final result of _allHP is returned.
+Of course, if at any time the expression should cause an error, such as adding a number to a string, then an error will result.
+Both of the temp variables can be named anything you want. As with other lambda macros, they don't exist
+outside of it, won't alter identically-named temp variables outside of it, and can't be manually (set:) within the lambda.
+You can refer to other variables, including other temp variables, in the via expression. For instance, you can write
+(folded: _score making _totalScore via _totalScore + _score * _bonusMultiplier). However, for obvious reasons,
+if the outer temp variable is named the same as the lambda's temp variables, it can't be referred to in the expression.
+You can also use a "where" clause inside the "making" lambda to prevent an operation from occurring if a value isn't suitable -
+(folded: _item making _total via _total + _item where _item > 0, 0, ...$arr) will only sum up the values in $arr which are greater than 0.
+Note that (as of 3.3.6), the "where" clause does not apply to the first value (as that is put into _total from the outset, and never becomes an _item value). As such,
+an explicit 0 is given before ...$arr, so that ...$arr's first value is still subject to the "where" clause.
+--->
+:: folded_1
+(folded: _enemy making _allHP via _allHP + _enemy's HP, 0, ...$enemies)
+
+:: folded_2
+(folded: _name making _allNames via _allNames + "/" + _name, ...(history: ))
+

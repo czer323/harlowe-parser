@@ -1,0 +1,22 @@
+<!--
+Rationale:
+For more information on custom macros, consult the (macro:) macro's article.
+All custom macros have inputs and output. This macro specifies the data value to output - provide it at the end
+of your macro's CodeHook, and give it the value you want the macro call to evaluate to.
+This is best suited for macros which primarily compute single data values, like strings, arrays and datamaps.
+If you wish to output a long span of code, please consider using the (output:) changer instead.
+
+Details:
+As soon as an (output-data:) macro is run, all further macros and code in the CodeHook will be ignored,
+much like how the (go-to:) and (undo:) macros behave.
+Attempting to call (output-data:) outside of a custom macro's CodeHook will cause an error.
+--->
+:: output-data_1
+(set: $randomCaps to (macro: str-type _str, [
+    (output-data:
+        (folded: _char making _out via _out + (either:(lowercase:_char),(uppercase:_char)),
+        ..._str)
+    )
+]))
+($randomCaps:"I think my voice module is a little bit very broken.")
+

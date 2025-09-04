@@ -1,0 +1,24 @@
+<!--
+Rationale:
+This is similar to (link:), but allows the created link to remain in the passage
+after it is clicked. It can be used to make a link which displays a slightly varying run of prose over and
+over, or a link which must be clicked multiple times before something can happen (using (set:) and (if:) to
+keep count of the number of clicks).
+This macro is part of a pair with (link-repeat:) - the latter macro will append each run of the hook,
+so that text gradually accumulates within it. This one should be used if you'd prefer the hook
+to remain at a certain size, or need it to always naturally flow from the link text.
+The created link is displayed in place of the hook's contents, and is exempt from all changers that would normally apply
+to the hook. This means that changers like (text-colour:), added to this changer, will ONLY apply
+to the hook once it's revealed, and not the link itself. To apply changers to just the link, provide them (added together if there
+are multiple) as the optional second value to this macro.
+
+Details:
+This creates a link which is visually indistinguishable from normal passage links. However, a changer can optionally be given, after the
+string, to change the appearance of the link. This must be a changer that would be accepted by (enchant-in:) or
+(link-style:) - which is to say, (link:), (replace:), (append-with:), or any of their relatives cannot be given, or else an error will result.
+Note that if you wish to apply a changer to every link in the passage (or, via the use of a 'header' or 'footer' tagged passage, every link
+in the story), then you can simply use (enchant:) with ?Link instead.
+--->
+:: link-rerun_1
+(link-rerun: "ROLL DICE ")[You rolled a (random:1,6).]
+

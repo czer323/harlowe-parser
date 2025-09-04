@@ -1,0 +1,53 @@
+<!--
+Rationale:
+This macro provides you with the means to expand Harlowe's collection of built-in macros with
+custom utilities tailored specifically for your story. While many Twine projects are simple
+hypertext stories, there are many that use it to make more complicated simulations, role-playing games,
+generative art, and so on. Being able to craft a personal language of macros in which to write the many algorithms
+and textual structures such games involve is essential to keeping your code succinct and readable.
+
+Details:
+You can, of course, have zero parameters, for a macro that needs no input values, and simply outputs a complicated (or randomised) value
+by itself.
+Currently, (macro:) code hooks do NOT have access to temp variables created outside of the (macro:) call. (set: _name to "Fox")(set:_aCustomMacro to (macro:[(output-data:_name)])) (_aCustomMacro:)
+will cause an error, because _name isn't accessible inside the _aCustomMacro macro. They do, however, have access to global variables (which begin with $).
+Much like with typed variables given to (set:) or (put:), each temp variable associated with a parameter is restricted to the given data type. So,
+(macro:num-type _a,[(set:_a to 'text')(output-data:_a)] will cause an error when run.
+All custom macros must return some value. If no (output:) or (output-data:) macros were run inside the code hook, an error will result.
+If you find yourself writing custom macros that do nothing except call another macro, such as (macro: num-type _a, [(out-data:(range:0,_a))]),
+then you may prefer to use the (partial:) macro instead of (macro:).
+--->
+:: macro_1
+(set:$ghostlyLaughter to (macro: num-type _o, [
+    (output: )+(text-rotate:(random:0,360))+(text-colour:(hsla:0, 1, 0.5, _o))[HE HE HE]
+]))
+($ghostlyLaughter:0.9) ($ghostlyLaughter:0.5) ($ghostlyLaughter:0.3)
+
+:: macro_2
+(set: $fancyTimeName to (macro: [
+    (set: _timeOfDay to turns % 24 + 1)
+    (output-data: (a:
+        "midnight", "dreamshour", "wolfshour", "dark's end", "lightbreak", "afterdawn", "early rise", "awakening",
+        "early warming", "joyshour", "first lunch", "shadow's end", "zenith", "shadow's birth", "second lunch", "hopeshour", "early cooling",
+        "lightfade", "sundown", "dark's birth", "supper", "early rest", "slumbering", "catshour"
+    )'s (_timeOfDay))
+]))
+It is now ($fancyTimeName:).
+
+:: macro_3
+(set: $charSheet to (dm: "name", str, "HP", num, "poison", num, "heartbreak", bool))
+(set: $healthSummary to (macro: $charSheet-type _stats, [
+    This text inside the macro is not displayed during the game.
+    (set: _TheyAre to _stats's name + " is ")
+    Dead characters get a single, pithy line.
+    (if: _stats's HP <= 0)[(output: _TheyAre + "deceased.")]
+    Living characters get specific status conditions referred to.
+    (output-data:
+        _TheyAre + "in " + (cond: _stats's HP > 50, "fair", "poor") + " health." +
+        (cond: _stats's poison > 0, " " + _TheyAre + "poisoned.", "") +
+        (cond: _stats's heartbreak, " " + _TheyAre + "heartbroken.", "")
+    )
+]))
+(set: $steelyStats to (dm: "name", "Steely", "HP", 80, "poison", 0, "heartbreak", true))
+($healthSummary: $steelyStats)
+

@@ -1,0 +1,12 @@
+<!--
+Details:
+This is part of a suite of string pattern macros. Consult the (p:) article to learn more about string patterns, special user-created datatypes
+that can match very precise kinds of strings.
+While you can use this as the datatype of a TypedVar, this won't accomplish much, since, as explained, it only matches the empty string. Additionally, you can't nest TypedVars inside this.
+--->
+:: p-not-before_1
+(str-replaced: (p: "$", (p-not-before: digit)), "", _text)
+
+:: p-not-before_2
+(p-many:(p-either:(p: "0", (p-not-before:"0")), (p:"1", (p-not-before:"1")), whitespace))
+

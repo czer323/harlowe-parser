@@ -1,0 +1,32 @@
+<!--
+Rationale:
+For those making number-heavy games, presenting those numbers in an immediately recognisable fashion can be essential to a smooth game experience - and there are times when simply
+stating the numbers in the prose isn't as direct as you'd like. The standard videogame UI meter, a bar that fills with a colour to represent an important value, is a
+visual idiom familiar to many people. In addition to their familiarity, meters have important semantic value, too - simply by graphically presenting a value in a meter,
+a player can immediately get a sense of how important to their play session that value is, as well as understand what numeric range that value should occupy during play.
+
+Details:
+The meter will graph the value of the bound variable, from 0 to the given maximum value number (which must be positive). For instance, if that number is 20, then if the bound variable is 5,
+the meter bar will be 25% full.
+As of Harlowe 3.3.0, using the 2bind keyword instead of bind will produce an error.
+The meter is a "box" element, which takes up the full width of the passage or hook in which it's contained. Placing it inside column markup can
+allow you to place text alongside it, or other (meter:) commands, if you so desire.
+The first string you give to this macro is a "sizing line" identical to that accepted by (box:) and (input-box:) - consult their documentation for more
+information about those lines. However, the sizing line also determines the direction that the meter's bar fills. If the meter is left-aligned or
+occupies the full width (by being given "X" as a sizing string), the bar fills from left (empty) to right (full), and the opposite is true for
+right-alignment. Centre-alignment causes the bar to fill from the centre, expanding outward in both directions.
+The second, optional string is a label that is placed inside the meter, on top of the bar. This text is aligned in the same direction as the meter itself.
+Whenever the meter updates, the label is also re-rendered.
+Either a colour or a gradient can be given as the final value, with which to colour the bar. If neither is given, the bar will be a simple gray.
+If a gradient is given, and it isn't a (stripes:) gradient, its rotation will be automatically changed to 90 degrees, with the leftmost colour
+(at colour stop 0) being placed at the "empty" end of the meter, and the rightmost colour (at colour stop 1) placed at the "full" end. If the bar
+is center-aligned, then the gradient will be modified, with both ends of the graph having the leftmost colour, and the center having the rightmost colour.
+The meter is exclusively horizontal, and cannot be rotated unless you attach (text-rotate:) to it.
+Note: In Internet Explorer 10, the vertical height of the meter may be lower than as drawn in other browsers. This is due to a CSS limitation in that browser.
+--->
+:: meter_1
+(set:$batteryPower to 800)(meter: bind $batteryPower, 1000, "X", "Battery Power: $batteryPower", (gradient: 90, 0, red, 1, orange))
+
+:: meter_2
+(set:$threatLevel to 2)(b4r:'solid')(meter: bind $threatLevel, 10, "==X", red)
+

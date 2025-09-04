@@ -1,0 +1,15 @@
+<!--
+Rationale:
+Having stored items in an array, or obtained a built-in array like (history:), you may
+want to perform some action using it - maybe assemble them into a single string using (folded:) -
+in the opposite order to which they are stored. (reversed:) allows this reversal to be easily created.
+
+Details:
+Unlike (shuffled:), which produces an error if one or no elements are given, this does not error if
+a non-reversible sequence of one or zero is given. This is meant to permit its wider use with data
+whose length you may not always have control over, such as the (history:) array.
+If you wish to specifically reverse the characters in a string, please use (str-reversed:).
+--->
+:: reversed_1
+(set: $a to (reversed: ...$a, 2))
+

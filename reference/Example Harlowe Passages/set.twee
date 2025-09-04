@@ -1,0 +1,48 @@
+<!--
+Rationale:
+Variables are data storage for your game. You can store data values under special names
+of your choosing, and refer to them later.
+There are two kinds of variables. Normal variables, whose names begin with $, persist between passages,
+and should be used to store data that will be needed throughout the entire game. Temp variables,
+whose names begin with _, only exist inside the hook or passage that they're first (set:), and
+are forgotten after the hook or passage ends. You should use temp variables if you're writing passage
+code that mustn't accidentally affect any other passages' variables (by using (set:) on a variable name
+that someone else was using for something different). This can be essential in collaborative work
+with other authors working on the same story independently, or when writing code to be used in multiple stories.
+The following example demonstrates where temp variables are usable.
+Variables have many purposes: keeping track of what the player has accomplished,
+managing some other state of the story, storing hook styles and changers, and
+other such things. You can display variables by putting them in passage text,
+attach them to hooks, and create and change them using the (set:) and (put:) macros.
+
+Details:
+Even though named hooks' names are case-insensitive, variable names are case-sensitive. So, $Chips and $chips are considered
+different variables.
+In its basic form, a variable is created or changed using (set: variable to value).
+You can also set multiple variables in a single (set:) by separating each VariableToValue
+with commas: (set: $weapon to 'hands', $armour to 'naked'), etc. Note: currently,
+each value in a VariableToValue is evaluated before any of them are stored in their variables.
+This means that, for instance, (set: $olives to 5)(set: $olives to 2, $grapes to $olives - 1) will,
+in the second (set:) call, cause 2 and $olives - 1 to be evaluted to 2 and 5 - 1 (i.e. 4) before
+being put in $olives and $grapes, respectively. This may change in a future version of Harlowe.
+You can also use it in expressions on the right-side of to. Much as in other
+expressions, it's a shorthand for what's on the left side: (set: $vases to it + 1)
+is a shorthand for (set: $vases to $vases + 1).
+Due to the variable syntax potentially conflicting with dollar values (such as $1.50) in your story text,
+variables cannot begin with a numeral.
+--->
+:: set_1
+(set: $battlecry to "Save a " + $favouritefood + " for me!")
+
+:: set_2
+(set: _dist to $altitude - $enemyAltitude)
+
+:: set_3
+(set: num-type $funds to 0)
+
+:: set_4
+(set: const-type $robotText to (font:"Courier New"))
+
+:: set_5
+(set: (p-either:"Ms.","Mr.","Mx.")-type $charTitle to "Mx.")
+

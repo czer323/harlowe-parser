@@ -1,0 +1,15 @@
+<!--
+Details:
+This macro only affects the text colour. To change the text background, call upon
+the (bg:) macro.
+This macro will change the colour of links inside the contained hook, with one exception: using
+(change:) to change the entire passage (via ?passage or ?page) with (text-colour:)
+will NOT affect links. This is to allow you to re-style the entire story without having to lose
+the distinct colour of links compared to passage text. You can change the colour of all links using
+an explicit (enchant: ?link, (text-colour: $color)).
+Also, while this will change the colour of links inside the contained hook, the hover colour
+for the link will remain the same. You can alter that colour by styling the links using (hover-style:).
+--->
+:: text-colour_1
+(colour: red + white)[Pink]
+

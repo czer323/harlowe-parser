@@ -1,0 +1,12 @@
+<!--
+Rationale:
+This macro is a shorthand form of nesting (repeated:) inside (str:). This example:
+(str: ...(repeated: 14, "-+*+")) is the same as (str-repeated: 14, "-+*+").
+
+Details:
+An error will, of course, be produced if the number given is negative, or contains a fraction.
+As of 3.2.0, however, it will no longer error if the number is 0.
+--->
+:: str-repeated_1
+(str-repeated: 5, "Fool! ")
+

@@ -1,0 +1,25 @@
+<!--
+Rationale:
+The sidebar for Harlowe stories contains two basic gameplay utility functions by default – an (icon-undo:) button and an (icon-redo:) button – and can have more such buttons added using
+the other icon-related macros, along with changers such as (append:) and (prepend:), and ideally in a header or footer tagged passage. But, one can also use that space to hold status
+information relevant to the player. If the game features a number of vital numeric values, such as a score or a resource count, having that value be in constant view, and in a relatively consistent
+screen position, can be very helpful in keeping the player aware of their current status.
+This element is visually optimised toward small, whole numeric values, such as the whole numbers from 0 to 100. Numbers with a greater number of decimal places than that can be
+used, but they will likely exceed the width of the sidebar. Furthermore, decimal places in the value will not be displayed, but will be rounded using the (trunc:) algorithm.
+
+Details:
+The optional second string allows for you to provide singular and plural forms of the counter label, which change based on whether the counter is 1 or -1. The first string becomes the
+singular form of the label, and the second string serves as the plural.
+Unlike the other icon-related commands, which create clickable icons, the element this creates cannot be clicked, and is designed to be fully visible at all times. Thus,
+it does not have 30% opacity by default, but instead has 100% opacity. You may attach the (opacity:) changer to it to lower its opacity, if you wish.
+The font used for this element, by default, is Verdana (and falls back to the browser's default sans-serif font family). This is intended to visually differentiate this counter
+from story prose, which uses a serif font by default.
+If, when the element is created, the bound variable is not a number, then an error will result.
+However, if the bound variable ever changes to a non-number data value after that, then the counter will simply not update, instead of producing an error.
+--->
+:: icon-counter_1
+(append: ?sidebar)[(icon-counter: bind $sunseeds, "Sunflower Seeds")]
+
+:: icon-counter_2
+(set: $satchel to (dm:"tomato",2))(prepend: ?sidebar)[(icon-counter: bind $satchel's tomato, "Tomato", "Tomatoes")]
+

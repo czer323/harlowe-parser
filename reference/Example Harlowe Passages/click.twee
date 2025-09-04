@@ -1,0 +1,22 @@
+<!--
+Rationale:
+The (link:) macro and its variations lets you make passages more interactive, by adding links that display text when
+clicked. However, it can often greatly improve your passage code's readability to write a macro call that's separate
+from the text that it affects. You could want to write an entire paragraph, then write code that makes certain words
+into links, without interrupting the flow of the prose in the editor.
+The (click:) macro lets you separate text and code in this way. Place (click:) hooks at the end of your passages, and have
+them affect named hooks, or text strings, earlier in the passage.
+
+Details:
+Text or hooks targeted by a (click:) macro will be styled in a way that makes them indistinguishable from passage links,
+and links created by (link:). When any one of the targets is clicked, this styling will be removed and the hook attached to the
+(click:) will be displayed.
+Additionally, if a (click:) macro is removed from the passage, then its targets will lose the link styling and no longer be
+affected by the macro.
+You can add further styling to the "links" produced by (click:) by providing an optional changer or "via" lambda as a second value, similar to (link:)'s optional
+changer. If a "via" lambda is supplied, then that lambda is used to compute a changer dynamically, based on specifics of
+each hook that's enchanted, similar to lambdas provided to (enchant:).
+--->
+:: click_1
+There is a small dish of water. (click: "dish")[Your finger gets wet.]
+

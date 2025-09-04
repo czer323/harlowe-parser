@@ -1,0 +1,22 @@
+<!--
+Rationale:
+If you're making a particularly random story, you'll often want to create a 'deck'
+of random descriptions, elements, etc. that you can use repeatedly. That is to say, you'll want
+to put them in a random order in an array, preserving that random order for the duration of a game.
+The (either:) macro is useful for selecting an element from an array randomly
+(if you use the spread ... syntax), but isn't very helpful for this particular problem. Additionally,
+the random data name of arrays can be used to retrieve a random value, and can remove that value using
+(move:), but it isn't as effective if you want that value to remain in the deck after being used.
+The (shuffled:) macro is another solution: it takes elements and returns a randomly-ordered array that
+can be used as you please.
+
+Details:
+This is one of the features that uses Harlowe's pseudo-random number generator. If you use (seed:) at the start of the story,
+the order will be predetermined based on the seed string, and how many other random macros and features have been used before it.
+As of 3.3.0, giving zero or more values to (shuffled:) will cause an empty array (such as by (a:)) to be returned,
+rather than causing an error to occur.
+--->
+:: shuffled_1
+(if: $condiments is not an array)[(set: $condiments to (shuffled: "mustard", "mayo", "chili sauce", "salsa"))]
+You reach into the fridge and grab... (nth: visits, ...$condiments)? OK.
+

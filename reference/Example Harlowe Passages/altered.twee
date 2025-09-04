@@ -1,0 +1,32 @@
+<!--
+Rationale:
+Transforming entire arrays or datasets, performing an operation on every item at once, allows arrays to be modified with the same ease
+that single values can - just as you can add some extra text to a string with a single +, so too can you add extra text to an entire
+array of strings using a single call to (altered:).
+This macro uses a lambda (which is just the "temp variable via an expression" expression) to take each item in the sequence and produce a new
+value to populate the resulting array. For (altered: _a via _a + 1, 10,20,30) it will produce 10 + 1, 20 + 1 and 30 + 1, and put those
+into a new array.
+
+Details:
+Of course, if any operation applied to any of the values should cause an error, such as trying to add a string to a number,
+an error will result.
+An error will NOT appear if you provide no values after the lambda - an empty array will be returned instead.
+This allows you to write (altered: $lambda, ...$array) without checking whether $array contains any values (which
+you may not be certain of, if it contains the result of a previous (find:)).
+The temp variable (if you choose to name it instead of using it) is controlled entirely by the lambda - it doesn't exist
+outside of it, it won't alter identically-named temp variables outside, and you can't manually (set:)
+it within the lambda.
+You can refer to other variables, including other temp variables, in the via expression. For instance, you can write
+(altered: _object via _playerName + "'s " + _object, "Glove", "Hat", "Purse"). However, for obvious reasons,
+if the outer temp variable is named the same as the lambda's temp variable, it can't be referred to in the expression.
+If no values are given to (altered:) except for the lambda, an empty array will be produced.
+--->
+:: altered_1
+(altered: _monster via "Dark " + _monster, "Wolf", "Ape", "Triffid")
+
+:: altered_2
+(altered: _player via _player + (dm: "HP", _player's HP - 1), ...$players)
+
+:: altered_3
+(altered: via it * -1 where it is an odd, 1,2,3,4,5,6)
+

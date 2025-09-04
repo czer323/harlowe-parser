@@ -1,0 +1,34 @@
+<!--
+Rationale:
+There are times when, for narrative reasons, you want the player, in the role of a character, to type text into a diegetic textbox, or make
+a seemingly "spontaneous" dialogue reply, but are unable to actually permit the player to type anything they want, as the story you're telling calls for
+specific dialogue or text at this point. While you could simply offer a "pretend" textbox using the (box:) macro, that can't actually be typed into, this
+macro offers an interesting and unexpected alternative: a text element that tricks the player into thinking they can type anything, only to change the text to fit
+your narrative letter-by-letter as they type it.
+This interface element has very potent and unsettling symbolism - the player suddenly being unable to trust their own keyboard to relay their words gives a
+strong feeling of unreality and loss of control, and as such, it is advised that, unless you wish to leverage that symbolism for horror purposes, you
+should perhaps prepare the player for this element's eccentricity with some accompanying text. Besides that, giving the player the tactile sense of typing words
+can help them occupy the role of their viewpoint character in situations where it's called for, such as a story revolving around text messaging or chat clients.
+
+Details:
+Unlike (input:), the final string is mandatory, as it holds the text that the input element will contain as the player "types" it in.
+The optional sizing string is the same kind of line given to (box:) - a sequence of zero or more = signs, then a sequence of characters (preferably "X"), then zero or
+more = signs. Think of this string as a visual depiction of the box's horizontal proportions - the = signs are the space to
+the left and right, and the characters in the middle are the box itself. Also, to avoid ambiguity with the second string given to this macro,
+a string representing 100% width (no margins) must be a single character, such as just "X". If you need the initial contents of the element to be a single character,
+provide an "X" sizing string before it, so that it's clear which is which.
+The produced element always occupies an entire line of the containing area, as with (box:) and (button:). If you wish to place it alongside other text, consider using it inside the column markup.
+Because you already know what the text in the element will become, you may feel there's no need to have a bound variable. However, you might wish to bind a temporary
+variable, and then check using a live macro when that variable has become filled with the full string, thus indicating that the player has read it. Otherwise,
+there is no mechanism to ensure that the player actually type out the entire string.
+If the bound variable is two-way, and it contains a string, then, when the input box appears, a number of fixed text characters equal to the string's length will be
+inserted into the input element automatically, and then the variable will update to match. Otherwise, if the bound variable is one-way, the variable will simply
+become an empty string (and then be updated to match the element's contents whenever the player "types" into it).
+As of 3.3.2, Harlowe will attempt to auto-focus input elements when they are added to the passage, allowing the player to
+type into them immediately. If multiple input elements are present, the first (highest) one will be auto-focused.
+Note that any further input elements added to the passage (via (after:) or some other means) will be auto-focused
+even if the player is currently typing into an existing element.
+--->
+:: force-input_1
+(force-input: bind _cmd, "ERASE INTERNET")
+

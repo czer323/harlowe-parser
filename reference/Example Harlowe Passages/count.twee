@@ -1,0 +1,22 @@
+<!--
+Rationale:
+This can be thought of as an accompaniment to the contains operator. Usually, you just want to check if one or more occurrences
+of the substring or value are in the given container. To check if an array or string contains any or all of the values,
+you can use contains with the all or some data names, like so: $arr contains all of (a:1,2)
+and $arr contains some of (a:1,2). But, if you need an exact figure for the number of occurrences,
+this macro will be of use.
+
+Details:
+If you use this with a number, boolean, datamap, dataset (which can't have duplicates),
+or anything else which can't have a value, then an error will result.
+If you use this with a string, and the values aren't also strings, then an error will result.
+Substrings are counted separately from each other - that is, the string "Though" contains "ugh" once and "h"
+once, and (count: "Though","ugh","h") results in 3. To check for "h" occurrences that are not contained in "ugh",
+you can try subtracting two (count:)s - (count: "Though","ugh") - (count: "Though","h") produces 1.
+--->
+:: count_1
+(count: (a:1,2,3,2,1), 1, 2)
+
+:: count_2
+(count: "Though", "ugh","u","h")
+

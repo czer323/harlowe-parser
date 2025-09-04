@@ -1,0 +1,37 @@
+<!--
+Rationale:
+The CIELAB colour model is considered to be more universally useful than the RGB model and its HSL representation,
+whose treatment of "lightness" doesn't properly reflect the actual perceived luminosity of the colours
+in question. For instance, this colour 
+(produced by (hsl:120,1,0.5)) and this colour 
+(produced by (hsl:220,1,0.5)) have the same HSL lightness (0.5), but one appears to the human eye to be less
+bright than the other, due to one hue being less luminous than the other.
+The lightness in LCH more closely corresponds to how the human eye perceives luminosity - (lch:0.9,80,120)
+produces , and (lch:0.9,80,220)
+produces , which, as you can see, is a pair closer in luminosity
+than the previous pair. Note that this means the lightness and hue values of LCH are not directly transferable between (hsl:)
+and this macro - they have different meanings in each. A hue angle in LCH is usually between 10 and 20 degrees less than its
+angle in HSL, varying by the LCH lightness.
+Additionally, CIELAB's colour model replaces the "saturation" value of HSL with "chroma". Rather than being a single percentage
+from 0 to 1, LCH's chroma is a value whose upper bound varies with the colour's hue, reflecting how the human eye distinguishes
+some hues more accurately than others.
+
+Details:
+Despite all of the above, any colour produced by this macro will have to be internally converted back to HSL in order to
+be used, due to HTML and CSS not fully supporting LCH as of 2020. As such, colours produced by this macro are constrained
+by HSL's limits - as LCH accepts a greater variety of chroma and lightness combinations than what HSL can represent, the output
+colour will be automatically converted to the nearest valid HSL values, if necessary.
+Giving lightness or alpha values less than 0 and greater than 1 will cause an error. Giving chroma values less than 0
+and greater than 132 will cause an error. However, you can give any kind of hue number to (lch:), and it will automatically
+round it to fit the 0-359 degree range - so, a value of 380 will become 20. This allows you to cycle through hues easily by
+providing a steadily increasing variable or a counter, such as (lch: 0.9, 80, time / 100).
+--->
+:: lch_1
+(lch: 0.6, 80, 10)
+
+:: lch_2
+(lch: 0.6, 80, 10)'s lch's c
+
+:: lch_3
+(lch: 0.9, 15, 142, 0.6)
+

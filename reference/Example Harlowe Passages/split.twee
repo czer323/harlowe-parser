@@ -1,0 +1,21 @@
+<!--
+Rationale:
+It's common to want to extract substrings from a string, but you often want to do so not based on any fixed number of characters in the string, but on the location of a separator
+value within the string. For instance, extracting the words from a string, such as with (words:), means you should consider whitespace to be the separator between words.
+This macro provides a general means of splitting strings based on any separator you wish, using either a substring, a string-related datatype, or a string pattern datatype created
+with (p:) or its family of macros.
+As with most of Harlowe's data-processing macros, the word "split" should be considered an adjective, not a verb - it produces a "split string", not a command to split a string.
+
+Details:
+If no occurrences of the separator are found in the string, then an array containing just the complete string (with no splits) is produced.
+If the separator (the first value) is the empty string, then the second string will be simply split into an array of its characters, as if by (a: ...$secondValue).
+If the separator is a pattern that matches the entire string (such as (split: "Hairs", "Hairs") or (split: string, "Gadfly"),
+then an array containing just the empty string will be produced.
+The pattern given to this macro cannot contained TypedVars (such as (split: (p: alnum-type _letter), "A")). Doing so will cause an error.
+--->
+:: split_1
+(split: newline, (passage:"Kitchen")'s source)
+
+:: split_2
+(split: (p:",", (p-opt:" ")), "Rhett, Brett, Brad,Red")
+

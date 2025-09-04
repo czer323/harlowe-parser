@@ -1,0 +1,26 @@
+<!--
+Rationale:
+this macro forms a pair with (force-input:). For a full elaboration on the purposes of a 'forced' input element as an interactive storytelling
+device, see the article for (force-input:). This serves to provide a multi-line textbox, compared to the former's single-line element, allowing
+longer runs of text to appear in it.
+
+Details:
+Unlike (input-box:), the final string is mandatory, as it holds the text that the input box will contain as the player "types" it in.
+The first string you give to this macro is a "sizing line" identical to that accepted by (box:) and (input-box:) - consult their documentation for more
+information about those lines.
+The optional number, which must come directly after the sizing line, is a height, in text lines. If this is absent, the box will be sized to 3
+lines. Harlowe's default CSS applies resize:none to the box, preventing it (in most browsers) from being resizable by the player.
+Because you already know what the text in the box will become, you may feel there's no need to have a bound variable. However, you might wish to bind a temporary
+variable, and then check using a live macro when that variable has become filled with the full string, thus indicating that the player has read it. Otherwise,
+there is no mechanism to ensure that the player actually type out the entire string.
+If the bound variable is two-way, and it contains a string, then, when the input box appears, a number of fixed text characters equal to the string's length will be
+inserted into the input box automatically, and then the variable will update to match. Otherwise, if the bound variable is one-way, the variable will simply
+become an empty string (and then be updated to match the box's contents whenever the player "types" into it).
+As of 3.3.2, Harlowe will attempt to auto-focus input elements when they are added to the passage, allowing the player to
+type into them immediately. If multiple input elements are present, the first (highest) one will be auto-focused.
+Note that any further input elements added to the passage (via (after:) or some other means) will be auto-focused
+even if the player is currently typing into an existing element.
+--->
+:: force-input-box_1
+(force-input-box: "XX=", "I'm sorry, father. I've failed you.")
+

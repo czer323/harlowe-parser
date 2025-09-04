@@ -1,0 +1,31 @@
+<!--
+Rationale:
+Sometimes, you may want to cycle through a sequence of values, without
+repeating any until you reach the end. For instance, you may have a rotating set
+of flavour-text descriptions for a thing in your story, which you'd like displayed
+in their entirety without the whim of a random picker. The (rotated:) macro
+allows you to apply this "rotation" to a sequence of data, changing their positions
+by a certain number without discarding any values.
+Remember that, as with all macros, you can insert all the values in an existing
+array using the ... syntax: (set: $a to (rotated: 1, ...$a)) is a common means of
+replacing an array with a rotation of itself.
+Think of the number as being an addition to each position in the original sequence -
+if it's 1, then the value in position 1 moves to 2, the value in position 2 moves to 3,
+and so forth.
+Incidentally... you can also use this macro to rotate a string's characters, by doing
+something like this: (str: ...(rotated: 1, ...$str))
+
+Details:
+As of 3.3.0, providing fewer than two items to this macro will not result in an error (even though that isn't enough
+values to meaningfully rotate).
+As of 3.3.0, rotating by a number of positions greater (or, if negative, less) than the number of values
+will still result in that many rotations occurring, without an error being produced.
+If you can't reliably know how many positions you wish to rotate, but know that you need a certain
+value to be at the front, simply use the (rotated-to:) variant of this macro instead.
+--->
+:: rotated_1
+(rotated: 1, 'A','B','C','D')
+
+:: rotated_2
+(rotated: -2, 'A','B','C','D')
+

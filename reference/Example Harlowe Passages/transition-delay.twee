@@ -1,0 +1,13 @@
+<!--
+Details:
+Much like (live:) and (after:), this macro should be given a number of milliseconds (such as 50ms) or seconds
+(such as 10s). Providing negative seconds/milliseconds is not permitted and will result in an error.
+Unlike (transition-time:), this does nothing when attached to links, because clicking the link should
+begin the transition immediately. Attaching it to a link will not produce an error.
+--->
+:: transition-delay_1
+(t8n:"slide-right")+(t8n-delay:3s)[Sorry I'm late.]
+
+:: transition-delay_2
+(char-style: via (t8n-delay:pos*60)+(t8n:'dissolve'))[A pleasure to make your acquaintance.]
+

@@ -1,0 +1,15 @@
+<!--
+Rationale:
+While there is a way to succinctly mark certain named hooks as hidden, by using parentheses instead of
+< or > marks, this macro provides a clear way for complex changers to hide their attached hooks.
+This works well when added to the (hook:) macro, for instance, to specify a hook's name and visibility
+in a single changer.
+This macro is essentially identical in behaviour to (if:false), but reads better.
+This macro takes no values - each changer value it produces is the same.
+--->
+:: hidden_1
+Don't you recognise me? (hidden:)|truth>[I'm your OC, brought to life!]
+
+:: hidden_2
+Don't you recognise me? |truth)[I'm your OC, brought to life!]
+

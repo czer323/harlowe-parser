@@ -1,0 +1,28 @@
+<!--
+Rationale:
+There are plenty of occasions where you might want random elements in your story: a few random adjectives
+or flavour text lines to give repeated play-throughs variety, for instance, or a few random links for a "maze"
+area. For these cases, you'll probably want to simply select from a few possibilities. The (either:)
+macro provides this functionality.
+
+Details:
+This is one of the features that uses Harlowe's pseudo-random number generator. If you use (seed:) at the start of the story,
+the chosen value will be predetermined based on the seed string, and how many other random macros and features have been used before it.
+As with many macros, you can use the spread ... operator to place all of the values in an array or dataset
+into (either:), and pick them randomly. (either: ...$array), for instance, will choose one possibility from
+all of the array contents.
+If you want to pick two or more values randomly, you may want to use the (shuffled:) macro, and extract a subarray
+from its result.
+If you want to pick a value more reliably - for instance, to pick a value randomly, but keep using that same value
+in subsequent visits to the passage - you may want to store an (either:) result in a variable using (set:) in an earlier passage,
+and use that whenever you want to use the result.
+--->
+:: either_1
+A (either: "slimy", "goopy", "slippery") puddle
+
+:: either_2
+(go-to: (either: "Void 2", "Void 3", "Void 4"))
+
+:: either_3
+(text-colour:(either: red, yellow, green))
+

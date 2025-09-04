@@ -1,0 +1,12 @@
+<!--
+Details:
+Normally, Harlowe stories will attempt to preserve their current game state across browser page reloads.
+This macro will suppress this behaviour, guaranteeing that the story restarts from the beginning.
+In order to prevent an endless "restart loop", this macro can't be used in the first passatge of the story.
+Attempting to do so will cause an error.
+Using (restart:) will not erase any games that have been saved with (save-game:).
+This command can't have changers attached - attempting to do so will produce an error.
+--->
+:: restart_1
+(click:"Restart")[(restart:)]
+

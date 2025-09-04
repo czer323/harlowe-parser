@@ -1,0 +1,28 @@
+<!--
+Rationale:
+This is a variation of the (cycling-link:) command macro that does not cycle - for more information about that macro,
+see its corresponding article. This is a simpler macro, being simply a link that changes when clicked without looping, albeit less useful as
+a means of obtaining the player's input.
+While it's possible to produce this effect by simply using (link:) and nesting it, such as by (link:"We nodded,")[(link:"turned,")[and departed, not a word spoken]],
+this macro is much more convenient to write when you wish to use a large amount of link labels. Additionally, this macro allows a bound variable to
+keep track of which string the player viewed last, as with (cycling-link:), which would be slightly more complicated to track using (link:) and (set:).
+
+Details:
+If one of the strings is empty, such as (seq-link: "Two eggs", "One egg", ""), then upon reaching the empty string, the link
+will disappear permanently. If the first string is empty, an error will be produced (because then the link can never appear at all).
+If attempting to render one string produces an error, such as (seq-link: "Goose", "(print: 2 + 'foo')"), then the error will only appear
+once the link cycles to that string.
+The bound variable will be set to the first value as soon as the sequence link is displayed - so, even if the player doesn't
+interact with the link at all, the variable will still have the intended value.
+If the bound variable has already been given a type restriction (such as by (set:num-type $candy to 1)), then, if that type isn't string or str, an error
+will result.
+If you use (replace:) to alter the text inside a (seq-link:), such as (seq-link: bind $candy, "Two candies", "One candy", "Some wrappers")(replace:"Two")[Five],
+then the link's text will be changed, but the value assigned to the bound variable will not - $candy will still be "Two candies" until the link is clicked.
+If only one string was given to this macro, an error will be produced.
+--->
+:: seq-link_1
+(seq-link: bind $candy, "Two candies", "One candy", "Some wrappers")
+
+:: seq-link_2
+(seq-link: "We nodded,", "turned,", "and departed, not a word spoken")
+

@@ -1,0 +1,25 @@
+<!--
+Rationale:
+You may often use macros like (replace:) or (append:) to alter the contents of hooks in your passages. But, you may also want an
+easy way of reversing these changes, to restore the hook to its original state as it had been written in your passage's code.
+This macro provides a means of doing so without having to reload or revisit the entire passage.
+In addition to re-running hooks elsewhere in the passage, you can produce some useful effects by having a (rerun:) affect its containing hook:
+Furthermore, as (rerun:) causes macros in the hook to re-run themselves, it can be used to "update" hooks to match the present game state:
+
+Details:
+(rerun:) will use the hook's original source as it was written in the passage source - any alterations done to it using (replace:) and other
+such macros will not be considered.
+(rerun:) will re-run every hook with the given name. To only re-run a specific hook, you can use the
+possessive syntax, as usual: (rerun: ?daydream's 1st).
+You can attach a transition changer, such as (transition:), (transition-time:), (transition-delay:), and the rest, to this command.
+Doing so will cause that transition to be applied to the hook.
+(rerun:), unlike (show:), will not work on hidden hooks until they become visible using (show:) or (link-show:).
+If you give ?page to (rerun:), an error will result. If you wish to "rerun" the entire page, consider using (restart:).
+If you give ?passage to (rerun:), the entire passage's code will be re-rendered. This will not change the value of the visits
+keyword, or count as an additional turn in any way.
+If you want to rerun a hook multiple times based on elapsed real time, use the (live:) macro.
+--->
+:: rerun_1
+|1>[You drew a (either:...(range:2,10), "Jack", "Queen", "King", "Ace") of (either:"Hearts","Clubs","Spades","Diamonds").]
+(link-rerun:"Shuffle and draw.")[(t8n:"dissolve")(rerun:?1)]
+

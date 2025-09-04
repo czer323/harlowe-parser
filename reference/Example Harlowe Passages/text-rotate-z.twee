@@ -1,0 +1,13 @@
+<!--
+Details:
+The surrounding non-rotated text will behave as if the rotated text is still in its original position -
+the horizontal space of its original length will be preserved, and text it overlaps with vertically will
+ignore it.
+A rotation of 180 degrees will, due to the rotational axis, flip the hook upside-down and back-to-front, as
+if the (text-style:) styles "mirror" and "upside-down" were both applied.
+Due to browser limitations, hooks using this macro will have its CSS display attribute
+set to inline-block.
+--->
+:: text-rotate-z_1
+(text-rotate:45)[Tilted]
+

@@ -1,0 +1,27 @@
+<!--
+Details:
+This is part of a suite of string pattern macros. Consult the (p:) article to learn more about string patterns, special user-created datatypes
+that can match very precise kinds of strings.
+When this macro's output is given to (p:), it will attempt to match (and thus exclude) the greatest permitted amount of repetitions in the string.
+So, (p:'g',(p-many:whitespace,'r'),'b') will match the string 'g r r r r r rb' because the (p-many:) macro will match " r r r r r r", instead
+of potentially only matching " r".
+The first optional number represents the minimum number of times the sequence is permitted to repeat within the string. The second optional
+number represents the maximum number of times. If only the minimum number is present, then it will also serve as the maximum number,
+limiting the matched strings to only those that match the sequence exactly that many times.
+If no optional numbers are given, the default minimum number of matches is 1. If you want the possibility of matching zero occurrences
+(i.e. this pattern is optional) then either combine this with (p-opt:), or (preferably) simply give the number 0 as the first argument.
+If the maximum number is smaller than the minimum number, or if either of them are negative or fractional, an error will be
+produced.
+When you use this in (unpack:) with a minimum of 0, such as (unpack: "No results." into (p-many: 0, newline)-type _newlines), and
+there are zero matches, the variable will be set to the empty string "".
+Note that while you can use this as the datatype of a TypedVar (as shown previously), you can't nest TypedVars inside this if the minimum is 0, because it then becomes an
+optional match - (set: (p:"A",(p-many:0, 8, digit-type _d)) to "A") will cause an error, because it's ambiguous whether, whenever the enclosing (p-many:)
+matches zero occurrecnes, the variable _d should not be set at all (which is rather counterintuitive) or if it should be set to an empty string
+(which contradicts its stated digit-type restriction anyway).
+--->
+:: p-many_1
+(p: uppercase, (p-many:lowercase))
+
+:: p-many_2
+(set: (p-many:3,12,alnum)-type $weakPassword to "ABC123")
+

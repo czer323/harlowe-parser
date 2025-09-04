@@ -1,0 +1,22 @@
+<!--
+Rationale:
+Links, being the primary interactive elements in your stories, need to be visually distinguished from the passage prose surrounding them. Harlowe applies a colour
+and boldness to links by default, but you'll often want to apply your own styles to links to suit your story. Rather than manually attach a changer holding those styles to
+every link where it appears, you can instead use this macro to style several links at once.
+If you wish to style every link in the passage or story equally, using (enchant:) with ?link in a "header" or "footer" tagged passage is most effective. But, if you only wish to apply a
+style to links in certain sections of a passage, this macro is most effective.
+
+Details:
+As with (enchant-in:), this can be given a changer, or a lambda that produces a changer, which is run on each link individually, and can produce different changers for each, depending on
+their pos or a random macro. If the lambda doesn't produce a changer, an error will result.
+Also, as with (enchant-in:), (link:), (replace:), (append-with:), or any of its relatives cannot be given to this macro.
+This creates a hook-specific enchantment, similar to (enchant-in:), It will be listed under the "Enchantments" tab of the Debug Mode panel.
+This will also apply the style changer to (click:) links inside the hook.
+Due to Harlowe engine limitations, this currently does NOT work when created by a lambda given to (enchant:) or (change:), such as in (enchant: ?passage, via (link-style:(bg:(hsl:pos*30,0.5,1)))).
+--->
+:: link-style_1
+(link-style:(b4r:"dotted"))[I stepped into the (link-reveal:"hall,")[ and the door shut behind me.]]
+
+:: link-style_2
+(link-style:via (text-colour:(cond: pos is an even, yellow, aqua)))[You choose: [[A]] [[B]] [[C]] [[D]] [[E]].]
+

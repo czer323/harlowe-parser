@@ -1,0 +1,24 @@
+<!--
+Rationale:
+This is a variant of (box:). There are times when you want a single block of text to be separated from the main passage's text,
+to the point where it's positioned offset from it as a separate panel - character statistics readouts in RPGs, and commentary
+asides are two possible uses. Unlike (box:), which leaves the hook in the passage, this provides that necessary spatial separation.
+
+Details:
+The values you give to this macro are "sizing lines" identical to those accepted by (box:) - consult its documentation for more
+information about those lines. However, while those lines scaled the hook proportional to the "containing element", (float-box:)
+scales proportional to the reader's browser window, using vw and wh CSS units. The second string references the vertical
+position and size of the hook - since (box:) cannot affect the vertical position of the hook, it only accepts a number representing
+its size.
+It's a recommended convention that the centre characters in the sizing line strings be "X" (for "X axis") for the horizontal line
+and "Y" (for "Y axis") for the vertical - but you may use whatever you wish as long as it is not a =.
+Since it is "floating", this box remains fixed in the window even when the player scrolls up and down.
+The resulting hook has the CSS attributes "display:block", "position:fixed" and "overflow-y:auto". Additionally, the hook will have
+'padding:1em', unless another padding value has been applied to it (such as via (css:)).
+--->
+:: float-box_1
+(float-box: "X====","Y====")[CASH: $35,101]
+
+:: float-box_2
+(float-box: "=XXX=","======Y")[Marvin: "Really?"]
+

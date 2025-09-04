@@ -1,0 +1,23 @@
+<!--
+Rationale:
+As discussed in the documentation for (show:), that macro is intended as a complement to (click-replace:) (or perhaps
+(click-append:)). While both let you insert text at a location when a link is clicked, they differ in whether they let the
+author write the initial text or the replacement text at the location when coding the passage.
+Typical (click-append:) usage resembles the following, where the inserted text provides supplementary content to the passage's
+prose, and is written separately from it:
+Conversely, typical (show:) usage resembles the following, where the inserted text is a continuation of the passage's prose,
+and is written together with it:
+The (link-show:) macro provides a convenient shorthand for the latter example, letting you write the final line as
+You (link-show: "struggle to listen.", ?more).
+
+Details:
+As with most link macros, providing this with an empty link text string will result in an error.
+As with (show:) and (click:), providing this with a hook which is already visible, or which doesn't even exist,
+will NOT produce an error, but simply do nothing. Also, showing a hook that was hidden with (hide:) will not re-run the
+macros contained within, but simply make visible the hook as it was.
+Note that (link-show:), unlike (link:), doesn't accept a changer value to style the produced link. This is because, as
+this produces a command (and not a changer), you can simply attach changers to the front of it to style the link.
+--->
+:: link-show_1
+But those little quirks paled before (link-show: "her darker eccentricities.", ?twist)
+

@@ -1,0 +1,29 @@
+<!--
+Rationale:
+Many web games use browser cookies to save the player's place in the game.
+Harlowe allows you to save the game, including all of the variables that were (set:)
+or (put:), and the passages the player visited, to the player's browser storage.
+(save-game:) is a single operation that can be used as often or as little as you
+want to. You can include it on every page; You can put it at the start of each "chapter";
+You can put it inside a (link:) hook, such as
+and let the player choose when to save.
+
+Details:
+(save-game:)'s first string is a slot name in which to store the game. You can have as many slots
+as you like. If you only need one slot, you can just call it, say, "A", and use (save-game:"A").
+You can tie them to a name the player gives, such as (save-game: $playerName), if multiple players
+are likely to play this game - at an exhibition, for instance.
+Giving the saved game a file name is optional, but allows that name to be displayed by finding it in the
+(saved-games:) datamap. This can be combined with a (load-game:)(link:) to clue the players into the save's contents:
+(save-game:) evaluates to a boolean - true if the game was indeed saved, and false if the browser prevented
+it (because they're using private browsing, their browser's storage is full, or some other reason).
+Since there's always a possibility of a save failing, you should use (if:) and (else:) with (save-game:)
+to display an apology message in the event that it returns false (as seen above).
+Using the (forget-undos:) macro will, as a side effect of its turn-erasing functionality, reduce the size of the data saved
+to browser localStorage by (save-game:). However, you should not use that macro solely on the hunch that it provides
+performance benefits for your story. See the (forget-undos:) macro's article for slightly more details.
+--->
+:: save-game_1
+##Chapter 2: The Mortuary
+(save-game:"Slot A","Chapter 2 start")
+

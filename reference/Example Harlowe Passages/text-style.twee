@@ -1,0 +1,32 @@
+<!--
+Rationale:
+While Harlowe offers markup for common formatting styles like bold and italic, having these
+styles available from a changer macro provides some extra benefits: it's possible, as with all
+such style macros, to (set:) them into a variable, combine them with other changers, and re-use them
+succinctly throughout the story (by using the variable in place of the macro).
+Furthermore, this macro also offers many less common but equally desirable styles to the author,
+which are otherwise unavailable or difficult to produce.
+
+Details:
+At present, the following text strings will produce a particular style. All of these are case-insensitive and dash-insensitive - "UPSIDE-DOWN" and "upsidedown" both work in place of "upside-down".
+You can use the "none" style to remove an existing style from a combined changer. NOTE: As of Harlowe 3.2.2,
+this can only be used to remove styles from combined changers, such as by (set: $changer to it + (text-style:"none")),
+and can't be used to remove styles from already-changed hooks or other structures.
+Due to browser limitations, combining many of these changers won't work exactly as intended – (text-style: "underline", "strike"), for instance,
+will cause only the latter of the two to be applied, in this case "strike". These incompatibilities are listed in the table above.
+Also due to browser limitations, hooks using "mirror", "upside-down", "tall", or "flat" will have their CSS display attribute set to inline-block. This means, among other
+things, that the text inside them won't word-wrap.
+Note that the animations "rumble" and "shudder" are particularly intense, and may induce frustration or illness in
+motion-sensitive readers. Take care when using them.
+Finally, "doublestrike" and "wavy-strike" will be replaced with "strike" when run on Internet Explorer, as will "double-underline" and
+"wavy-underline" be replaced with "underline".
+--->
+:: text-style_1
+The shadow (text-style: "shadow")[flares] at you!
+
+:: text-style_2
+(set: $s to (text-style: "shadow")) The shadow $s[flares] at you!
+
+:: text-style_3
+(text-style: "italic", "emboss")[Richard Donahue, King for Hire]
+

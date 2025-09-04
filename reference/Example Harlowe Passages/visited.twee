@@ -1,0 +1,26 @@
+<!--
+Rationale:
+Often, you may find yourself using "flag" variables simply to keep track of whether
+the player has visited a certain passage in the past. In most such cases, you can use (visited:)
+instead of having to use these variables. 
+
+Details:
+If a string name is given, and no passages of that name are in the story, an error will be produced.
+Passages visited via (redirect:) will be considered "visited" by this macro, just as they are considered
+"visited" by the visits keyword.
+When given a where lambda, the variable in the lambda (referred to by the it keyword or by a temp variable
+placed before the word where) is always a datamap - the same datamap as would be returned by (passage:) for that passage name. That datamap contains
+these values:
+So, you can think of (visited: where its tags contains "Forest") as a shorthand for
+(some-pass:where (passage: it)'s tags contains "Forest", ...(history:)).
+If you're testing your story in debug mode using (mock-visits:), then any "mock" visit you simulate
+will be counted as a visit.
+By default, Harlowe records an unlimited amount of passage visits. However, you can use the (forget-visits:) macro to
+make Harlowe "forget" visits that are a certain number of turns old. This is the only way to directly alter this macro's output.
+--->
+:: visited_1
+(visited:"Cellar")
+
+:: visited_2
+(visited: where its tags contains "Forest")
+

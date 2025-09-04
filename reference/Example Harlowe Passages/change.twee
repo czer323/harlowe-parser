@@ -1,0 +1,43 @@
+<!--
+Rationale:
+While changers allow you to style or transform certain hooks in a passage, it can be tedious and error-prone to attach them to every
+occurrence as you're writing your story, especially if the attached changers are complicated. You can
+simplify this by storing changers in short variables, and attaching just the variables, like so:
+Nevertheless, this can prove undesirable: you may want to not use the _ghost styling later in development, which would
+force you to remove the attached variables to avoid producing an error; you may want to only style a single word or phrase,
+and find it inconvenient to place it in a hook; you may simply not like dedicating variables to storing changers, or in placing
+(set:) macros at the start of your passage's prose.
+Instead, you can give the hooks the name "ghost", and then (change:) them afterward like so:
+This has a few advantages. As it ties the changer styling to a hook name rather than a variable, the (change:) can be removed later without causing errors.
+Placing the (change:) at the end of the passage can also make the passage's source more readable, the textual content being closer to the top.
+
+Details:
+The (change:) macro can target plain text instead of hooks, much like (click:) - simply provide a string instead of a hook name.
+If a "via" lambda is supplied to (change:) instead of a changer, then that lambda is used to compute a changer dynamically, using the pos keyword
+to distinguish each hook that's enchanted. For instance, (change: "O", via (text-style:(cond: pos is an even, 'bold', 'none'))) changes only
+even-numbered instances of the letter "O".
+Like the (replace:), (append:) and (prepend:) macros, this macro does not affect text and hooks that appear after it, as it is an immediate
+command that only affects what has already been rendered. For an alternative version of this macro which does affect hooks and text after it,
+see (enchant:).
+The built-in hook names, ?Page, ?Passage, ?Sidebar and ?Link, as well as their data names like chars or lines, can be targeted by this macro,
+and can be styled on a per-passage basis this way.
+Using (text-colour:) with this macro will let you change the colour of links inside the indicated hook, with one exception:
+using (change:) to change the entire passage (via ?passage or ?page) with (text-colour:) will NOT affect links. This is to allow you
+to re-style the entire story without having to lose the distinct colour of links compared to passage text. You can change the colour of all links using
+an explicit (change: ?link, (text-colour: $color)) or by using (link-style: (text-colour: $color))[= (that is, with unclosed hook markup).
+You can't use this macro to change the appearance or behaviour of a completely empty hook, such as |A>[]. Completely empty hooks (that haven't had text inserted
+by (replace-with:) and the like) are always hidden by Harlowe.
+You can use (change:) with (transition:) to add transitions to hooks or text elsewhere in the same passage – however, if the (change:) macro is
+run after the passage was initially rendered, the transitions will begin animating in the middle of their usual animations, or, if enough time
+has passed, won't run at all. For example, (event: when time > 2s)[(change:"Riddles", (t8n:"Shudder")+(t8n-time:3s))] will
+apply a 3-second transition to each instance of the word "Riddles" in the passage, but since 2 seconds have already passed since those words were
+rendered, only the last 1 second of the transition will be visible.
+You cannot use (change:) with (link:), (replace:), or any of its relatives – because the enchanted hook or text is already in the passage, the link can't appear
+and it can't replace anything.
+--->
+:: change_1
+(change: "gold", (text-colour: yellow) + (text-style:'bold'))
+
+:: change_2
+(change: ?passage's chars, via (text-color:(hsl: pos * 10, 1, 0.5)))
+

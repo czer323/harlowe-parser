@@ -1,0 +1,42 @@
+<!--
+Rationale:
+While there are other means of accepting player text input into the story, such as the (prompt:) macro, you may desire an input region
+that is integrated more naturally into the passage's visual design, and which allows a greater quantity of text to be inputted. This macro
+offers that functionality, and provides an easy means for that inputted text to be stored in a variable.
+
+Details:
+This macro has no mandatory values - (input:) by itself will produce a text input element with no bound variable, no placeholder and no default value.
+The optional sizing string is the same kind of line given to (box:) - a sequence of zero or more = signs, then a sequence of characters (preferably "X"), then zero or
+more = signs. Think of this string as a visual depiction of the element's horizontal proportions - the = signs are the space to
+the left and right, and the characters in the middle are the element itself. Also, to avoid ambiguity with the second string given to this macro,
+a string representing 100% width (no margins) must be a single character, such as just "X". If you need the initial contents of the element to be a single character,
+provide an "X" sizing string before it, so that it's clear which is which.
+The produced element always occupies an entire line of the containing area, as with (box:) and (button:). If you wish to place it alongside other text, consider using it inside the column markup.
+This macro accepts two-way binds using the 2bind syntax. These will cause the element's contents to always match the current value of the bound
+variable, and automatically update itself whenever any other macro changes it. However, if the variable no longer contains a string, then
+it won't update - for instance, if the variable becomes the number 23, the element won't update.
+If the bound variable isn't two-way, the variable will be set to the element's contents as soon as it is displayed - so, it will become the optional
+initial text string, or, if it wasn't given, an empty string.
+If the bound variable has already been given a type restriction (such as by (set:num-type $candy to 1)), then, if that type isn't string or
+str, an error will result.
+The optional initial text string given to this macro will not be parsed as markup, but inserted into the element verbatim - so, giving
+"''CURRENT SAVINGS'': $lifeSavings" will not cause the $lifeSavings variable's contents to be printed into the element, nor will "CURRENT SAVINGS"
+be in boldface.
+A note about player-submitted strings: because most string-printing functionality in Harlowe (the (print:) macro, and putting variable names
+in bare passage prose) will attempt to render markup inside the strings, a player may cause disaster for your story by placing Harlowe markup
+inside an (input:) bound variable, which, when displayed, produces either an error or some effect that undermines the story. In order to
+display those strings safely, you may use either the verbatim markup, the (verbatim:) changer, or (verbatim-print:).
+As of 3.3.2, Harlowe will attempt to auto-focus input elements when they are added to the passage, allowing the player to
+type into them immediately. If multiple input elements are present, the first (highest) one will be auto-focused.
+Note that any further input elements added to the passage (via (after:) or some other means) will be auto-focused
+even if the player is currently typing into an existing element.
+--->
+:: input_1
+(input: "Cheese Honey Sandwich")
+
+:: input_2
+(input: bind _name, "=X=", "Calder Faust")
+
+:: input_3
+(input: bind _spell)
+

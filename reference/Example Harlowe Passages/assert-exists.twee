@@ -1,0 +1,20 @@
+<!--
+Rationale:
+The macros in Harlowe that remotely affect other hooks or text based on their name or contents, such as (click:), are designed such that they
+do not cause an error if no matching hooks or text is found in the passage. This allows them to be thought of as similar to CSS rules for how passage prose
+is to be rendered - something like (enchant:?dust, (text-style:'blur')) states the "rule" that ?dust hooks are to be blurred - rather than as imperative commands
+that must be fulfilled there and then. This means that they can be placed in every passage, via "header" or "footer" tagged passages, without errors occurring.
+But, this flexibility comes at a cost. In the minority of situations where you need to be certain that a macro is affecting a visible in-passage
+structure, you'll often want to test with this macro, so as to produce an error if those structures do not exist.
+
+Details:
+This command (and note that (assert:) doesn't produce a command) probes the current passage in which it's located in order to determine whether to produce an error or not.
+As such, like all commands, it can be saved into a variable, and deployed into passage code using that variable, to save having to retype it in full.
+If you provide an empty string to this macro (which obviously can't be found in the passage), it will produce a different kind of error than what would be desired.
+--->
+:: assert-exists_1
+(assert-exists: "the auroch")
+
+:: assert-exists_2
+(assert-exists: ?bottomBar)
+

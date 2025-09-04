@@ -1,0 +1,21 @@
+<!--
+Rationale:
+Indentation of initial letters has long been used in typesetting as a means of helping the human eye distinguish paragraphs of
+text from each other. While you can use line breaks to separate paragraphs, this often takes up an uncomfortable amount of vertical space,
+and can be unsuitable for long sections of prose. This macro can be used to provide indentation to single hooks, or, using (change:) or (enchant:),
+to every line in a passage.
+
+Details:
+This will place a gap before the first character of the attached hook, even if it isn't at the start of a line.
+The given number is the number of CSS pixels to indent the hook by. If it is negative, an error will be produced.
+Because this uses the CSS 'text-indent' attribute, hooks using this macro will have their CSS display attribute
+set to inline-block.
+It is recommended that you do NOT use this macro for precisely placing text offset from the left or right of the passage.
+You will get better results using the (align:) macro, aligner marker, or column markup for this purpose.
+--->
+:: text-indent_1
+(enchant: ?passage's lines, (text-indent:12))
+
+:: text-indent_2
+(text-indent: 24)+(size:1.5)[CHAPTER TWO]
+

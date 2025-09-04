@@ -1,0 +1,19 @@
+<!--
+Rationale:
+There are times when you wish to examine the data of the story as it is running - for instance, checking what
+tag a certain passage has, and performing some special behaviour as a result. In particular, checking what data the
+current passage has can be very useful in a header tagged passage, or in a (display:)ed passage. This macro, as
+well as its counterpart (passages:), provides that functionality.
+
+Details:
+The datamap contains the following names and values.
+However, if the passage contained a (metadata:) macro call, then the data provided to that macro call will be added to that
+passage's datamap. So, you can have any amount of author-defined data in it as well.
+The "source" value, like all strings, can be printed using (print:). Be warned that printing the source of
+the current passage, while inside of it, may lead to an infinite regress.
+Interestingly, the construction (print: (passage: "Cellar")'s source) is essentially identical in function (albeit longer to write)
+to (display: "Cellar").
+--->
+:: passage_1
+(passage:"Cellar")
+

@@ -1,0 +1,7 @@
+<!--
+
+--->
+:: some-pass_1
+(set: $partyMembers to (a: (dm: "name", "Alan", "curseLevel", 0), (dm: "name", "Jess", "curseLevel", 0)))
+(set: $taintedParty to (some-pass: where its curseLevel > 0, ...$partyMembers))
+

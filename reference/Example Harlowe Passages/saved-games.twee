@@ -1,0 +1,20 @@
+<!--
+Rationale:
+For a more thorough description of the save file system, see the (save-game:) article.
+This macro provides a means to examine the current save files in the user's browser storage, so
+you can decide to print "Load game" links if a slot is occupied, or display a list of
+all of the occupied slots.
+
+Details:
+Each name in the datamap corresponds to an occupied slot name. The values are the file names of
+the files occupying the slot.
+The following is an example. If a game was saved using (save-game:"File A", "The Mortuary"), and there were no other
+saved games, the datamap produced by (saved-games:) would look like this.
+Changing the datamap does not affect the save files - after this macro has created the datamap, it is simply inert data.
+--->
+:: saved-games_1
+(print: (saved-games: )'s "File A")
+
+:: saved-games_2
+(if: (saved-games: ) contains "File A")
+

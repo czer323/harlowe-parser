@@ -1,0 +1,24 @@
+<!--
+Rationale:
+While the (if:), (else:) and (else-if:) macros allow blocks of passage prose to be conditionally displayed and code to be
+conditionally run, there are plenty of situations where you'd prefer to succinctly select values inside macro
+calls, or select from multiple values, without needing to write multiple (else-if:)s or (set:)s for each possibility.
+The (cond:) macro (short for "condition") offers such utility.
+In situations where you would write something like this,
+you could instead simply write this.
+(set:$lostTheSword to (either:true,false))(set: $weapon to (cond: not $lostTheSword, "a holy sword", "an unholy swear-word"))
+
+Details:
+This macro is intended to resemble the "cond" function in Lisp, as well as the "ternary" operator in numerous other
+programming languages (though it does not perform short-circuiting).
+It also might remind you of the values given to (dm:) - a piece of metadata, followed by its matching
+data - except that (dm:) ties names to data, whereas this ties conditions to data.
+If only one value was given to (cond:), then that value will be returned as-is.
+Except for the last, every odd value given to (cond:) must be a boolean, or an error will occur.
+--->
+:: cond_1
+(set: $status to (cond: $cash >= 300, "stable", $cash >= 200, "lean", $cash >= 100, "skint", "broke"))
+
+:: cond_2
+Your (cond: $wonTheRace, "gasps of triumph", "wheezes of defeat") drown out all other noise.
+

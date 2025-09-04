@@ -1,0 +1,22 @@
+<!--
+Rationale:
+The RGB additive colour model is commonly used for defining colours: the HTML
+hexadecimal notation for colours (such as #9263AA) simply consists of three hexadecimal
+values placed together. This macro allows you to create such colours computationally,
+by providing variables for certain components.
+
+Details:
+This macro takes the same range of numbers as the CSS rgb() function.
+Giving values higher than 255 or lower than 0 will cause an error. Former versions of Harlowe
+did not allow fractional values to be given, but that restriction is no longer present.
+Giving alpha percentages higher than 1 or lower than 0 will cause an error.
+--->
+:: rgb_1
+(rgb: 255, 0, 47)
+
+:: rgb_2
+(rgb: 90, 0, 0)'s r
+
+:: rgb_3
+(rgb: 178, 229, 178, 0.6)
+

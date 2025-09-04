@@ -1,0 +1,18 @@
+<!--
+Rationale:
+Transitions allow incoming text to animate in a visually stylish fashion, but there are times you might want already displayed text to suddenly animate,
+as if it had just transitioned in anew. This command can be useful, when used sparingly, to draw the attention of the player toward a particular part
+of the passage, such as a link, or an easily missed word, after they click a link or wait a certain amount of time. It can be particularly interesting
+when used to draw attention to a part that, until then, had nothing visually remarkable about it, so as to highlight it for only a moment.
+
+Details:
+(animate:) recognises the same transition names as (transition:), except for "instant" (which obviously cannot be animated). These names are:
+The optional time value, which alters the animation's length of time, corresponds to (transition-time:). Additional alterations to the animation
+can be given by attaching the other two transition changers, (transition-delay:) and (transition-skip:), to this command.
+You may notice that other, permanent animations are available as (text-style:) options. (animate:)'s animations operate separately to those,
+and animations unique to (text-style:) can't be temporarily applied with this macro. Instead, use (change:) with (text-style:) to apply those
+animations.
+--->
+:: animate_1
+(after: 15s)[You'd better get going now, pardner. (animate:?passage's links, "rumble")]
+

@@ -1,0 +1,20 @@
+<!--
+Details:
+The border macros accept up to four values. These values refer to corners of a rectangle, going clockwise
+from the top: the first value is the top-left corner (10 o'clock), second is the top-right corner (2 o'clock),
+third is the bottom-right corner (4 o'clock), fourth is the bottom-left corner (8 o'clock). You can stop giving
+values anywhere. If a corner doesn't have a value, then it will use whatever the opposite corner's value is
+(or the top-left value if it's the only one).
+Obviously, unless the hook has a (bg:) or a (border:), the rounded corners will not be visible, and this
+changer will have no real effect.
+If the hook has a (border:), values greater than the border's (border-width:) (which is 2 if it wasn't changed)
+will cause the interior of the element to become constrained by the curvature of the corners, as the
+rectangle's corners get cut off. Because of this, this macro also adds interior padding (distance between the
+border and the contained text) equal to each of the passed-in numbers, unless another changer (such as (css:))
+provided a different padding value.
+--->
+:: corner-radius_1
+(b4r:'solid')+(corner-radius:8)[Hasn't this gone on too long?]
+(b4r:'solid')+(corner-radius:12)[Shouldn't you tell them the truth?]
+(b4r:'solid')+(corner-radius:16)[//That you're not really who you say you are??//]
+

@@ -1,0 +1,17 @@
+<!--
+Rationale:
+While you can already select a continuous span of text by simply providing multiple values to (p:) and the like, this can be inconvenient for macros such as (str-find:) and (str-replaced:) -
+if you only want to find a subset of the match (such as just the digits before "AM" or "PM" in the above example), you'll have to strip the unwanted portion off afterward using a dataname like 1stto2ndlast.
+As an alternative, you can use (p-before:) in the pattern to specify a portion of the pattern that should be checked, but not included in the match substring itself.
+
+Details:
+This is part of a suite of string pattern macros. Consult the (p:) article to learn more about string patterns, special user-created datatypes
+that can match very precise kinds of strings.
+While you can use this as the datatype of a TypedVar, this won't accomplish much, since, as explained, it only matches the empty string. Additionally, you can't nest TypedVars inside this.
+--->
+:: p-before_1
+(str-find: (p:(p-many:digit), (p-before:(p-either:"AM","PM"))), "I arrived home at 42nd Street at 11PM and was in bed by 2AM.")
+
+:: p-before_2
+(a:"11","2")
+

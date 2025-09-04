@@ -1,0 +1,28 @@
+<!--
+Rationale:
+There are plenty of occasions where you may want to instantly advance to a new
+passage without the player's volition. (go-to:) provides access to this ability.
+(go-to:) can accept any expression which evaluates to
+a string. You can, for instance, go to a randomly selected passage by combining it with
+(either:) - (go-to: (either: "Win", "Lose", "Draw")).
+(go-to:) can be combined with (link:) to accomplish the same thing as (link-goto:):
+(link:"Enter the hole")[(go-to:"Falling")] However, you
+can include other macros inside the hook to run before the (go-to:), such as (set:),
+(put:) or (save-game:).
+
+Details:
+You can attach changers like (t8n-depart:) and (t8n-arrive:) to this to
+alter the transition animation used when (go-to:) activates. Other kinds of changers
+won't do anything, though.
+If it is performed, (go-to:) will "halt" the passage and prevent any macros and text
+after it from running. So, a passage that contains:
+will not cause $listen to become "I love you" when it runs.
+You should generally avoid using (go-to:) unconditionally in the passage - that is, avoid using it such
+that it would immediately run when the player enters, regardless of anything. This has a few side-effects:
+it makes it difficult to use (undo:) to return to this passage, and it counts as a new turn for the "turns" identifier even
+though the player didn't do or see anything. You can use (redirect:) in place of (go-to:) to avoid these issues.
+If you simply want to go back to the previous passage, forgetting the current turn, then you may use (undo:).
+--->
+:: go-to_1
+(go-to: "The Distant Future")
+

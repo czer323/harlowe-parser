@@ -25,7 +25,7 @@
    - Ensure errors are accessible to both CLI and programmatic consumers.
 
 5. **Test Error Reporting**
-   - Write Jest tests that:
+   - Write Vitest tests that:
      - Trigger each type of error (syntax, token, early exit, etc.)
      - Assert that errors include line/column, message, and context
      - Check that actionable suggestions are present where appropriate

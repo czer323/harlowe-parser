@@ -1,0 +1,8 @@
+<!--
+Details:
+Hooks affected by this changer will take up their own lines in the passage, regardless of
+their placement in the story prose. This allows them to be aligned in the specified manner.
+--->
+:: align_1
+(align: "=><==")[Hmm? Anything the matter?]
+

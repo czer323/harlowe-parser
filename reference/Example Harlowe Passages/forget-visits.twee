@@ -1,0 +1,32 @@
+<!--
+Rationale:
+This macro forms a pair with (forget-undos:). These together allow you to erase two kinds of non-variable data tracked by Harlowe - the undo cache, and
+the record of passage visits.
+The visits identifier and the (history:) macro are not intended to be "special variables" that the author can permute as they may wish - they have a very specific meaning
+within Harlowe's language. Using them as they are designed (as permanent records of when the player visited a passage or passages) is highly recommended. This is why
+this macro only offers limited functionality for erasing visits.
+That being said, there are a few edge-case situations when you'd want to use (forget-visits:). If your story consists entirely of "sub-stories" (like an anthology) that individually use visits,
+but which also need to be revisitable/replayable without restarting the whole story with (restart:), then this (along with (forget-undos:)) can be used to erase all of the visits
+once the player has finished a sub-story, so that (along with resetting its variables using (set:)) it can be replayed as it was.
+The other situation is when you're writing an "endless" story, one that will be played over an indefinite number of turns, such as a kiosk or an art installation. Because
+Harlowe is constantly recording visited passages (as part of the (history:) macro's functionality) then over many thousands of turns, the ever-increasing memory usage of the story may become
+detrimental to the browser's performance. Periodically running both (forget-undos:) and (forget-visits:) (in a "header" or "footer" tagged passage, for instance) to erase data from
+hundreds of turns ago (such as by (forget-visits:-200)(forget-undos:-200) will keep the record of visited passages (and the undo cache) from growing beyond a certain point,
+preventing this situation from occurring.
+
+Details:
+You currently cannot use this macro to erase "mock visits" created with (mock-visits:).
+The effects of (forget-visits:) can be undone by the player using (link-undo:), the sidebar undo button, and so forth, so previous turns are unaffected
+by this command. This also means that the visits still "exist" as long as you can undo past the turn in which (forget-visits:) was used.
+If there aren't enough past turns' visits to erase (for instance, when (forget-visits:4) is run when only two turns have been taken) then
+all past visits will be erased.
+If 0 is given, no past turns will be erased.
+Because of the very specific purposes this macro is designed for, there is no way to forget visits of just a single passage, or after a certain turn, or in other, more specific ways.
+If you really need to manipulate a passage's recorded visits like this, please use a variable to track "visits" to this passage instead.
+--->
+:: forget-visits_1
+(forget-visits: -10)
+
+:: forget-visits_2
+(forget-visits: -1)
+

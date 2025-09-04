@@ -1,0 +1,17 @@
+<!--
+Details:
+The border macros accept up to four values. These values refer to sides of a rectangle, going clockwise
+from the top: the first value is the top edge (12 o'clock), second is the right edge (3 o'clock),
+third is the bottom edge (6 o'clock), fourth is the left edge (9 o'clock). You can stop giving
+values anywhere. If an edge doesn't have a value, then it will use whatever the opposite edge's value is
+(or the top value if it's the only one).
+The default size of borders added using (border:) is 2px (2 pixels). The number given is a number of
+CSS pixels to set the new size to. Since CSS pixels don't exactly correspond to display pixels
+(such as, for instance, if the browser window is zoomed in) then it's possible to have a non-whole
+number of CSS pixels (such as 1.5, which would, if the browser window was zoomed in to 200%, become
+3 display pixels). Thus, this macro accepts numbers with fractional values. That being said,
+if a number lower than 0 is given, an error will be produced.
+--->
+:: border-size_1
+(b4r:"solid")+(b4r-size:4)[Do not read anything outside of this box.]
+

@@ -1,0 +1,40 @@
+<!--
+Rationale:
+Selecting specific data from arrays or sequences based on a user-provided boolean condition is one of the more common and powerful
+operations in programming. This macro allows you to immediately work with a subset of the array's data, without
+caring what kind of subset it is. The subset can be based on each string's characters, each datamap's values, each number's
+evenness or oddness, whether a variable matches it... anything you can write.
+This macro uses a lambda (which is just the "temp variable where a condition" expression) to check every one of
+the values given after it. For (find: _item where _item > 40, 30, 60, 90), it will first check if 30 > 40 (which
+is false), if 60 > 40 (which is true), and if 90 > 40 (which is true), and include in the returned array
+those values which resulted in true.
+
+Details:
+Of course, if any condition should cause an error, such as checking if a number contains a number, then the error will appear.
+However, an error will NOT appear if you provide no values after the lambda - searching an empty sequence will simply
+result in an empty array being returned. This allows you to write (find: $lambda, ...$array) without checking whether $array contains
+any values (which you may not be certain of, if it contains the result of a previous (find:)).
+The temp variable (if you choose to name it instead of using it) is controlled entirely by the lambda - it doesn't exist
+outside of it, it won't alter identically-named temp variables outside, and you can't manually (set:)
+it within the lambda.
+You can refer to other variables, including other temp variables, in the where condition. For instance, you can
+write (set: _name to "Eva")(find: _item where _item is _name, "Evan", "Eve", "Eva"). However, for obvious reasons,
+if the outer temp variable is named the same as the lambda's temp variable, it can't be referred to in the condition.
+There isn't a way to examine the position of a value in the condition - you can't write, say, (find: _item where _pos % 2 is 0, "A", "B", "C", "D") to select just "B" and "D".
+You shouldn't use this macro to try and alter the given values! Consider the (altered:) or (folded:) macro instead.
+--->
+:: find_1
+(find: _person where _person is not "Alice", ...$people)
+
+:: find_2
+(find: _item where _item's 1st is "A", "Thorn", "Apple", "Cryptid", "Anchor")
+
+:: find_3
+(find: _num where (_num >= 12) and (it % 2 is 0), 9, 10, 11, 12, 13, 14, 15, 16)
+
+:: find_4
+(find: _val where _val + 2, 9, 10, 11)
+
+:: find_5
+1st of (find: _room where _room's objs contains "Egg", ...$rooms)
+

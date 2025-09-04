@@ -1,0 +1,20 @@
+<!--
+Rationale:
+Modern browsers allow web pages to take up the entire screen of the user, in a manner similar to desktop games. This feature can be useful
+for immersive or moody stories, such as horror stories, that wish to immerse the player's senses in a certain colour or shade, or to display
+impactful text that doesn't have to compete for attention from any other screen elements. While it can be more convenient to place an (icon-fullscreen:)
+in your story's sidebar, this macro can be useful if you remove or replace the sidebar with something else, and can serve as an alternative
+means of activating fullscreen mode.
+
+Details:
+When activated, this will make the page's <html> element be the fullscreen element, not <tw-story>. This is because, in most browsers,
+removing the fullscreen element from the page, however briefly, will deactivate fullscreen mode. Since the (enchant:) macro, when given ?Page,
+will often need to wrap <tw-story> in another element, those macro calls will deactivate fullscreen mode if <tw-story> was the fullscreen element.
+So, if you have edited the compiled HTML to add elements before and after it, such as a navigation bar, that will remain visible while the story
+is in fullscreen mode. Additionally, this means that the Debug Mode panel is still visible when fullscreen mode is activated.
+Currently, there is no special functionality or error reporting when the browser reports that fullscreen mode is available, but the attempt
+to switch to fullscreen mode fails. In that case, the checkbox will simply appear to do nothing.
+--->
+:: checkbox-fullscreen_1
+(checkbox-fullscreen: "Fullscreen mode")
+

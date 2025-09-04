@@ -1,0 +1,19 @@
+<!--
+Details:
+This is part of a suite of string pattern macros. Consult the (p:) article to learn more about string patterns, special user-created datatypes
+that can match very precise kinds of strings.
+Unlike many pattern datatype macros, this will error if given any datatype that could match 0 or 2+ characters. So, passing str, empty, any spread datatype like ...digit,
+or any string with more or less than 1 character, will produce an error.
+When you use this in (unpack:), such as (unpack: "-" into (p-many:(p-not:'s'))-type _a), and the optional pattern doesn't match,
+the variable will be set to the empty string "".
+While you can use this as the datatype of a TypedVar, you can't nest TypedVars inside this.
+--->
+:: p-not_1
+(p-not: digit, ".")
+
+:: p-not_2
+(p-not:..."aeiou")
+
+:: p-not_3
+(p:"[", (p-many:(p-not:"]")), "]")
+

@@ -1,0 +1,23 @@
+<!--
+Rationale:
+This is similar to (link:), but allows the text of the link to remain in the passage
+after it is clicked. It allows key words and phrases in the passage to expand and
+reveal more text after themselves. Simply attach it to a hook, and the hook will only be
+revealed when the link is clicked.
+
+Details:
+This creates a link which is visually indistinguishable from normal passage links. However, a changer can optionally be given, after the
+string, to change the appearance of the link. This must be a changer that would be accepted by (enchant-in:) or
+(link-style:) - which is to say, (link:), (replace:), (append-with:), or any of their relatives cannot be given, or else an error will result.
+Note that if you wish to apply a changer to every link in the passage (or, via the use of a 'header' or 'footer' tagged passage, every link
+in the story), then you can simply use (enchant:) with ?Link instead.
+The created link is displayed in place of the hook's contents, and is exempt from all changers that would normally apply
+to the hook. This means that changers like (text-colour:), added to this changer, will ONLY apply
+to the hook once it's revealed, and not the link itself. To apply changers to just the link, consider wrapping it in a
+hook itself and using (link-style:), or just using (enchant:) with ?Link to enchant every link.
+If the link text contains formatting syntax, such as "bold", then it will be retained
+when the link is demoted to text.
+--->
+:: link-reveal_1
+(link-reveal: "Heart")[broken]
+

@@ -1,0 +1,29 @@
+<!--
+Rationale:
+The purpose of hidden hooks is, of course, to eventually show them - and this macro is
+how you show them. You can use this command inside a (link:), trigger it in real-time with
+a (live:) macro, or anywhere else. You can also re-reveal a hook that had been hidden with (hide:), but
+any macros in that hook won't be re-run.
+
+Details:
+(show:) will reveal every hook with the given name. To only reveal a specific hook, you can use the
+possessive syntax, as usual: (show: ?shrub's 1st).
+You can attach a transition changer, such as (transition:), (transition-time:), (transition-delay:), and the rest, to this command.
+Doing so will cause that transition to be applied to the hook.
+Much like (replace:), (show:) cannot affects hooks or text that haven't been printed yet - if the (show:)
+runs at the same time that the passage is appearing (as in, it isn't inside a hook that's delayed by (live:), (link:), (event:)
+or similar macros), and a hook or line of text appears after it in the passage, the macro won't replace its contents
+even if it's a valid target. For example: (show:?fence)|fence)[A white picket fence.] won't work because the (show:) runs immediately.
+If you provide to (show:) a hook which is already visible, nothing will happen - no error will be produced. If you provide to
+(show:) a hook that had been visible, but was hidden with (hide:), then the hook will reappear, but its macros won't be re-run.
+If you wish to re-run an already visible hook, use (rerun:). Note that hooks whose visible contents have been replaced with
+nothing, such as via (replace: ?1)[], are still considered "visible".
+If you give ?page to (show:), an error will result - the entire page can't ever be "hidden".
+If you wish to reveal a hook after a number of other links have been clicked and removed, such as those created
+by (link-reveal:) or (click:), you may find the (more:) macro to be convenient.
+--->
+:: show_1
+|fan)[The overhead fan spins lazily.]
+
+(link:"Turn on fan")[(t8n:"dissolve")(show:?fan)]
+

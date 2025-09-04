@@ -1,0 +1,11 @@
+<!--
+Rationale:
+Sometimes, you may wish to obtain some information about a datamap. You may want
+to list all of its data names, or determine how many entries it has. You can use
+the (dm-names:) macro to do these things: if you give it a datamap, it produces
+a sorted array of all of its names. You can then (print:) them, check the length
+of the array, obtain a subarray, and other things you can do to arrays.
+--->
+:: dm-names_1
+(dm-names: (dm:'B','Y', 'A','X'))
+

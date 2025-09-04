@@ -1,0 +1,15 @@
+<!--
+Rationale:
+While the (click:) macro lets you add links to your text without placing lots of macro code in the middle of your prose, there isn't
+an obvious way of creating a repeatable link, similar to (link-rerun:) or using (link:) with (rerun:), in the same way. This macro provides that functionality.
+
+Details:
+This changes the enchanted text into a link in the same way as (click:). As with most link macros, you may style the link by providing a changer (or a lambda
+producing a changer) as the second value.
+--->
+:: click-rerun_1
+The only place you haven't searched yet is the washing basket, and you know there's nothing to find in there.
+
+(set:_t to 0)\
+(click-rerun:"washing basket")[(set:_t to it+1)You pull out (nth:_t, "two left socks","a tie-dyed tie","a thimble","a laced tablecloth"). Just in case it was under there.]
+

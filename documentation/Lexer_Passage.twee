@@ -1,0 +1,133 @@
+{= <!-- Use collapsing whitespace for the entire passage for readability. -->
+
+<!--
+  ================================================================
+  Harlowe 3.3.8 - Comprehensive Lexer Test Passage
+  ================================================================
+  Purpose: This passage contains examples of every token type a
+  Harlowe lexer should recognize. If your lexer can successfully
+  tokenize this entire file without any unrecognized characters,
+  it is likely complete.
+-->
+
+<!-- Section 1: Literals & Basic Data Types -->
+# Section 1: Literals
+
+(print: 123.45) <!-- NumberLiteral (float) -->
+(print: -50) <!-- NumberLiteral (integer with negative sign) -->
+(print: 5s + 200ms) <!-- NumberLiteral with time suffixes -->
+
+(print: "This is a string with an escaped \" quote.") <!-- StringLiteral (double quotes) -->
+(print: 'This is a string with a single quote.') <!-- StringLiteral (single quotes) -->
+
+(print: true) <!-- BooleanLiteral (lowercase) -->
+(print: FALSE) <!-- BooleanLiteral (case-insensitive) -->
+(set: $myColor to #FF00FF) <!-- HexColorLiteral -->
+
+
+<!-- Section 2: Variables, Hooks, and Identifiers -->
+# Section 2: Identifiers
+
+(set: $story_var to "a story variable")
+(set: _temp_var to "a temp variable")
+(print: ?myHook) <!-- Hook Reference -->
+(print: $story_var)
+(print: _temp_var)
+(print: (a:1)'s 1st) <!-- Dataname access with 's -->
+(print: 1st of (a:1)) <!-- Dataname access with 'of' -->
+
+
+<!-- Section 3: Macro Calls -->
+# Section 3: Macro Calls
+
+(set: $myArray to (a: 4, 5, 6))
+(print: (either: 1, 2, 3)) <!-- Macro with multiple arguments -->
+(print: (random: 1, (count: $myArray, 4))) <!-- Nested macro call -->
+(print: ...(a: 7, 8)) <!-- Spread operator -->
+
+
+<!-- Section 4: Keywords & Operators -->
+# Section 4: Keywords and Operators
+
+<!-- Assignment -->
+(set: $num to 10)
+(put: "value" into $str)
+(set: num-type $typedVar to 100) <!-- TypedVar with -type suffix -->
+
+<!-- Logic and Comparison -->
+(if: $num > 5 and ($str contains "val" or not false)) [
+  (print: $num is 10)
+  (if: 5 is not 6)[ (print: "Math works.") ]
+  (if: "a" is in "abc")[ (print: "Strings work.") ]
+  (if: $typedVar matches num)[ (print: "Patterns work.") ]
+  (if: $num is a number)[ (print: "Type checks work.") ]
+]
+
+<!-- Lambdas -->
+(for: each _item, ...$myArray)[ (print: _item) ]
+(find: where it > 4, ...$myArray)
+(altered: via it * 2, ...$myArray)
+(folded: _i making _total via _total + _i, ...$myArray)
+(event: when time > 5s)[This shows after 5 seconds.]
+
+<!-- Binding -->
+(cycling-link: bind $choice, "A", "B")
+(dropdown: 2bind $twoWay, "X", "Y")
+
+
+<!-- Section 5: Prose Markup (Styling) -->
+# Section 5: Prose Styling Markup
+
+This text has //italic//, ''bold'', and ~~strikethrough~~ styles.
+It also supports **strong emphasis** and E=mc^^2^^ superscript.
+This line uses a backslash \
+to escape a newline.
+
+<!-- Verbatim text is a major test case -->
+`This is verbatim text with a (macro:) call inside.`
+``This has a ` backtick inside.``
+```And this has ``two`` backticks.```
+
+
+<!-- Section 6: Structural Markup -->
+# Section 6: Structural Markup
+
+## This is an H2 Heading
+### This is an H3 Heading
+
+* This is a bulleted list item.
+  ** This is a nested item.
+0. This is a numbered list item.
+  0.0. And a nested numbered item.
+
+--- <!-- Horizontal Rule -->
+
+==> <!-- Right Aligner -->
+This text is right-aligned.
+=><= <!-- Center Aligner -->
+This text is centered.
+<== <!-- Left Aligner -->
+This text is back to normal.
+
+|== <!-- Column Markup -->
+This is the first column.
+==|
+This is the second column.
+|==|
+
+
+<!-- Section 7: Hooks & Links -->
+# Section 7: Hooks and Links
+
+[This is a simple hook.]
+[This is a named hook]<myHook|
+|myOtherHook>[Another named hook.]
+|hiddenHook)[This hook is hidden.]
+
+[[Link Text->PassageName]] <!-- Standard Link -->
+[[ShorthandLink]] <!-- Shorthand Link -->
+
+[== <!-- Unclosed hook -->
+This text is inside the unclosed hook.
+
+} <!-- This is the closing curly brace for the initial {= -->

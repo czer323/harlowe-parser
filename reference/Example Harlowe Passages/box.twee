@@ -1,0 +1,47 @@
+<!--
+Rationale:
+There are times when you want to make a block of text appear to occupy an enclosed, small region with its own scroll bar,
+so that players can scroll through it separate from the rest of the passage - for instance, if it's an excerpt of some
+in-story document, or if it's a "message log" which has lots of text appended to it with (append:). This macro
+provides that ability.
+
+Details:
+The first value you give to this macro is a "sizing line" similar to the aligner and column markup - a sequence of zero or
+more = signs, then a sequence of characters (preferably "X"), then zero or more = signs. Think of this string as a visual
+depiction of the box's horizontal proportions - the = signs are the space to the left and right, and the characters in
+the middle are the box itself. If you wish to specify that the box should take up the full width, you must provide
+just a single character, like "X" - anything more will cause an error.
+The second, optional value is a height, in text lines. This size varies based on the font size of the containing element,
+which is adjustible with (text-size:) and other changers. The hook will (as of version 3.3.6) be given a CSS height value of 1.5em
+(the default CSS line-height) multiplied by the number of lines given. If you need to reposition the hook vertically, consider using
+(float-box:) instead. Note that this value will NOT adjust to match any custom CSS padding or line-height
+given to this hook in addition to (box:).
+If no height is given, then it will use a height large enough to display all of the lines, as usual.
+If a non-whole number is given, an error will be produced.
+The "containing element" is whatever structure contains the hook. If it's inside column markup, the containing column is the
+element. If it's inside another hook (including a hook that also has (box:) attached), that hook is the element. Usually,
+however, it will just be the passage itself.
+This changer does not interact well with (align:), which also sets the horizontal placement of hooks - adding these changers
+together will cause one to override the placement of the other. (align:) will also, if center-alignment is given, force
+the hook's horizontal size to 50% of the containing element.
+If you want the box's horizontal size to be a large proportion of the available width, it may be more readable if you uniformly varied
+the characters that comprise the sizing string: (box:"=XxxxXxxxXxxxX=", 0.25), for instance, makes it easier to discern that
+the box is 13/15th of the available width.
+You can use this with (change:) or (enchant:) and ?passage to affect the placement of the passage in the page. (Note that doing so will change
+the horizontal padding of the <tw-story> HTML element, which is normally 20%. It will become 0%, and the <tw-passage>'s new margins
+will define its position on the screen.)
+The resulting hook has the CSS attributes "display:block", "overflow-y:auto", and "box-sizing:content-box". Additionally,
+the hook will have 'padding:1em', unless another padding value has been applied to it (such as via (css:)).
+--->
+:: box_1
+(box:"=XX=", 1)[Chapter complete]
+
+:: box_2
+(box:"==X", 3)[Chapter complete]
+
+:: box_3
+(box:"X", 7)[Chapter complete]
+
+:: box_4
+(enchant: ?passage, (box:"XXX="))
+

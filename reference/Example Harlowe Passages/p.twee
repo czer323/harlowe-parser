@@ -1,0 +1,52 @@
+<!--
+Rationale:
+The contains operator is useful for searching strings for words, characters or substrings, but it's noticeably limited when you
+want to make more sophisticated queries about a string's contents. For instance, what if you want to check if a string begins with any uppercase
+letter, followed by only lowercase letters? Or, what if you want to check if a string contains any words inside quotation " marks? You could design
+and write a cumbersome (loop:) hook to compute these using many contains checks, but there's a much easier way to do so - rather than check if
+a string contains a substring, check if it matches a pattern that precisely describes what a valid substring should look like.
+A suite of macros, starting with the (p:) macro, are available to construct string patterns. Give the (p:) macro an ordered sequence of strings (like "Mr.")
+or datatypes (like whitespace, alnum, newline, uppercase, lowercase, or other string pattern macro calls), and it will produce a datatype that, when used with matches or is a,
+will match a string that exactly fits the given sequence. (p: "The", (p-many:whitespace), "End") will match the strings "The End", "The  End", "The   End", and so forth.
+(p: uppercase, "1", (p-opt:"A")) will match "A1", "B1", "A1A", "C1", and so forth. Spread datatypes can be used to represent zero or more of a given string
+datatype: ...uppercase means "zero or more uppercase letters", ...whitespace means "zero or more whitespace characters" and so forth - though datatypes
+that represent multiple characters, such as ...str, is the same as str.
+You may notice a similarity between these patterns and array/datamap patterns. Arrays and datamaps can be inspected using the matches operator when
+combined with datatypes and the data structure macros (a:) and (dm:) - (a:(a:num,num),(a:num,num)) matches $array
+checks that the array in $array contains two arrays that each contain two numbers, all in one line of code. You can't do this with strings, though,
+because a string can only hold characters, not arbitrary data like datatypes. So, these macros provide that functionality for strings, too.
+String patterns can be used with (unpack:) to unpack parts of a string into multiple variables at once. For instance,
+(set: (p: (p-opt:"Dr. "), (p: alnum-type _firstName, whitespace, alnum-type _lastName)-type _fullName) to "Dr. Iris Cornea")
+creates three variables, _firstName, _lastName and _fullName, from a single string, and sets them to "Iris", "Cornea", and "Iris Cornea", respectively.
+
+Details:
+When (p:), and some (but not all) macros like (p-many:), are given multiple values, it is treated as a sequence. Strings are matched to sequences as follows: first,
+Harlowe checks if the start of the string matches the first value in the pattern. If it matches, then Harlowe checks if the start of the remaining portion of the string
+matches the next value in the pattern. When every part of the string has been matched to every one of the values, then the whole string is considered a match for the whole sequence.
+For example, in the case of "egg orb" matches (p:"egg",whitespace,"orb"):
+0. Harlowe checks if the start of "egg orb" matches "egg". It does, so the portion that matches "egg" is excluded, leaving " orb".
+0. Harlowe checks if the start of " orb" matches whitespace. It does, so the portion that matches whitespace is excluded, leaving "orb".
+0. Harlowe checks if the start of "orb" matches "orb". It does. As this means every part of the string has been matched to every one of the values, the entire
+statement "egg orb" matches (p:"egg",whitespace,"orb") evaluates to boolean true.
+By default, datatypes produced with this macro (string patterns) will only match strings that entirely match the pattern. (p: ":", (p-opt:"-"),")") will match ":)" and ":-)",
+but not match " :-) " or "Sorry :)". You can use the str datatype inside (p:) to represent any amount of unimportant characters. Thus, by rewriting the preceding pattern as
+(p:str, ":", (p-opt:"-"),")", str), you can produce a datatype that matches any string that contains ":)" or ":-)" anywhere inside it. Alternatively, (p:":", (p-opt:"-"),")", str)
+can match just strings that start with ":)" or ":-)", and (p:str, ":", (p-opt:"-"),")") for strings that end with ":)" or ":-)". If you'd rather only compare the start or end of strings in
+a case-by-case basis, you can instead take the pattern and see if it matches the start or end of those strings - (p: ":", (p-opt:"-"),")") matches "Sorry :)"'s end.
+Don't forget that you can save individual parts of a string pattern into variables, and use them to construct larger patterns afterward! For instance,
+(set: $HTTP to (p: "http", (p-opt:"s"), "://")) sets $HTTP to a string pattern that matches "http://" or "https://". With that, you can write
+checks like (if: $userURL matches (p: $HTTP, "lightside.college/", str)) and (if: $userURL matches (p:$HTTP, "sunglasses.darkweb/", str)) later in your story, without
+needing to rewrite the $HTTP pattern each time.
+--->
+:: p_1
+"Rentar Ihrno" matches (p:(p-many:1,6,alnum),whitespace,(p-many:1,6,alnum))
+
+:: p_2
+(set:$upperFirst to (p:uppercase,(p-many:lowercase)))(set:$upperFirst-type $name to "Edgar")
+
+:: p_3
+(unpack: $roadName into (p:str,(p-either:'St','Rd','Ln','Ave','Way')-type _roadTitle))
+
+:: p_4
+(p:"$", digit, ...digit) matches "$21000"
+

@@ -1,0 +1,19 @@
+<!--
+Rationale:
+For an explanation of what arrays are, see the Array article. This macro is the primary
+means of creating arrays - simply supply the values to it, in order.
+
+Details:
+Note that due to the way the spread ... operator works, spreading an array into
+the (a:) macro will re-create the original array unchanged: (a: ...$array) is the same as just $array.
+--->
+:: a_1
+(a:)
+
+:: a_2
+(a:
+    "You didn't sleep in the tiniest bed",
+    "You never ate the just-right porridge",
+    "You never sat in the smallest chair",
+)
+

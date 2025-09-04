@@ -1,0 +1,14 @@
+<!--
+Details:
+Note that the (visited:) macro can be used for checking if a passage was visited earlier in the game. So, you don't necessarily need to
+use this macro to record that the player has visited the destination passage. Generally, you should use this macro only if you
+need to record that the player used this specific link to visit that passage.
+Note also that there's no way to "cancel" traveling to the new passage once the link is clicked, unless you include (go-to:),
+(undo:), or another such macro inside the hook.
+--->
+:: link-reveal-goto_1
+(link-reveal-goto: "Study English", "Afternoon 1")[(set:$eng to it + 1)]
+
+:: link-reveal-goto_2
+(link-reveal-goto: "Fight the King of England", "Death")[(dialog:"You asked for it!")]
+

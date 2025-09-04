@@ -1,0 +1,34 @@
+<!--
+Rationale:
+By default, each passage in a Harlowe story features a narrow sidebar to the left, housing "Undo" and "Redo" menu icons.
+However, other functions may be desirable to have available to the player at all times, such as an option to restart the story from the beginning.
+This would be best suited to short stories with a high density of random or branching content, such as a story with dozens of options that ends after
+a certain number of turns, or a procedurally generated puzzle with a lot of dead-ends.
+
+Details:
+Of course, you can use this in normal passage prose, if you wish - they are merely commands, just like (link-goto:) or (print:).
+If you wish to change the icon to a different symbol, you may provide a string containing a single character to this macro.
+If none is given, the default symbol is ⟲ (in HTML, &#10226;).
+You may also provide a string that contains a label for the icon. This label must have more than one character in it (so that it isn't
+confused with the optional icon string) and will be placed beneath the icon. The label's contents will NOT be interpreted as Harlowe markup, so
+everything in it will be used verbatim for the label. This is because, unlike links, the label isn't considered part of passage prose.
+If both strings given to this macro have more than one character in them, an error will result.
+This command creates an element that uses the same default CSS styling as the sidebar's icons: a <tw-icon> holding a glyph of text at 66px font size,
+with 0.2 opacity that changes to 0.4 when hovered over.
+Normally, Harlowe stories will attempt to preserve their current game state across browser page reloads.
+This macro will suppress this behaviour, guaranteeing that the story restarts from the beginning.
+Clicking this icon will NOT prompt the player with any kind of dialogue box warning them that this will restart the story. Instead, the story will
+restart without prompting.
+--->
+:: icon-restart_1
+(replace:?sidebar)[(icon-restart: )]
+
+:: icon-restart_2
+(icon-restart:"⟲")
+
+:: icon-restart_3
+(icon-restart:"Restart")
+
+:: icon-restart_4
+(icon-restart:"⟲", "Restart")
+

@@ -1,0 +1,12 @@
+<!--
+Rationale:
+Sometimes, you may wish to examine the values stored in a datamap without
+referencing every name - for instance, determining if 0 is one of the values.
+(This can't be determined using the contains keyword, because that only checks
+the map's data names.) You can extract all of the datamap's values into an array
+to compare and analyse them using (dm-values:). The values will be sorted by
+their associated names.
+--->
+:: dm-values_1
+(dm-values: (dm:'B',24, 'A',25))
+

@@ -1,0 +1,26 @@
+<!--
+Rationale:
+While the (passage:) and (passages:) datamaps can provide the tags, name and source code of your story's passages by default,
+there are many cases when you need more specific data than just strings, such as a number or a changer. An example is when making links for
+passages that have been chosen non-deterministically, such as by (open-storylets:) - you may want the link to be accompanied with a short description fitting
+the passage, or you may want each passage to have a random chance of not appearing at all. Moreover, you want to be able to write this information inside
+the passage itself, as you write it, just as tags are written on the passage as you write it.
+The (metadata:) macro provides this functionality - it augments the (passage:) datamap for the current passage,
+adding extra data of your choosing to it, as if by adding a (dm:) to it at startup.
+
+Details:
+The data names and values are provided to (metadata:) as if it was a (dm:) macro call – first the string names, then the values, in alternation.
+Being a metadata macro, a (metadata:) macro call must appear in the passage before every other non-metadata macro in the passage, such as (set:) and (if:).
+(This doesn't include macros inside a "header" or "footer" tagged passage.) The recommended place to put it is at the top of the passage.
+Every passage's (metadata:) macro is run just once, at startup. If an error occurs while doing so (for instance, if a value is given without a matching name)
+then a dialog box will appear at startup, displaying the error.
+Since passages already have "source", "name" and "tags" data names in their datamap, trying to use these names in a (metadata:) macro will produce an error.
+Putting this in a "header", "startup" or "footer" tagged passage will NOT cause this metadata to be applied to every passage, much as how adding extra tags
+to a "header", "startup" or "footer" tagged passage will not cause those tags to apply to every passage.
+--->
+:: metadata_1
+(metadata: "danger", 4, "hint", "Dragon teeth are fire-hardened.")
+
+:: metadata_2
+(metadata: "rarity", 5)
+

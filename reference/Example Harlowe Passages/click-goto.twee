@@ -1,0 +1,11 @@
+<!--
+Details:
+This construction differs from simply nesting (go-to:) in a hook, as in (click:?page)[(goto:"Stonehenge")] in one important respect: you can
+attach the (t8n-depart:) and (t8n-arrive:) changers to the (click-goto:) command, such as by (t8n-depart:"dissolve")(click-goto:?page, "Stonehenge"),
+and the passage transition will be applied when you click the indicated area. In the former construction, you'd have to attach the (t8n-depart:) and (t8n-arrive:)
+macros to the interior (go-to:) command rather than the (click:) command.
+--->
+:: click-goto_1
+Time to get in your crimchair, plug in your crimphones, power up your crimrig and your crimgrip - the next page in your crimming career awaits.
+(click-goto: "crim", "Test")
+

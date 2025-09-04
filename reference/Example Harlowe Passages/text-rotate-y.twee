@@ -1,0 +1,17 @@
+<!--
+Details:
+The surrounding non-rotated text will behave as if the rotated text is still in its original position -
+the horizontal space of its original length will be preserved, and text it overlaps with vertically will
+ignore it.
+A rotation of 90 degrees will, due to the rotational axis, cause the hook to disappear, appearing edge-on to the viewer.
+A rotation of 180 degrees willreverse the hook, as if (text-style:"mirror") was applied.
+Due to browser limitations, hooks using this macro will have its CSS display attribute
+set to inline-block.
+--->
+:: text-rotate-y_1
+(text-rotate-y:45)+(size:1.5)[ATE BREAKFAST!
+
+READ THE NEWS!
+
+FOUND A LOST SOCK!]
+

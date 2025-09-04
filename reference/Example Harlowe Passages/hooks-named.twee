@@ -1,0 +1,20 @@
+<!--
+Rationale:
+The standard syntax for referring to hooks, in macros such as (replace:), (change:) or (show:), is to write a HookName, such as ?door. That syntax,
+though, requires that you hard-code the name of the hook. This macro lets you construct a HookName from one or more existing strings or other variables,
+so that the exact hook referenced depends on the game state.
+This macro is called (hooks-named:) to avoid confusion with (hook:), and also to convey that a HookName will refer to any number of hooks as long as they
+have the same name.
+
+Details:
+Note that the HookNames produced by this macro have the same functionality as other HookNames. In particular, you can specify the 1st hook, 2ndlast and so forth
+by writing, for instance, (hooks-named: "A")'s 2ndlast. Also note that the built-in HookNames can be constructed with this macro - (hooks-named:"passage") is
+the same as ?passage.
+If an empty string is given, then this will cause an error.
+--->
+:: hooks-named_1
+|oracle)["I scry with sticks, not bones."]|mage)["No teeth in the jawbones?"]|bodyguard)["Don't sift through rot."]
+
+(set: $companionType to "bodyguard")
+(link:"Investigate the bones")[(show:(hooks-named:$companionType))]
+

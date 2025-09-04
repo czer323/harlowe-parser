@@ -1,0 +1,15 @@
+<!--
+Rationale:
+After you've written a series of hooks guarded by (if:) and (else-if:), you'll often have one final
+branch to show, when none of the above have been shown. (else:) is the "none of the above" variant
+of (else-if:), which needs no boolean expression to be provided. It's essentially the same as
+(else-if: true), but shorter and more readable.
+For more information, see the documentation of (else-if:).
+--->
+:: else_1
+The coins fall... 
+\(if: (either:false, false, false, true))
+    [and both land on tails! That means you've won the bet!]
+\(else: )
+    [and one of them lands heads-up.]
+

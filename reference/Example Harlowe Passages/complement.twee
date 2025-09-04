@@ -1,0 +1,12 @@
+<!--
+Details:
+This is a very simple macro - the returned colour is the same as the input colour, except that its LCH hue
+(as given to the (lch:) macro) has been rotated by 180 degrees, producing a colour with equivalent chroma
+and luminosity, but an opposite hue.
+Note that, unlike (text-colour:), this will not take a string containing a CSS colour. This is because
+it operates purely on Harlowe colour data, and doesn't have a means of converting CSS colours into
+colour data.
+--->
+:: complement_1
+(complement:orange)
+

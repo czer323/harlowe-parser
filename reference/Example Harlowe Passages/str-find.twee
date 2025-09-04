@@ -1,0 +1,37 @@
+<!--
+Rationale:
+The matches operator allows you to check if a string contains a specific substring that matches a pattern. This macro goes further, leting you extract every instance
+of those matching substrings, and use them as data. This is very useful if you have a structured string that you'd like to "break down" by removing unimportant
+parts, but which isn't uniform enough to simply use (split:) for.
+Using typed variables to extract multiple components of the substring at once, such as in the above example, can let you directly translate a string
+into a sequence of data structures that provide easy access to that data. Rather than having to perform additional (str-find:) calls on the results of the first
+(str-find:), you can tag parts of the initial pattern with-type and a temp variable name, thus causing a datamap of those parts to be created. This array of
+datamaps can then be tweaked further with (altered:). If the last (str-find:) example above was stored in the variable _pies, then one could write
+(altered: via its cost + " for " + (lowercase:its flavor), ..._pies) to create (a: "5.50 for apple", "14.50 for pumpkin").
+
+Details:
+This macro only takes a string pattern as its first value. This is because, if a string was given, every result in the produced array would simply be a copy of that string,
+which isn't particularly useful.
+Here is a more detailed description of how (str-find:) works when the pattern contains typed variables. Whenever (str-find:) encounters a substring,
+it takes the substring, and "unpacks" it into the typed variables in the pattern (in a manner similar to (unpack:)). Then, it immediately
+converts these temp variables into datamap names and values, and produces a datamap corresponding to that particular substring. Finally, a "match" dataname is added
+holding the full substring.
+Thus, even though this macro can use typed temp variables in its pattern, this does not cause any temp variables to be created in the passage or containing hook. Other macro calls can't access
+the temp variables used here, and they essentially do not exist. This is similar to (str-replaced:)'s use of temp variables in its patterns, which also does not affect the temp variables in
+the passage or containing hook.
+If no matches of the pattern exist within the string, an empty array is returned.
+If two identical TypedVar names are used in the pattern (such as (p: alnum-type _a, alnum-type _a)) then an error will occur.
+If a TypedVar named _match is used, then an error will occur (because this collides with the "match" dataname containing the full substring).
+--->
+:: str-find_1
+(str-find: digit, "PARSEC47")
+
+:: str-find_2
+(str-find: (p:"S", ...alnum), "Mr. Smith, Mr. Schmitt, and Mr. Smithers")
+
+:: str-find_3
+(str-find:(p:"$", ...digit, ".", ...digit), "Apple pie - $5.50; Pumpkin pie - $14.50")
+
+:: str-find_4
+(str-find:(p:...alnum-type _flavor, " pie - $", (p:...digit, ".", ...digit)-type _cost), "Apple pie - $5.50; Pumpkin pie - $14.50")
+

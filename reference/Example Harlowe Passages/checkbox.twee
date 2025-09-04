@@ -1,0 +1,22 @@
+<!--
+Rationale:
+This command uses the common web page checkbox input to let you ask the player for their preference on an auxiliary or
+metatextual feature or decision. Unlike the (confirm:) command, this doesn't directly ask the player a yes/no question, but simply
+presents a phrase or option that they can opt into or out of. Thus, it is useful for offering choices that aren't directly "in-character"
+or diegetic in the narrative - though, you could still use it for that purpose if the clinical nature of a checkbox was especially fitting for the setting.
+
+Details:
+This macro accepts two-way binds using the 2bind syntax. These will cause the checkbox's contents to always match the current value of the bound
+variable, and automatically update itself whenever any other macro changes it. However, if the variable no longer contains a boolean, then
+it won't update - for instance, if the variable becomes the number 23, the checkbox won't update.
+If the bound variable isn't two-way, the checkbox will be unchecked when it appears, and the variable will be set to false as soon as it is displayed.
+If the bound variable has already been given a type restriction (such as by (set:num-type $candy to 1)), then, if that type isn't string or
+str, an error will result.
+If the label string is empty, an error will result.
+--->
+:: checkbox_1
+(checkbox: bind $gore, "Show violent scenes")
+
+:: checkbox_2
+(checkbox: 2bind $perma, "Permadeath")
+

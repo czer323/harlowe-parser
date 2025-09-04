@@ -1,0 +1,32 @@
+<!--
+Rationale:
+This is designed as a shorthand for writing certain common macro calls with the same first values over and over. Think of (partial:) as creating
+a partial macro call - one that isn't finished, but which can be used to make finished calls to that macro, by providing the remaining values.
+You may notice that a number of macros in Harlowe have a "configuration-first" ordering of their values - (rotated:) takes the number of rotations first,
+(sorted:) takes the optional sorting lambda first, (cycling-link:) takes the optional bound variable first, and so forth. This ordering works well with
+(partial:).
+
+Details:
+Don't fall into the trap of thinking the values given to (partial:) will be re-evaluated on each call of the custom macro! For instance,
+(partial: "count", (history:)) will not produce a custom macro that is always equivalent to (count:(history:), ..._someOtherNumbers).
+Remember that (history:) produces an array of passage names each time it's called. It is that array that is given to (partial:), so every
+call to the produced custom macro will use that array, and not whatever the current (history:) array would be.
+Unlike macros created with (macro:), the "params" data name of macros created with (partial:) is always an empty array.
+As of 3.3.0, this can not be used with metadata macros such as (metadata:) or (storylet:). Giving "metadata", "storylet" or other such
+macros' names will produce an error.
+--->
+:: partial_1
+(set: $zeroTo to (partial:"range", 0))
+
+:: partial_2
+(set: $askDLG to (partial:"dialog", bind _result))
+
+:: partial_3
+(set: $next to (partial:"link-goto", "==>"))
+
+:: partial_4
+(set: $next2 to (partial: $next, "Continue"))
+
+:: partial_5
+(set: $envNoise to (partial:'either',"","",""))
+

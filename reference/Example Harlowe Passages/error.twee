@@ -1,0 +1,26 @@
+<!--
+Rationale:
+Allowing your custom macros to produce insightful error messages is essential to making them user-friendly, especially
+if you intend other authors to use them. In the example above, for instance, an empty string inputted to the $altCaps
+macro would causes (folded:) to produce an error, as ..._input would spread zero characters. However, the earlier
+custom error provides a better message, explaining exactly what the problem is.
+
+Details:
+As with (output-data:), as soon as this is encountered, all further macros and code in the CodeHook will be ignored.
+Note that this occurs even if the macro is given as input to another macro - (cond: false, (error:"There's a problem"), "")
+will always produce the error, regardless of (cond:)'s behaviour.
+If an empty string is given to this macro, an error (different from the intended error) will be produced. Also,
+attempting to call (error:) outside of a custom macro's CodeHook will cause another (also different from intended) error.
+--->
+:: error_1
+(set: $altCaps to (macro: str-type _input, [
+    (if: _input is "")[(error: "I can't alt-caps an empty string.")]
+    (output:
+        (folded: _char making _result via _result +
+            (cond: pos % 2 is 0, (lowercase:_char), (uppercase:_char)),
+            ..._input
+        )
+    )
+]))
+($altCaps:"")
+

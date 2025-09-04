@@ -1,0 +1,23 @@
+<!--
+Rationale:
+The HSL colour model is regarded as easier to work with than the RGB model used for HTML hexadecimal
+notation and the (rgb:) macro. Being able to set the hue with one number instead of three, for
+instance, lets you control the hue using a single variable, and alter it at will.
+
+Details:
+This macro takes the same range of numbers as the CSS hsla() function.
+Giving saturation or lightness values higher than 1 or lower than 0 will cause an error. However,
+you can give any kind of hue number to (hsl:), and it will automatically round it to fit the 0-359
+degree range - so, a value of 380 will become 20. This allows you to cycle through hues easily by
+providing a steadily increasing variable or a counter, such as (hsl: time / 100, 1, 0.5).
+Giving alpha percentages higher than 1 or lower than 0 will cause an error.
+--->
+:: hsl_1
+(hsl: 120, 0.8, 0.5)
+
+:: hsl_2
+(hsl: 28, 1, 0.4)'s h
+
+:: hsl_3
+(hsl: 120, 0.5, 0.8, 0.6)
+

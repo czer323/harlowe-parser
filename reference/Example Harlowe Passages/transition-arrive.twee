@@ -1,0 +1,14 @@
+<!--
+Details:
+This macro accepts the exact same transition names as (transition:).
+Attaching this macro to a hook that isn't a passage link won't do anything (no error message will be produced).
+You can't combine transitions by adding them together, like you can with (text-style:) -
+(t8n-depart:"dissolve")+(t8n-depart:"shudder") won't make a transition that simultaneously dissolve-fades and shudders.
+The "blur" transition will not work in Internet Explorer 10 or 11.
+--->
+:: transition-arrive_1
+(t8n-arrive: "instant")[[Next morning]]
+
+:: transition-arrive_2
+(enchant: ?Link, (t8n-arrive: "instant"))
+

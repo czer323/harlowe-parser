@@ -1,0 +1,12 @@
+<!--
+Rationale:
+As this is a variation of (replace:), the rationale for this macro can be found in
+that macro's description. This provides the ability to append content to a target, building up
+text or amending it with an extra sentence or word, changing or revealing a deeper meaning.
+--->
+:: append_1
+(append: "Emily")[, my maid]
+
+:: append_2
+(append: ?dress)[ from happier days]
+

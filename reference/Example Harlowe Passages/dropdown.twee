@@ -1,0 +1,33 @@
+<!--
+Rationale:
+Dropdown menus offer a more esoteric, but visually and functionally unique way of presenting the player with
+a choice from several options. Compared to other list-selection elements like (cycling-link:)s or lists of links,
+dropdowns are best used for a long selection of options which should be displayed all together, but would not otherwise
+easily fit in the screen in full.
+While dropdowns, whose use in form UI suggests themes of bureaucracy and utility, may appear best used for "character
+customisation" screens and other non-narrative purposes, that same imagery can also be a good reason to use them within prose
+itself - for instance, to present an in-story bureaucratic form or machine control panel.
+
+Details:
+This macro accepts two-way binds using the 2bind syntax. These will cause the dropdown to always match the current value of the bound
+variable, if it can. Also, it will automatically update itself whenever any other macro changes the bound variable. However,
+if the variable no longer matches any of the dropdown's strings, then it won't update - for
+instance, if the variable becomes "Peasant", then a dropdown with the strings "Duke", "King" and "Emperor" won't update.
+Note that unlike (cycling-link:), another command that uses bound variables, the bound variable is mandatory here.
+Also note that unlike (cycling-link:), empty strings can be given. These instead create separator elements,
+which are rendered as unselectable horizontal lines that separate groups of options. Having empty strings as the first or
+last elements, however, will result in an error (as these can't meaningfully separate one group from another).
+The first element in a (dropdown:) will always be the one initially displayed and selected - and thus, the one that is
+immediately set into the bound variable.
+If you use (replace:) to alter the text inside a (dropdown:), such as (dropdown: bind $tattoo, "Star", "Feather")(replace:"Star")[Claw],
+then the option text and the value assigned to the bound variable will change - but only when the player next interacts with the dropdown.
+$tattoo will be "Star" until a new option is selected, whereupon it will become either "Claw" or "Feather" depending on which was picked.
+Harlowe markup inside (dropdown:) labels will be ignored - the text will be treated as if the markup wasn't present. For instance,
+(dropdown: bind $mode, "//Stealth//", "//Speed//") will produce a dropdown with "Stealth" and "Speed", with the italic styling markup removed.
+--->
+:: dropdown_1
+(dropdown: bind _origin, "Abyssal outer reaches", "Gyre's wake", "The planar interstice")
+
+:: dropdown_2
+(dropdown: 2bind $title, "Duke", "King", "Emperor")
+

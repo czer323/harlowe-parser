@@ -1,0 +1,23 @@
+<!--
+Rationale:
+In practice, this is functionally identical to a (verbatim:) changer attached to a (print:) command. However, one major
+difference is that this can be stored in a variable and used in passage prose by itself, without having to
+attach the changer each time. This scenario is especially useful when dealing with player-inputted text:
+rather than having to display it with two macros each time, you can simply save this command in a variable
+and use that variable.
+
+Details:
+As with (print:), once text is given to this command, there's no easy way to extract it from the command value
+without using (source:). So, you can't provide it to (upperfirst:) and other such macros.
+(upperfirst: (verbatim-print: $name)) will produce an error. Instead, convert the original string
+using (upperfirst:) before giving it to (verbatim-print:).
+If you have a string you need to print frequently, and you don't want to call (verbatim-print:) every time you need to print it,
+you may wish to simply (set:) a (verbatim-print:) into a variable, like so: (set: $vbName to (verbatim-print:$name)). Then, you can
+put the command (set in that variable) into passage prose, and it will work as expected.
+--->
+:: verbatim-print_1
+(v6m-print: "<sarcasm>" + $quip + "</sarcasm>")
+
+:: verbatim-print_2
+(set: $name to (v6m-print: (prompt: "Enter your name:", "")))
+

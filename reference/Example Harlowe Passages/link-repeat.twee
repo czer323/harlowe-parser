@@ -1,0 +1,25 @@
+<!--
+Rationale:
+This is similar to (link:), but allows the created link to remain in the passage
+after it is clicked. It can be used to make a link that fills with increasingly more text after
+each click, possibly conveying a sense of powerlessness or desperation.
+This macro is part of a pair with (link-rerun:) - the latter macro will empty the hook each time the link is
+clicked. This one should be used if you'd prefer the hook to retain each of its past runs.
+The created link is displayed in place of the hook's contents, and is exempt from all changers that would normally apply
+to the hook. This means that changers like (text-colour:), added to this changer, will ONLY apply
+to the hook once it's revealed, and not the link itself. To apply changers to just the link, consider wrapping it in a
+hook itself and using (link-style:), or just using (enchant:) with ?Link to enchant every link.
+
+Details:
+This creates a link which is visually indistinguishable from normal passage links. However, a changer can optionally be given, after the
+string, to change the appearance of the link. This must be a changer that would be accepted by (enchant-in:) or
+(link-style:) - which is to say, (link:), (replace:), (append-with:), or any of their relatives cannot be given, or else an error will result.
+Note that if you wish to apply a changer to every link in the passage (or, via the use of a 'header' or 'footer' tagged passage, every link
+in the story), then you can simply use (enchant:) with ?Link instead.
+--->
+:: link-repeat_1
+(link-repeat: "Add cheese")[(set:$cheese to it + 1)]
+
+:: link-repeat_2
+(link-repeat: "Scream a little ")[A]
+

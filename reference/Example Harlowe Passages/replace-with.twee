@@ -1,0 +1,21 @@
+<!--
+Rationale:
+This changer macro may seem unintuitive and without obvious purpose - what is the point of a changer that changes a hook so drastically that
+nothing is left of its original text, and the player never sees it? However, there are some minor cases where such an effect is helpful: being able to
+pre-fill an empty hook with a given line of text not only saves you from having to write out that text multiple times (similar to saving that text
+in a variable by itself and using (print:) or a bare variable to display it), but also allows additional changers to be combined with it, and
+for (replace:), (append:) and (prepend:) macros to modify it afterward, by targeting the specific name of the attached hook. And, you can, at a
+later point in a story, add this to an existing changer to cause hooks it formerly changed to display different text content.
+
+Details:
+This changer, when attached to a hook, will never allow the prose it replaces to be run - (replace-with:"")[(set:$x to 1)] will not allow
+the enclosed (set:) macro to be run before it is replaced.
+This macro can't be used with (enchant:) or (change:) - attempting to do so will produce an error. You'll want to instead use (replace:), which
+accomplishes the same effect.
+--->
+:: replace-with_1
+(set: $vitalInfoChanger to it + (replace-with:"**This sentence may contain mature content, so we've excised it from your mind.**"))
+
+:: replace-with_2
+(set: $locked to (replace-with:[(text-color:red)[Locked Content] - Beat the game to unlock]))
+

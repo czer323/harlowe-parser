@@ -1,0 +1,13 @@
+<!--
+Rationale:
+Clunky though it looks, this macro serves a single important purpose: inside a (live:)
+macro's hook, its appearance signals that the macro must stop running. In every other occasion,
+this macro does nothing.
+This command can't have changers attached - attempting to do so will produce an error.
+--->
+:: stop_1
+{(set:$packedBags to true)(live: 1s)[
+    (if: $packedBags)[OK, let's go!(stop:)]
+    (else: )[(either:"Are you ready yet?","We mustn't be late!")]
+]}
+

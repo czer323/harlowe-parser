@@ -1,0 +1,22 @@
+<!--
+Rationale:
+Harlowe's debug mode provides panels to check the current game state, the contents of variables, active enchantments, and so forth, providing assistance
+in identifying bugs. Of course, knowing what variables contain is not the same as knowing whether the relationships between them are being maintained, and
+a way of encoding these relationships, in your story, can provide an additional layer of security when debugging your game. 
+(assert:) allows you to assert facts about the game state, facts which absolutely must be true, so much so that
+an error should be produced. For example, if your story's code assumes that the variable $nails will always be smaller than or equal to $maxNails, and you want to
+ensure that no bugs are written that cause $nails to be greater, you may write (assert: $nails is <= $maxNails), and place that call in
+a "debug-header" tagged passage. Thus, should a bug ever appear which causes these variables to no longer maintain their relationship, the (assert:) call will produce an error.
+
+Details:
+Note that there are other tools within Harlowe to ensure that variables are obeying certain restrictions, which make the need for certain simple (assert:) calls
+unnecessary. Chief among these features is TypedVars, which can be provided to (set:) to permanently and automatically restrict a certain variable to a narrow range
+of data. Instead of writing (assert: $petals is an int), you can change the earliest (set:) call that creates $petals to (set: int-type $petals to 0).
+Though this is classed as a "debugging" macro, this works even outside of debug mode.
+This can also be useful within custom macros, as a shortened form of combining (if:) with (error:). However, the error message produced by (assert:) may not
+be as insightful as the customisable error message given to (error:), so it's not especially recommended for use within custom macros that are meant for other authors
+to use.
+--->
+:: assert_1
+(assert: $isWounded is $isBleeding or $isBandaged)
+

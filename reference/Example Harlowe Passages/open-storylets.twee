@@ -1,0 +1,23 @@
+<!--
+Rationale:
+For a greater explanation of what storylets are (essentially, disconnected sets of passages that can be procedurally visited when author-specified requirements are met),
+see the (storylet:) macro's description. This macro is used to create links or listings of storylets which are currently "open" to the player, in combination with other
+macros such as (for:), (link-goto:) and such.
+
+Details:
+The exact algorithm determining the contents and order of the resulting array is as follows.
+The (urgency:) macro can thus be used in passages to affect their order in this array, and (exclusivity:) can be used to situationally exclude certain passages from it.
+The passages returned are datamaps identical to those returned by (passage:). They contain the following names and values.
+If no passages' storylet requirements are currently met, the array will be empty.
+If no passage matches the search lambda given to (open-storylets:), the array will be empty.
+If any passage's (storylet:) macro produces an error (such as by dividing a number by 0), it will be displayed when the (open-storylets:) macro is run.
+--->
+:: open-storylets_1
+(for: each _p, ...(open-storylets:)'s 1stTo5th)[(link-goto: _p's name) - ]
+
+:: open-storylets_2
+(link-goto: "Off to the next job!", (either: ...(open-storylets: where 'night' is not in its tags))'s name)
+
+:: open-storylets_3
+You have (plural: (open-storylets: where its tags contains 'quest')'s length, "quest") available.
+

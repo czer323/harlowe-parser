@@ -2,7 +2,6 @@ ReferenceData
 twee3-language-tools-master
 .github
 .vscode
-Example Harlowe Passages
 .gemini
 Example Chevrotain
 ReferenceData
@@ -30,3 +29,4 @@ yarn-error.log*
 *.swp
 *.swo
 
+batch-parse-report

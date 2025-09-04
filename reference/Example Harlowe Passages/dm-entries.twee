@@ -1,0 +1,14 @@
+<!--
+Rationale:
+There are occasions where operating on just the names, or the values, of
+a datamap isn't good enough - you'll want both. Rather than the verbose process
+of taking the (dm-names:) and (dm-values:) arrays and using them (interlaced:)
+with each other, you can use this macro instead, which allows the name and value of
+each entry to be referenced using "name" and "value" properties.
+--->
+:: dm-entries_1
+(dm-entries: (dm:'B',24, 'A',25))
+
+:: dm-entries_2
+(altered: _entry via _entry's name + ":" + _entry's value, ...(dm-entries: $m))
+

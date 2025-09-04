@@ -1,0 +1,44 @@
+<!--
+Rationale:
+For more information on custom macros, consult the (macro:) macro's article.
+All custom macros have inputs and output. This macro lets you output an entire hook, displaying it in a single
+call of the macro. Attach this to a hook at the end of your custom macro's code hook, and the custom macro will
+produce a command that displays the hook, similar to how (print:) or (link-goto:) work.
+If you want your custom macro to return single values of data, like numbers or arrays, rather than hooks, please
+use the (output-data:) macro instead.
+
+Details:
+As soon as a hook with (output:) attached is encountered, all further macros and code in the CodeHook will be ignored,
+just as how (go-to:) and (redirect:) behave. This behaviour is unique among changers.
+You can combine (output:) with other changers, like (text-style:) or (link:). The hook that is displayed by the command
+will have those other changers applied to it.
+As you might have noticed, (output:) accepts no values itself - simply attach it to a hook.
+Attempting to use (output:) outside of a custom macro's CodeHook will cause an error.
+As of 3.3.0, custom commands created by (output:) that are stored in story-wide variables can be saved using (save-game:),
+just like any other value. Be warned, however, that these commands take up space in browser storage proprotional to the number and size of
+temp variables used inside the custom macro, and the size of the attached hook. If you're concerned about browser storage space, consider
+limiting the complexity of custom commands you store in story variables.
+--->
+:: output_1
+(set: $describePotion to (macro: dm-type _potion, [
+    (size:0.7)+(box:"=XXXXX=")+(border:"solid")+(output:)[\
+    ##(print:_potion's name)
+    |==
+    ''Hue'': (print:_potion's hue)
+    ''Smell'': (print:_potion's smell)
+    ''Flask'': (print:_potion's flask)
+    ''Effect'': (print: _potion's effect)
+    ==|
+    //(print: _potion's desc)//
+    ]
+]))
+($describePotion: (dm:
+    "name", "Vasca's Dreambrew",
+    "hue", "Puce",
+    "smell", "Strong acidic honey",
+    "flask", "Conical, green glass, corked",
+    "effect", "The drinker will, upon sleeping, revisit the last dream they had, exactly as it was.",
+    "desc", "Though Vasca was famed in life for her more practical potions, this brew is still sought after"
+    + " by soothsayers and dream-scryers alike.",
+))
+

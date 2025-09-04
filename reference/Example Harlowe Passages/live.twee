@@ -1,0 +1,37 @@
+<!--
+Rationale:
+Passage text generally behaves like a HTML document: it starts as code, is changed into a
+rendered page when you "open" it, and remains so until you leave. But, you may want a part of the
+page to change itself before the player's eyes, for its code to be re-renders "live"
+in front of the player, while the remainder of the passage remains the same.
+Certain macros, such as the (link:) macro, allow a hook to be withheld until after an element is
+interacted with. The (live:) macro is more versatile: it re-renders a hook every specified number of
+milliseconds. If (if:) or (unless:) macros are inside the hook, they of course will be re-evaluated each time.
+
+Details:
+Numbers given to macros such as (live:) can be suffixed with ms or s to indicate whether you mean milliseconds or
+seconds (see the article on number data for more information). If you give a bare number, the macro interprets it as milliseconds.
+Live hooks will continue to re-render themselves until they encounter and print a (stop:) macro. (stop:) should be used
+whenever you don't need to keep the hook "live", to save on processing and passage repainting (which can interfere
+with clicking, selecting text, and other interactions).
+As of Harlowe 3.3.4, when testing your story in Debug Mode, you can alter the speed at which (live:) waits (so as to quickly advance
+the passage to an important part, or linger on an important part) by using the "Speed" dropdown in the Tools panel. If you change it to 0.5x,
+(live:) will wait twice as long as instructed: a 1s wait will behave as if it was 2s, and so forth. Changing it to 2x will half (live:)'s wait
+time, conversely. Note that this option will currently not affect the speed of transitions (using (t8n-delay:) or (t8n-time:)).
+A note about timing: due to browser security and resource limitations, modern browsers may arbitrarily increase the delay given to (live:)
+by about 5-10ms, based on how long the (live:) macro has been running and how hard the CPU is working. More importantly,
+if the browser tab becomes inactive (such as by the player switching to another tab), modern browsers will often increase the
+delay by over 1 second, or, if the tab is inactive for a long time, any arbitrary length of time it wishes! In short, there is
+no guarantee that the time interval given to (live:) will actually be the time that will elapse between renders! Please
+use this macro with that limitation in mind.
+If you want to just display a hook once a certain thing happens (that is, when the condition in an (if:) macro becomes
+true) and then (stop:), then the (event:) macro may be shorter and easier to use for this. If you want to display a hook after
+a certain amount of time has passed, then the (after:) macro is almost certainly what you'd prefer to use.
+Currently, you cannot attach (live:) to a command (such as in (live:2s)(link-goto:"?")). You have to wrap the command
+in a hook (such as (live:2s)[(link-goto:"?")]).
+--->
+:: live_1
+{(live: 0.5s)[
+    (either: "Bang!", "Kaboom!", "Whammo!", "Pow!")
+]}
+

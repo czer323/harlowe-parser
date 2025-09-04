@@ -1,0 +1,13 @@
+<!--
+Details:
+If the given URL is invalid, no error will be reported - the browser will simply attempt to
+open it anyway.
+Much like the <a> HTML element, the URL is treated as a relative URL if it doesn't start
+with "http://", "https://", or another such protocol. This means that if your story file is
+hosted at "http://www.example.org/story.html", then (open-url: "page2.html") will actually open
+the URL "http://www.example.org/page2.html".
+This command can't have changers attached - attempting to do so will produce an error.
+--->
+:: open-url_1
+(open-url: "http://www.example.org/")
+

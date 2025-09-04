@@ -1,0 +1,20 @@
+<!--
+Details:
+The border macros accept up to four values. These values refer to sides of a rectangle, going clockwise
+from the top: the first value is the top edge (12 o'clock), second is the right edge (3 o'clock),
+third is the bottom edge (6 o'clock), fourth is the left edge (9 o'clock). You can stop giving
+values anywhere. If an edge doesn't have a value, then it will use whatever the opposite edge's value is.
+This macro affects the style of the border, and accepts the following border names.
+The "none" type can be used to remove a border that another changer may have included. NOTE: As of Harlowe 3.2.2,
+this can only be used to remove borders from combined changers, such as by (set: $changer to it + (b4r:"none")),
+and can't be used to remove borders from already-changed hooks or other structures.
+The default size of the border, with no other CSS changes to any elements, is 2px (2 pixels),
+unless a change is applied using (border-size:).
+Due to browser CSS limitations, the border will force the hook to become a single rectangular area. The hook can
+no longer word-wrap, and moreover occupies every line in which its text is contained. So, this changer is best
+suited for entire paragraphs of text (or hooks using the (box:) changer) rather than single words or phrases.
+--->
+:: border_1
+(b4r:"dotted")[I love you!
+I want to be your wife!]
+

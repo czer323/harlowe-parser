@@ -1,0 +1,24 @@
+<!--
+Rationale:
+English ordinals are useful to express that a number refers to a position or ordering of some object or item, but constructing an
+ordinal word from a number can be tricky, given that English ordinals have special cases for numbers ending in 1 or 2. This macro, then,
+serves to smooth over those cases, and provide a succinct means to construct these words.
+
+Details:
+Do not confuse this with the (nth:) macro, which is primarily used to display values in a sequence in passage prose.
+If the number isn't a whole number (such as 2.3), then an error will result.
+Note that you do NOT need to use this to access array data positions, even though their positions are written in the form
+1st, 2ndlast and so forth. You can simply use numbers in brackets (such as $inventoryArray's (2)) to access a particular data value.
+--->
+:: str-nth_1
+(str-nth: 3)
+
+:: str-nth_2
+(str-nth: 11)
+
+:: str-nth_3
+(str-nth: 0)
+
+:: str-nth_4
+(str-nth: -7)
+

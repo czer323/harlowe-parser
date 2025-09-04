@@ -1,0 +1,28 @@
+<!--
+Rationale:
+As you're aware, links are what the player uses to traverse your story. However,
+links can also be used to simply display text or run macros inside hooks. Just
+attach the (link:) macro to a hook, and the entire hook will not run or appear at all until the
+player clicks the link.
+Note that this particular macro's links disappear when they are clicked - if you want
+their words to remain in the text, or for only a small portion of the text
+to disappear, consider using (link-reveal:).
+
+Details:
+This creates a link which is visually indistinguishable from normal passage links. However, a changer can optionally be given, after the
+string, to change the appearance of the link. This must be a changer that would be accepted by (enchant-in:) or
+(link-style:) - which is to say, (link:), (replace:), (append-with:), or any of their relatives cannot be given, or else an error will result.
+Note that if you wish to apply a changer to every link in the passage (or, via the use of a 'header' or 'footer' tagged passage, every link
+in the story), then you can simply use (enchant:) with ?Link instead.
+The created link is displayed in place of the hook's contents, and is exempt from all changers that would normally apply
+to the hook. This means that changers like (text-colour:), added to this changer, will ONLY apply
+to the hook once it's revealed, and not the link itself. To apply changers to just the link, consider wrapping it in a
+hook itself and using (link-style:), such as by the following:
+Alternatively, you can just use (enchant:) with ?Link to enchant every link with the same changer.
+--->
+:: link_1
+(link: "Stake")[The dracula crumbles to dust.]
+
+:: link_2
+(link: "Click to continue")[==
+

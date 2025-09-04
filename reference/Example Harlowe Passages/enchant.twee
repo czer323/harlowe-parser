@@ -1,0 +1,28 @@
+<!--
+Rationale:
+This is a special version of (change:) which doesn't just perform a single transformation of a set of hooks or text - rather,
+like (click:), it creates an ongoing effect that constantly checks and reapplies the changers whenever new hooks or text are inserted into
+the passage, persisting until you navigate to another passage. Consider the following:
+If this were a (change:) command, the second hook revealed by the (link:) wouldn't be affected, as it is inserted into the passage after
+it's finished rendering. The (enchant:) macro allows you to guarantee that every hook or bit of text that you want the changer to affect
+is constantly affected.
+
+Details:
+The (enchant:) macro takes the same values as (change:) - a string can be given instead of a hook name, and a lambda can be given instead of
+a changer. See (change:)'s article for more details about these.
+This macro works well in "header" or "footer" tagged passages - using a lot of (enchant:) commands to style certain words or parts of
+every passage, you can essentially write a "styling language" for your story, where certain hook names "mean" certain colours or
+behaviour. (This is loosely comparable to using CSS to style HTML class names, but exclusively uses macros.)
+When targeting ?Page, ?Passage and ?Sidebar, there is generally no difference between using (enchant:) and using (change:), as there (usually)
+aren't any other hooks with those names in the passage.
+Like (change:), you cannot use (enchant:) with (link:), (replace:), or any of its relatives.
+The enchantment created by this macro cannot change the appearance or behaviour of a completely empty hook, such as |A>[].
+However, once a hook stops being empty (such as when the (append:) macro appends to it), the
+enchantment created by this macro will automatically start applying to it.
+--->
+:: enchant_1
+(enchant: "gold", (text-colour: yellow) + (text-style:'bold'))
+
+:: enchant_2
+(enchant: ?passage's chars, via (t8n-delay:pos * 30) + (t8n:'instant'))
+

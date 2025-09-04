@@ -1,0 +1,19 @@
+<!--
+Rationale:
+This isn't a macro you're likely to commonly use, because most of the time, you have exact knowledge of the
+types of data you use throughout your story. But, this can be helpful in custom macros created with (macro:), if they
+have any any-type parameters. Being able to identify the exact type that such a value is allows you to give types to other
+data based on that type.
+
+Details:
+The only types that this will return are "general" types, like string, number, boolean and such. More specific types
+like even, or descriptive types like empty, will not be returned, even if it's given a value that matches those types. Nor will
+spread datatypes be returned - even if a given string consists only of, say, digits, then ...digits won't be returned instead of str.
+if there isn't a known datatype value for the given data (for instance, if you give it a HookName) then an error will be produced.
+--->
+:: datatype_1
+(if: _theirName is a (datatype:_myName))
+
+:: datatype_2
+(altered: (datatype:_input)-type _n via _n + _input, ..._values)
+

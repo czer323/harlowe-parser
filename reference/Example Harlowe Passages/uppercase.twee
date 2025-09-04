@@ -1,0 +1,8 @@
+<!--
+Details:
+The results of this macro for non-ASCII characters currently depends on the player's browser's Unicode
+support. For instance, 'ß' in uppercase should be 'SS', but some browsers don't support this.
+--->
+:: uppercase_1
+(uppercase: "GrImAcE")
+

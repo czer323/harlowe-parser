@@ -1,0 +1,17 @@
+<!--
+Details:
+The default text size for Harlowe, with no other CSS changes to any elements, is 16px (16 pixels), and its
+default line height is 24px. This macro multiplies both of those CSS properties by the given
+number, scaling both proportionally. This size is absolute - any pure CSS alterations to the text
+size of the passage, story or page, using (css:) or story stylesheets, will NOT be taken into account.
+This macro also scales any markup which displays text larger or smaller by default, such as
+header markup or the "superscript" (text-style:).
+Be careful about using this macro with (hover-style:) - changing the displayed size of the "hover region"
+when the mouse begins to hover over it can lead to the pointer "slipping off" the region, causing it to abruptly
+stop hovering (and deactivating the style) unexpectedly.
+--->
+:: text-size_1
+This is normal text.
+(text-size:0.5)[Umm... this text is half the size of normal text]
+(size:2)[This text is enlarged twofold!]
+

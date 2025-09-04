@@ -1,0 +1,19 @@
+<!--
+Details:
+This is part of a suite of string pattern macros. Consult the (p:) article to learn more about string patterns, special user-created datatypes
+that can match very precise kinds of strings.
+Like (p-not:), and unlike the other macros, each of this macro's arguments represents a different possible match, not parts of a single sequence. If
+you need a possibility to be a sequence of values, you can nest the (p:) macro inside this one, such as in (p-either: (p:str," Crystal"), "N/A").
+You can use this macro, along with the spread ... operator, to succinctly check if the string matches one in a set of characters. For example, to
+check if a string is a single bracket character, you can write (p-either: ..."[](){}"), where each bracket character is in a string that gets spread
+out into single characters.
+Note that while you can use this as the datatype of a TypedVar (as shown previously), you can't nest TypedVars inside this - (set: (p:"A",(p-either:digit-type _d, "X")) to "AX")
+will cause an error, because it's ambiguous whether, when the digit-type _d TypedVar doesn't match, the variable _d should not be set at all (which
+is rather counterintuitive) or if it should be set to an empty string (which contradicts its stated digit-type restriction anyway).
+--->
+:: p-either_1
+"Lovegyre" matches (p: (p-either: ...$emotions), "gyre")
+
+:: p-either_2
+(set: (p-either:"","Hugged","Charmed","Dazed")-type $statusEffect to "")
+

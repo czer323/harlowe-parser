@@ -1,0 +1,20 @@
+<!--
+Rationale:
+The ability to undo the player's last turn, as an alternative to (go-to:), is explained in the documentation
+of the (undo:) macro. This macro provides a shorthand for placing (undo:) inside a (link:) attached hook.
+You may, as part of customising your story, be using (replace:) to change the ?sidebar, and remove its
+default "undo" link. If so, you can selectively provide undo links at certain parts of your story instead,
+by using this macro.
+
+Details:
+As with (undo:), (link-storylet:) and such, if undos aren't available (either due to this being the start of the story, or (forget-undos:) being used)
+then either the optional second string will be displayed instead, or (if that wasn't provided) nothing will be displayed.
+If this is used in a passage, and (forget-undos:) is used later in the passage to prevent undoing, then this link's text will automatically
+be replaced with the optional second string (or disappear if it's not provided). This is similar to how (link-fullscreen:) will
+update itself if another macro changes the player's fullscreen status.
+Note that (link-undo:), unlike (link:), doesn't accept a changer value to style the produced link. This is because, as
+this produces a command (and not a changer), you can simply attach changers to the front of it to style the link.
+--->
+:: link-undo_1
+(link-undo:"Retreat", "Can't retreat!")
+
