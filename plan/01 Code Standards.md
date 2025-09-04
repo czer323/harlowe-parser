@@ -41,3 +41,12 @@
 7. **Review and Enforce in Code Reviews**
    - Require all pull requests to pass linting and formatting checks before merging.
    - Reviewers should reject PRs that do not comply with the documented standards.
+
+## Summary
+
+Basically, the key steps are:
+
+- Ensure code is formatted: `npm run format`
+- Ensure linting tests pass: `npm run lint`
+- Ensure typecheck passes: `npm run typecheck`
+- Ensure tests pass: `npm run test`
