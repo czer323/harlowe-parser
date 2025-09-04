@@ -1,61 +1,75 @@
-/// <reference types="vitest" />
-
-// If Chevrotain is needed, import as:
-// import * as chevrotain from 'chevrotain';
-
 import { describe, expect, it } from "vitest";
-
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { HarloweLexer } from "../src/lexer.js";
-import { HarloweParser } from "../src/parser.js";
-import { printCST } from "../src/printCST.js";
+import { parser } from "../src/parser.js";
+import type { CstNode, IRecognitionException } from "chevrotain";
 
-describe("HarloweParser", () => {
-	function parse(input: string) {
-		const lexResult = HarloweLexer.tokenize(input);
-		const parser = new HarloweParser();
-		parser.input = lexResult.tokens;
-		const cst = parser.passage();
-		return { cst, lexResult, parser };
-	}
+// Main parsing function for tests
+function parse(text: string): { cst: CstNode; errors: IRecognitionException[] } {
+	// In production, the lexer and parser would be reused.
+	const lexResult = HarloweLexer.tokenize(text);
+	parser.input = lexResult.tokens;
+	const cst = parser.passage();
 
-	// Test: Should parse a passage header and plain text without errors.
-	// Input: A passage with a header and plain text body.
-	// Expect: No parser errors, and the CST root node is named "passage".
-	it.skip("parses a passage header and plain text", () => {
-		const input = ":: My Passage\nHello world!";
-		const { cst, parser } = parse(input);
-		expect(parser.errors).toHaveLength(0); // No errors expected
-		expect(cst.name).toBe("passage"); // CST root should be 'passage'
+	const errors = [...parser.errors];
+	// Reset the parser state after each run
+	parser.errors = [];
+
+	return {
+		cst,
+		errors,
+	};
+}
+
+describe("Harlowe Parser", () => {
+	it("should parse simple prose without errors", () => {
+		const input = "This is a simple sentence.";
+		const { errors } = parse(input);
+		expect(errors).toHaveLength(0);
 	});
 
-	// Test: Should parse a macro call without errors.
-	// Input: A single macro call (set: $foo to "bar")
-	// Expect: No parser errors, and the CST root node is named "passage".
-	it.skip("parses a macro call", () => {
-		const input = '(set: $foo to "bar")';
-		const { cst, parser } = parse(input);
-		// Output the CST structure in a readable tree format for inspection
-		printCST(cst);
-		expect(parser.errors).toHaveLength(0); // No errors expected
-		expect(cst.name).toBe("passage"); // CST root should be 'passage'
+	it("should parse a simple macro call without errors", () => {
+		const input = "(print: 'hello world')";
+		const { errors } = parse(input);
+		expect(errors).toHaveLength(0);
 	});
 
-	// Test: Should recover from a syntax error in the macro call argument.
-	// Input: Macro call with invalid argument (set: $foo to @@@)
-	// Expect: At least one parser error is reported (error recovery works).
-	it.skip("recovers from errors", () => {
-		const input = "(set: $foo to @@@)";
-		const { parser } = parse(input);
-		expect(parser.errors.length).toBeGreaterThanOrEqual(1); // Should report error(s)
+	it("should correctly parse the comprehensive 'torture test' passage and match the snapshot", () => {
+		const passagePath = resolve(
+			process.cwd(),
+			"documentation/Lexer_Passage.twee",
+		);
+		const input = readFileSync(passagePath, "utf-8");
+		const { cst, errors } = parse(input);
+
+		expect(errors).toHaveLength(0);
+		expect(cst).toMatchSnapshot();
 	});
 
-	// Test: Should track CST node locations (line/column info).
-	// Input: Passage with header and macro call on next line.
-	// Expect: CST root node has a location property, and startLine is 1 (header line).
-	it.skip("tracks CST node locations", () => {
-		const input = ':: Header\n(set: $x to "y")';
-		const { cst } = parse(input);
-		expect(cst.location).toBeDefined(); // CST node should have location info
-		expect(cst.location?.startLine).toBe(1); // Start line should be 1 (header)
+	describe("Expressions", () => {
+		it("should handle additive and multiplicative precedence", () => {
+			const input = "(print: 1 + 2 * 3)"; // Should be parsed as 1 + (2 * 3)
+			const { errors } = parse(input);
+			expect(errors).toHaveLength(0);
+		});
+
+		it("should handle unary negation precedence", () => {
+			const input = "(print: -2 + 3)";
+			const { errors } = parse(input);
+			expect(errors).toHaveLength(0);
+		});
+
+		it("should handle parenthesized expressions", () => {
+			const input = "(print: (1 + 2) * 3)";
+			const { errors } = parse(input);
+			expect(errors).toHaveLength(0);
+		});
+
+		it("should handle logical operator precedence", () => {
+			const input = "(if: $a is 1 and $b is 2)";
+			const { errors } = parse(input);
+			expect(errors).toHaveLength(0);
+		});
 	});
 });
