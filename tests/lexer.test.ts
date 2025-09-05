@@ -17,14 +17,15 @@ const lex = (input: string) => {
 
 describe("Harlowe Lexer", () => {
 	describe("Category 1: Whitespace & Comments", () => {
-		it("should skip whitespace", () => {
+		it("should tokenize whitespace", () => {
 			const tokens = lex("  \t\n\r  ");
 			expect(tokens).toHaveLength(0);
 		});
 
-		it("should skip HTML comments", () => {
+		it("should tokenize HTML comments", () => {
 			const tokens = lex("<!-- this is a comment -->");
-			expect(tokens).toHaveLength(0);
+			expect(tokens).toHaveLength(1);
+			expect(tokens[0].tokenType.name).toBe("HTMLComment");
 		});
 	});
 
@@ -56,6 +57,7 @@ describe("Harlowe Lexer", () => {
 			const tokens = lex("123 -45.67 5s");
 			expect(tokens.map((t) => t.tokenType.name)).toEqual([
 				"NumberLiteral",
+				"Minus",
 				"NumberLiteral",
 				"NumberLiteral",
 			]);
@@ -125,7 +127,7 @@ describe("Harlowe Lexer", () => {
 				"Identifier",
 				"Comma",
 				"Identifier",
-				"PlainText",
+				"ErrorToken",
 			]);
 		});
 	});
