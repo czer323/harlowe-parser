@@ -200,16 +200,14 @@ export interface LogicalExpressionCstNode extends CstNode {
 
 export type ComparisonExpressionCstChildren = {
 	lhs: AdditiveExpressionCstNode[];
-	operator?: (
-		| IToken & {
-				tokenType:
-					| typeof Is
-					| typeof Contains
-					| typeof Matches
-					| typeof GreaterThan
-					| typeof LessThan;
-		  }
-	)[];
+	operator?: (IToken & {
+		tokenType:
+			| typeof Is
+			| typeof Contains
+			| typeof Matches
+			| typeof GreaterThan
+			| typeof LessThan;
+	})[];
 	rhs?: AdditiveExpressionCstNode[];
 };
 export interface ComparisonExpressionCstNode extends CstNode {
@@ -229,9 +227,9 @@ export interface AdditiveExpressionCstNode extends CstNode {
 
 export type MultiplicativeExpressionCstChildren = {
 	lhs: UnaryExpressionCstNode[];
-	operator?: (
-		| IToken & { tokenType: typeof Multiply | typeof Divide | typeof Modulo }
-	)[];
+	operator?: (IToken & {
+		tokenType: typeof Multiply | typeof Divide | typeof Modulo;
+	})[];
 	rhs?: UnaryExpressionCstNode[];
 };
 export interface MultiplicativeExpressionCstNode extends CstNode {

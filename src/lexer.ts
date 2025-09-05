@@ -19,7 +19,12 @@ const createKeyword = (config: { name: string; pattern: RegExp }) =>
 	createToken({ ...config, longer_alt: Identifier });
 
 // --- Category 1: Whitespace & Comments ---
-export const WhiteSpace = createToken({ name: "WhiteSpace", pattern: /\s+/ });
+export const WhiteSpace = createToken({
+	name: "WhiteSpace",
+	pattern: /\s+/,
+	group: Lexer.SKIPPED,
+	line_breaks: true,
+});
 addToken(WhiteSpace);
 
 export const HTMLComment = createToken({
@@ -143,6 +148,47 @@ addToken(Dollar);
 export const Backslash = createToken({ name: "Backslash", pattern: /\\/ });
 addToken(Backslash);
 
+export const BulletedListMarker = createToken({
+	name: "BulletedListMarker",
+	// Use a function pattern to enforce start-of-line without anchors
+	pattern: (text: string, startOffset: number): RegExpExecArray | null => {
+		// Must start with '*'
+		if (text.charAt(startOffset) !== "*") return null;
+		// Ensure previous character is start of input or a newline
+		if (startOffset > 0) {
+			const prev = text.charAt(startOffset - 1);
+			if (prev !== "\n" && prev !== "\r") return null;
+		}
+		const m = /^\*+(?=\s)/.exec(text.substring(startOffset));
+		if (!m) return null;
+		const result = [m[0]] as unknown as RegExpExecArray;
+		result.index = startOffset;
+		result.input = text;
+		return result;
+	},
+	line_breaks: false,
+});
+addToken(BulletedListMarker);
+export const NumberedListMarker = createToken({
+	name: "NumberedListMarker",
+	pattern: (text: string, startOffset: number): RegExpExecArray | null => {
+		// Must start with a digit
+		const ch = text.charAt(startOffset);
+		if (ch < "0" || ch > "9") return null;
+		if (startOffset > 0) {
+			const prev = text.charAt(startOffset - 1);
+			if (prev !== "\n" && prev !== "\r") return null;
+		}
+		const m = /^\d+\.(?=\s)/.exec(text.substring(startOffset));
+		if (!m) return null;
+		const result = [m[0]] as unknown as RegExpExecArray;
+		result.index = startOffset;
+		result.input = text;
+		return result;
+	},
+	line_breaks: false,
+});
+addToken(NumberedListMarker);
 // --- Category 6: Markup ---
 export const Italic = createToken({ name: "Italic", pattern: /\/\// });
 addToken(Italic);
@@ -160,16 +206,6 @@ export const Superscript = createToken({
 	pattern: /\^\^/,
 });
 addToken(Superscript);
-export const BulletedListMarker = createToken({
-	name: "BulletedListMarker",
-	pattern: /\*+(?=\s)/,
-});
-addToken(BulletedListMarker);
-export const NumberedListMarker = createToken({
-	name: "NumberedListMarker",
-	pattern: /(?:0\.)+(?=\s)/,
-});
-addToken(NumberedListMarker);
 export const HeadingMarker = createToken({
 	name: "HeadingMarker",
 	pattern: /#{1,6}(?=\s)/,

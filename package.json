@@ -33,7 +33,7 @@
   },
   "lint-staged": {
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-      "biome format --no-errors-on-unmatched --staged --write",
+      "biome format --no-errors-on-unmatched --staged --write && git add",
       "biome check --no-errors-on-unmatched --staged"
     ]
   }

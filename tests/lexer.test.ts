@@ -19,8 +19,7 @@ describe("Harlowe Lexer", () => {
 	describe("Category 1: Whitespace & Comments", () => {
 		it("should tokenize whitespace", () => {
 			const tokens = lex("  \t\n\r  ");
-			expect(tokens).toHaveLength(1);
-			expect(tokens[0].tokenType.name).toBe("WhiteSpace");
+			expect(tokens).toHaveLength(0);
 		});
 
 		it("should tokenize HTML comments", () => {
@@ -50,7 +49,6 @@ describe("Harlowe Lexer", () => {
 			const tokens = lex(`"hello" 'world'`);
 			expect(tokens.map((t) => t.tokenType.name)).toEqual([
 				"StringLiteral",
-				"WhiteSpace",
 				"StringLiteral",
 			]);
 		});
@@ -59,10 +57,8 @@ describe("Harlowe Lexer", () => {
 			const tokens = lex("123 -45.67 5s");
 			expect(tokens.map((t) => t.tokenType.name)).toEqual([
 				"NumberLiteral",
-				"WhiteSpace",
 				"Minus",
 				"NumberLiteral",
-				"WhiteSpace",
 				"NumberLiteral",
 			]);
 		});
@@ -73,11 +69,8 @@ describe("Harlowe Lexer", () => {
 			const tokens = lex("to and it true_story");
 			expect(tokens.map((t) => t.tokenType.name)).toEqual([
 				"To",
-				"WhiteSpace",
 				"And",
-				"WhiteSpace",
 				"It",
-				"WhiteSpace",
 				"Identifier",
 			]);
 		});
@@ -88,13 +81,9 @@ describe("Harlowe Lexer", () => {
 			const tokens = lex("// '' ~~ ** ^^");
 			expect(tokens.map((t) => t.tokenType.name)).toEqual([
 				"Italic",
-				"WhiteSpace",
 				"Bold",
-				"WhiteSpace",
 				"Strikethrough",
-				"WhiteSpace",
 				"Emphasis",
-				"WhiteSpace",
 				"Superscript",
 			]);
 		});
@@ -128,13 +117,7 @@ describe("Harlowe Lexer", () => {
 		it("should correctly tokenize text surrounding a verbatim block", () => {
 			const tokens = lex("prose `verbatim` prose");
 			const tokenNames = tokens.map((t) => t.tokenType.name);
-			expect(tokenNames).toEqual([
-				"Identifier",
-				"WhiteSpace",
-				"VerbatimBlock",
-				"WhiteSpace",
-				"Identifier",
-			]);
+			expect(tokenNames).toEqual(["Identifier", "VerbatimBlock", "Identifier"]);
 		});
 
 		it("should tokenize plain text with punctuation", () => {
@@ -143,7 +126,6 @@ describe("Harlowe Lexer", () => {
 			expect(tokenNames).toEqual([
 				"Identifier",
 				"Comma",
-				"WhiteSpace",
 				"Identifier",
 				"ErrorToken",
 			]);
